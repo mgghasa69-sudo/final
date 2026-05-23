@@ -145,6 +145,40 @@ app.delete('/orders/:id', async (req, res) => {
     }
 });
 
+// ─── POINTS ──────────────────────────────────────────────────────────────────
+
+// GET - Fetch user points
+app.get('/points/:username', async (req, res) => {
+    try {
+        const { username } = req.params;
+        const result = await pool.query(
+            `SELECT points FROM users WHERE username = $1`,
+            [username]
+        );
+        if (result.rows.length === 0) return res.status(404).json({ points: 0 });
+        res.json({ points: result.rows[0].points || 0 });
+    } catch (error) {
+        console.error('Fetch points error:', error);
+        res.status(500).json({ points: 0 });
+    }
+});
+
+// POST - Add points
+app.post('/points/add', async (req, res) => {
+    try {
+        const { username, points } = req.body;
+        const result = await pool.query(
+            `UPDATE users SET points = COALESCE(points, 0) + $1 WHERE username = $2 RETURNING points`,
+            [points, username]
+        );
+        if (result.rows.length === 0) return res.status(404).json({ message: 'User not found' });
+        res.json({ success: true, totalPoints: result.rows[0].points });
+    } catch (error) {
+        console.error('Add points error:', error);
+        res.status(500).json({ message: 'Failed to update points' });
+    }
+});
+
 // ─── FALLBACK ─────────────────────────────────────────────────────────────────
 
 app.get('*path', (req, res) => {
@@ -155,17 +189,4 @@ app.get('*path', (req, res) => {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
-});
-// DELETE - Remove order (admin dashboard)
-app.delete('/orders/:id', async (req, res) => {
-    try {
-        const { id } = req.params;
-        console.log('Deleting order id:', id); // ← add this
-        const result = await pool.query(`DELETE FROM orders WHERE id = $1 RETURNING *`, [id]);
-        console.log('Deleted rows:', result.rowCount); // ← add this
-        res.json({ success: true });
-    } catch (error) {
-        console.error('Delete order error:', error.message); // ← add this
-        res.status(500).json({ message: 'Failed to delete order', error: error.message });
-    }
 });
