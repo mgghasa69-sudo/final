@@ -44,10 +44,11 @@ app.get('/db-test', async (req, res) => {
 // POST - Create reservation
 app.post('/reservation', async (req, res) => {
     try {
-        const { name, email, date, time } = req.body;
+        const { name, phone, date, time, guests, occasion, notes } = req.body;
         await pool.query(
-            `INSERT INTO reservations (name, email, reservation_date, reservation_time) VALUES ($1, $2, $3, $4)`,
-            [name, email, date, time]
+            `INSERT INTO reservations (name, phone, reservation_date, reservation_time, guests, occasion, notes)
+             VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+            [name, phone || '', date, time, guests || '', occasion || '', notes || '']
         );
         res.status(201).json({ message: "Reservation saved successfully" });
     } catch (error) {
