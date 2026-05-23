@@ -189,19 +189,14 @@ body{
   box-shadow:0 8px 32px rgba(0,0,0,0.5);
 }
 .item-card:active{transform:scale(0.97);}
-.item-img{
-  height:130px;
-  background:var(--surface2);
-  display:flex;align-items:center;justify-content:center;
-  font-size:4rem;
-  position:relative;
+.item-img span{
+  font-size:1.2rem;
 }
-.badge{
-  position:absolute;top:8px;left:8px;
-  font-size:0.62rem;font-weight:800;
-  padding:3px 9px;border-radius:var(--radius-sm);
-  text-transform:uppercase;letter-spacing:0.06em;
-  z-index:1;
+.badge-hot{
+  background:var(--red);
+  color:#fff;
+  font-size:0.7rem;
+  padding:4px 10px;
 }
 .badge-hot{background:var(--red);color:#fff;}
 .badge-new{background:var(--green);color:#fff;}
@@ -592,4 +587,137 @@ body{
  
 .pts-total strong {
   color: var(--yellow);
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.7);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+}
+
+.modal.active{
+  display:flex;
+}
+
+.modal-content{
+  background:#1f1f1f;
+  color:white;
+  padding:30px;
+  border-radius:16px;
+  text-align:center;
+  min-width:300px;
+}
+
+.modal-content button{
+  margin-top:20px;
+  padding:10px 20px;
+  border:none;
+  background:#ffcc00;
+  color:black;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+}
+/* ── ADD THESE TO YOUR style.css ── */
+
+.user-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-avatar {
+  width: 34px;
+  height: 34px;
+  background: #F5C518;
+  color: #000;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: 700;
+  font-size: 13px;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.user-pts {
+  font-size: 11px;
+  color: #F5C518;
+}
+
+.topbar-logout-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.5);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+  margin-left: 4px;
+}
+
+.topbar-logout-btn:hover {
+  background: #D62B2B;
+  border-color: #D62B2B;
+}
+
+.btn-login-redirect {
+  background: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+  padding: 7px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+
+.btn-login-redirect:hover {
+  background: rgba(255,255,255,0.15);
+}
+.btn-redeem {
+  width: 100%;
+  margin-top: 8px;
+  background: transparent;
+  color: #FFC107;
+  border: 1.5px solid #FFC107;
+  border-radius: 10px;
+  padding: 12px;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-redeem:hover {
+  background: #FFC107;
+  color: #1A1A1A;
+}
+.redeem-hint {
+  text-align: center;
+  font-size: 0.75rem;
+  color: #A0A0A0;
+  margin-top: 4px;
 }

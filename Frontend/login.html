@@ -6,6 +6,7 @@
   <title>QuickBite — Login</title>
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' http://localhost:5000 http://127.0.0.1:5500 http://127.0.0.1:5000 http://localhost:3000 ws://127.0.0.1:5500 ws://localhost:5500; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     :root{
@@ -40,7 +41,7 @@
     .topbar{
       background:var(--red);
       height:70px;
-      display:flex;align-items:center;justify-content:space-between;
+      display:flex;align-items:center;
       padding:0 2rem;
       flex-shrink:0;
       position:relative;
@@ -272,8 +273,7 @@
     </div>
   </div>
 
- <script>
-    // Tab switching layout functionality
+  <script>
     function switchTab(tab){
       document.getElementById('loginForm').classList.toggle('hidden', tab !== 'login');
       document.getElementById('registerForm').classList.toggle('hidden', tab !== 'register');
@@ -282,7 +282,6 @@
       clearMessage();
     }
 
-    // Helper functions to manage display feedback messages
     function displayMessage(text, isSuccess = false) {
       const msgEl = document.getElementById('message');
       msgEl.innerText = text;
@@ -297,7 +296,6 @@
       document.getElementById('message').innerText = '';
     }
 
-    // LOGIN PROCESS
     async function login() {
       clearMessage();
       const email = document.getElementById('loginEmail').value.trim();
@@ -309,7 +307,6 @@
       }
 
       try {
-        // Pointing to your backend port 5000 instead of 3000
         const response = await fetch('http://localhost:5000/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -324,15 +321,13 @@
         }
 
         displayMessage("Login successful! Redirecting...", true);
-        
-        // Save access tokens or session details if your backend sends them
+
         if (data.token) {
           localStorage.setItem('token', data.token);
         }
 
-        // Redirect user to homepage or booking view after 1.5 seconds
         setTimeout(() => {
-          window.location.href = '/index.html'; 
+          window.location.href = '/index.html';
         }, 1500);
 
       } catch (error) {
@@ -341,7 +336,6 @@
       }
     }
 
-    // REGISTRATION PROCESS
     async function register() {
       clearMessage();
       const username = document.getElementById('regUsername').value.trim();
@@ -354,7 +348,6 @@
       }
 
       try {
-        // Pointing to your backend port 5000 instead of 3000
         const response = await fetch('http://localhost:5000/auth/register', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -369,8 +362,7 @@
         }
 
         displayMessage("Account created successfully! Switching to login...", true);
-        
-        // Automatically pivot to login view so they can sign in
+
         setTimeout(() => {
           switchTab('login');
           document.getElementById('loginEmail').value = email;

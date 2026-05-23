@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickBite — Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+    <div class="sidebar-logo">
+        <div class="logo-icon">QB</div>
+        <div class="logo-text">QUICK<span>BITE</span></div>
+    </div>
+
+    <nav class="sidebar-nav">
+        <div class="nav-label">Main</div>
+        <button class="nav-item active" onclick="showPage('dashboard', this)">
+            <span class="icon">📊</span> Dashboard
+        </button>
+        <button class="nav-item" onclick="showPage('orders', this)">
+            <span class="icon">🧾</span> Orders
+            <span class="badge" id="pending-count">0</span>
+        </button>
+        <button class="nav-item" onclick="showPage('reservations', this)">
+            <span class="icon">📅</span> Reservations
+        </button>
+
+        <div class="nav-label">Management</div>
+        <button class="nav-item" onclick="showPage('menu', this)">
+            <span class="icon">🍔</span> Menu Items
+        </button>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="admin-info">
+            <div class="admin-avatar">A</div>
+            <div>
+                <div class="admin-name">Admin</div>
+                <div class="admin-role">QuickBite Staff</div>
+            </div>
+        </div>
+        <button class="logout-btn" onclick="logout()">🚪 Sign Out</button>
+    </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+    <div class="topbar">
+        <div class="page-title" id="page-title">Dashboard</div>
+        <div class="topbar-actions">
+            <div class="live-indicator">
+                <div class="live-dot"></div> Live
+            </div>
+            <button class="btn btn-ghost" onclick="refreshAll()">🔄 Refresh</button>
+        </div>
+    </div>
+
+    <div class="content">
+
+        <!-- DASHBOARD PAGE -->
+        <div class="page-section active" id="page-dashboard">
+            <div class="stats-grid">
+                <div class="stat-card red">
+                    <div class="stat-icon">🧾</div>
+                    <div class="stat-value" id="stat-orders">—</div>
+                    <div class="stat-label">Total Orders</div>
+                    <div class="stat-change" id="stat-pending-text">— pending</div>
+                </div>
+                <div class="stat-card yellow">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-value" id="stat-revenue">—</div>
+                    <div class="stat-label">Total Revenue</div>
+                    <div class="stat-change">All time</div>
+                </div>
+                <div class="stat-card green">
+                    <div class="stat-icon">📅</div>
+                    <div class="stat-value" id="stat-reservations">—</div>
+                    <div class="stat-label">Reservations</div>
+                    <div class="stat-change">All time</div>
+                </div>
+                <div class="stat-card orange">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-value" id="stat-pending">—</div>
+                    <div class="stat-label">Pending Orders</div>
+                    <div class="stat-change">Needs attention</div>
+                </div>
+            </div>
+
+            <div class="panels">
+                <div class="panel">
+                    <div class="panel-header">
+                        <span class="panel-title">Recent Orders</span>
+                        <button class="btn btn-ghost" style="padding:6px 12px;font-size:12px" onclick="showPage('orders', document.querySelector('.nav-item:nth-child(3)'))">View all</button>
+                    </div>
+                    <div class="panel-body" id="recent-orders-list">
+                        <div class="loading">Loading...</div>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <span class="panel-title">Upcoming Reservations</span>
+                        <button class="btn btn-ghost" style="padding:6px 12px;font-size:12px" onclick="showPage('reservations', document.querySelector('.nav-item:nth-child(4)'))">View all</button>
+                    </div>
+                    <div class="panel-body" id="recent-reservations-list">
+                        <div class="loading">Loading...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ORDERS PAGE -->
+        <div class="page-section" id="page-orders">
+            <div class="tabs">
+                <button class="tab active" onclick="filterOrders('all', this)">All</button>
+                <button class="tab" onclick="filterOrders('pending', this)">Pending</button>
+                <button class="tab" onclick="filterOrders('preparing', this)">Preparing</button>
+                <button class="tab" onclick="filterOrders('ready', this)">Ready</button>
+            </div>
+            <div class="orders-section">
+                <div class="section-header">
+                    <span class="section-title">Orders</span>
+                </div>
+                <div id="orders-table-wrap">
+                    <div class="loading">Loading orders...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESERVATIONS PAGE -->
+        <div class="page-section" id="page-reservations">
+            <div class="orders-section">
+                <div class="section-header">
+                    <span class="section-title">All Reservations</span>
+                </div>
+                <div id="reservations-table-wrap">
+                    <div class="loading">Loading reservations...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MENU PAGE -->
+        <div class="page-section" id="page-menu">
+            <div class="panel">
+                <div class="panel-header">
+                    <span class="panel-title">Menu Items (Top Ordered)</span>
+                </div>
+                <div id="menu-list">
+                    <div class="loading">Loading menu data...</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<script>
+    // ── ALWAYS POINT TO EXPRESS SERVER ──────────────────────────────────────
+    const BASE_URL = 'http://localhost:5000';
+
+    let allOrders = [];
+    let allReservations = [];
+
+    function showPage(page, btn) {
+        document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        document.getElementById('page-' + page).classList.add('active');
+        if (btn) btn.classList.add('active');
+        const titles = { dashboard: 'Dashboard', orders: 'Orders', reservations: 'Reservations', menu: 'Menu Items' };
+        document.getElementById('page-title').textContent = titles[page] || page;
+    }
+
+    async function fetchOrders() {
+        try {
+            const res = await fetch(`${BASE_URL}/orders/all`, { credentials: 'include' });
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const data = await res.json();
+            allOrders = data.orders || data || [];
+            renderStats();
+            renderRecentOrders();
+            renderOrdersTable(allOrders);
+        } catch (e) {
+            console.error('fetchOrders failed:', e.message);
+            allOrders = getSampleOrders();
+            renderStats();
+            renderRecentOrders();
+            renderOrdersTable(allOrders);
+        }
+    }
+
+    async function fetchReservations() {
+        try {
+            const res = await fetch(`${BASE_URL}/reservations/all`, { credentials: 'include' });
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            const data = await res.json();
+            allReservations = data.reservations || data || [];
+            renderReservations();
+            renderRecentReservations();
+        } catch (e) {
+            console.error('fetchReservations failed:', e.message);
+            allReservations = getSampleReservations();
+            renderReservations();
+            renderRecentReservations();
+        }
+    }
+
+    function getSampleOrders() {
+        return [
+            { id: 1001, customer_name: 'Juan dela Cruz', customer_email: 'juan@gmail.com', total: 429, status: 'pending', order_type: 'dine-in', items: [{name:'Classic Smash Burger',qty:2},{name:'Fries',qty:1}], created_at: new Date().toISOString() },
+            { id: 1002, customer_name: 'Maria Santos', customer_email: 'maria@gmail.com', total: 199, status: 'preparing', order_type: 'take-out', items: [{name:'Spicy Crispy Chicken',qty:1}], created_at: new Date(Date.now()-300000).toISOString() },
+            { id: 1003, customer_name: 'Carlo Reyes', customer_email: 'carlo@gmail.com', total: 747, status: 'ready', order_type: 'dine-in', items: [{name:'Bacon BBQ Stack',qty:2},{name:'Coke',qty:3}], created_at: new Date(Date.now()-600000).toISOString() },
+            { id: 1004, customer_name: 'Ana Gonzales', customer_email: 'ana@gmail.com', total: 99, status: 'done', order_type: 'take-out', items: [{name:'Cheeseburger',qty:1}], created_at: new Date(Date.now()-900000).toISOString() },
+        ];
+    }
+
+    function getSampleReservations() {
+        return [
+            { id: 1, name: 'Ramon Bautista', email: 'ramon@gmail.com', reservation_date: '2026-05-20', reservation_time: '18:00' },
+            { id: 2, name: 'Liza Dizon', email: 'liza@gmail.com', reservation_date: '2026-05-20', reservation_time: '19:30' },
+            { id: 3, name: 'Mark Villanueva', email: 'mark@gmail.com', reservation_date: '2026-05-21', reservation_time: '12:00' },
+        ];
+    }
+
+    function renderStats() {
+        const pending = allOrders.filter(o => o.status === 'pending').length;
+        const revenue = allOrders.reduce((s, o) => s + parseFloat(o.total || 0), 0);
+        document.getElementById('stat-orders').textContent = allOrders.length;
+        document.getElementById('stat-revenue').textContent = '₱' + revenue.toLocaleString();
+        document.getElementById('stat-reservations').textContent = allReservations.length;
+        document.getElementById('stat-pending').textContent = pending;
+        document.getElementById('stat-pending-text').textContent = pending + ' pending';
+        document.getElementById('pending-count').textContent = pending;
+    }
+
+    function renderRecentOrders() {
+        const el = document.getElementById('recent-orders-list');
+        const recent = allOrders.slice(0, 5);
+        if (!recent.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">🧾</div>No orders yet</div>'; return; }
+        el.innerHTML = recent.map(o => `
+            <div class="reservation-item">
+                <div class="res-avatar">${o.customer_name?.charAt(0).toUpperCase() || 'U'}</div>
+                <div class="res-info">
+                    <div class="res-name">${o.customer_name}</div>
+                    <div class="res-detail">${Array.isArray(o.items) ? o.items.map(i=>i.name).join(', ') : 'Order #'+o.id}</div>
+                </div>
+                <div>
+                    <div class="res-time">₱${parseFloat(o.total).toFixed(2)}</div>
+                    <div style="text-align:right;margin-top:4px"><span class="status-badge status-${o.status}">${o.status}</span></div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function renderRecentReservations() {
+        const el = document.getElementById('recent-reservations-list');
+        const recent = allReservations.slice(0, 5);
+        if (!recent.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">📅</div>No reservations yet</div>'; return; }
+        el.innerHTML = recent.map(r => `
+            <div class="reservation-item">
+                <div class="res-avatar">${r.name?.charAt(0).toUpperCase() || 'G'}</div>
+                <div class="res-info">
+                    <div class="res-name">${r.name}</div>
+                    <div class="res-detail">${r.email}</div>
+                </div>
+                <div class="res-time">${r.reservation_date}<br><span style="font-size:12px;color:var(--muted)">${r.reservation_time}</span></div>
+            </div>
+        `).join('');
+    }
+
+    function renderOrdersTable(orders) {
+        const wrap = document.getElementById('orders-table-wrap');
+        if (!orders.length) { wrap.innerHTML = '<div class="empty"><div class="empty-icon">🧾</div>No orders found</div>'; return; }
+        wrap.innerHTML = `
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Customer</th>
+                        <th>Items</th>
+                        <th>Type</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${orders.map(o => `
+                        <tr>
+                            <td style="color:var(--muted)">#${o.id}</td>
+                            <td>
+                                <div style="font-weight:600">${o.customer_name}</div>
+                                <div style="font-size:12px;color:var(--muted)">${o.customer_email}</div>
+                            </td>
+                            <td style="font-size:13px;color:var(--muted)">${Array.isArray(o.items) ? o.items.map(i=>i.name).join(', ') : 'N/A'}</td>
+                            <td><span class="order-type">${o.order_type || 'dine-in'}</span></td>
+                            <td style="font-weight:700;color:var(--yellow)">₱${parseFloat(o.total).toFixed(2)}</td>
+                            <td><span class="status-badge status-${o.status}">${o.status}</span></td>
+                            <td style="display:flex;gap:8px;align-items:center">
+                                <select onchange="updateStatus(${o.id}, this.value)" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);padding:4px 8px;border-radius:6px;font-size:12px;cursor:pointer">
+                                    <option value="pending"   ${o.status==='pending'  ?'selected':''}>Pending</option>
+                                    <option value="preparing" ${o.status==='preparing'?'selected':''}>Preparing</option>
+                                    <option value="ready"     ${o.status==='ready'    ?'selected':''}>Ready</option>
+                                    <option value="done"      ${o.status==='done'     ?'selected':''}>Done</option>
+                                </select>
+                                <button class="btn-delete" onclick="deleteOrder(${o.id})">🗑 Delete</button>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
+    }
+
+    function renderReservations() {
+        const wrap = document.getElementById('reservations-table-wrap');
+        if (!allReservations.length) { wrap.innerHTML = '<div class="empty"><div class="empty-icon">📅</div>No reservations yet</div>'; return; }
+        wrap.innerHTML = `
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${allReservations.map(r => `
+                        <tr>
+                            <td style="color:var(--muted)">${r.id}</td>
+                            <td style="font-weight:600">${r.name}</td>
+                            <td style="color:var(--muted)">${r.email}</td>
+                            <td>${r.reservation_date}</td>
+                            <td style="color:var(--yellow);font-weight:600">${r.reservation_time}</td>
+                            <td>
+                                <button class="btn-delete" onclick="deleteReservation(${r.id})">🗑 Delete</button>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        `;
+    }
+
+    function renderMenuStats() {
+        const itemCounts = {};
+        allOrders.forEach(o => {
+            const items = Array.isArray(o.items) ? o.items : [];
+            items.forEach(item => {
+                itemCounts[item.name] = (itemCounts[item.name] || 0) + (item.qty || 1);
+            });
+        });
+
+        const emojis = { 'Classic Smash Burger':'🍔','Bacon BBQ Stack':'🥓','Spicy Crispy Chicken':'🍗','Mushroom Swiss Burger':'🍄','Signature QB Burger':'⭐','Cheeseburger':'🧀','Fries':'🍟','Coke':'🥤' };
+        const sorted = Object.entries(itemCounts).sort((a,b) => b[1]-a[1]);
+        const el = document.getElementById('menu-list');
+
+        if (!sorted.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">📊</div>No order data yet</div>'; return; }
+
+        el.innerHTML = sorted.map(([name, count]) => `
+            <div class="menu-item-row">
+                <div class="menu-emoji">${emojis[name] || '🍽️'}</div>
+                <div class="menu-info">
+                    <div class="menu-name">${name}</div>
+                    <div class="menu-sales">${count} sold</div>
+                </div>
+                <div style="width:100px;background:var(--surface2);border-radius:4px;height:6px;overflow:hidden">
+                    <div style="width:${Math.min(100, count * 20)}%;height:100%;background:var(--red);border-radius:4px"></div>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function filterOrders(status, btn) {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        btn.classList.add('active');
+        const filtered = status === 'all' ? allOrders : allOrders.filter(o => o.status === status);
+        renderOrdersTable(filtered);
+    }
+
+    async function updateStatus(orderId, newStatus) {
+        try {
+            const res = await fetch(`${BASE_URL}/orders/${orderId}/status`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({ status: newStatus })
+            });
+            if (!res.ok) throw new Error('Failed');
+            const o = allOrders.find(o => o.id === orderId);
+            if (o) o.status = newStatus;
+            renderStats();
+            renderOrdersTable(allOrders);
+        } catch (e) {
+            alert('Failed to update status');
+        }
+    }
+
+    async function deleteOrder(id) {
+        if (!confirm('Delete this order? This cannot be undone.')) return;
+        try {
+            const res = await fetch(`${BASE_URL}/orders/${id}`, {
+                method: 'DELETE',
+                credentials: 'include'
+            });
+            if (!res.ok) throw new Error('Failed');
+            allOrders = allOrders.filter(o => o.id !== id);
+            renderStats();
+            renderRecentOrders();
+            renderOrdersTable(allOrders);
+        } catch (e) {
+            alert('Failed to delete order');
+        }
+    }
+
+    async function deleteReservation(id) {
+        if (!confirm('Delete this reservation? This cannot be undone.')) return;
+        try {
+            const res = await fetch(`${BASE_URL}/reservations/${id}`, {
+                method: 'DELETE',
+                credentials: 'include'
+            });
+            if (!res.ok) throw new Error('Failed');
+            allReservations = allReservations.filter(r => r.id !== id);
+            renderStats();
+            renderRecentReservations();
+            renderReservations();
+        } catch (e) {
+            alert('Failed to delete reservation');
+        }
+    }
+
+    function refreshAll() {
+        fetchOrders();
+        fetchReservations();
+    }
+
+    async function logout() {
+        try {
+            await fetch(`${BASE_URL}/auth/logout`, { method: 'POST', credentials: 'include' });
+        } catch(e) {}
+        window.location.href = '/login.html';
+    }
+
+    // INIT
+    fetchOrders();
+    fetchReservations();
+    setInterval(refreshAll, 30000);
+
+    document.querySelector('.nav-item:last-child').addEventListener('click', () => {
+        setTimeout(renderMenuStats, 100);
+    });
+</script>
+</body>
+</html>
