@@ -13,7 +13,7 @@ const app = express();
 
 // MIDDLEWARE
 app.use(cors({
-    origin: ['http://localhost:5000'],
+    origin: ['http://localhost:5500', 'http://127.0.0.1:5500'],
     credentials: true
 }));
 app.use(express.json());
@@ -29,9 +29,7 @@ app.use('/cart', cartRouter);
 // DATABASE TEST ROUTE
 app.get('/db-test', async (req, res) => {
     try {
-        console.log("Start");
         const result = await pool.query("SELECT current_database()");
-        console.log("End");
         res.send(`The database name is ${result.rows[0].current_database}`);
     } catch (error) {
         console.log(error);
@@ -39,9 +37,8 @@ app.get('/db-test', async (req, res) => {
     }
 });
 
-// ─── RESERVATIONS ────────────────────────────────────────────────────────────
+// ─── RESERVATIONS ─────────────────────────────────────────────────────────────
 
-// POST - Create reservation
 app.post('/reservation', async (req, res) => {
     try {
         const { name, phone, date, time, guests, occasion, notes } = req.body;
@@ -57,7 +54,6 @@ app.post('/reservation', async (req, res) => {
     }
 });
 
-// GET - All reservations (admin dashboard)
 app.get('/reservations/all', async (req, res) => {
     try {
         const result = await pool.query(
@@ -70,7 +66,6 @@ app.get('/reservations/all', async (req, res) => {
     }
 });
 
-// DELETE - Remove reservation (admin dashboard)
 app.delete('/reservations/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -82,22 +77,17 @@ app.delete('/reservations/:id', async (req, res) => {
     }
 });
 
-// ─── ORDERS ──────────────────────────────────────────────────────────────────
+// ─── ORDERS ───────────────────────────────────────────────────────────────────
 
-// POST - Create order
 app.post('/orders', async (req, res) => {
     try {
         const { customer_name, customer_email, items, total, notes, order_type } = req.body;
-
-        console.log('Order received:', req.body);
-
         const result = await pool.query(
             `INSERT INTO orders (customer_name, customer_email, items, total, notes, order_type, status)
              VALUES ($1, $2, $3, $4, $5, $6, 'pending')
              RETURNING *`,
             [customer_name, customer_email, JSON.stringify(items), total, notes || '', order_type || 'dine-in']
         );
-
         res.status(201).json({ message: 'Order placed successfully', order: result.rows[0] });
     } catch (error) {
         console.error('Order error:', error);
@@ -105,12 +95,9 @@ app.post('/orders', async (req, res) => {
     }
 });
 
-// GET - All orders (admin dashboard)
 app.get('/orders/all', async (req, res) => {
     try {
-        const result = await pool.query(
-            `SELECT * FROM orders ORDER BY created_at DESC`
-        );
+        const result = await pool.query(`SELECT * FROM orders ORDER BY created_at DESC`);
         res.json({ orders: result.rows });
     } catch (error) {
         console.error(error);
@@ -118,15 +105,11 @@ app.get('/orders/all', async (req, res) => {
     }
 });
 
-// PATCH - Update order status (admin dashboard)
 app.patch('/orders/:id/status', async (req, res) => {
     try {
         const { id } = req.params;
         const { status } = req.body;
-        await pool.query(
-            `UPDATE orders SET status = $1 WHERE id = $2`,
-            [status, id]
-        );
+        await pool.query(`UPDATE orders SET status = $1 WHERE id = $2`, [status, id]);
         res.json({ success: true });
     } catch (error) {
         console.error(error);
@@ -134,7 +117,6 @@ app.patch('/orders/:id/status', async (req, res) => {
     }
 });
 
-// DELETE - Remove order (admin dashboard)
 app.delete('/orders/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -146,16 +128,12 @@ app.delete('/orders/:id', async (req, res) => {
     }
 });
 
-// ─── POINTS ──────────────────────────────────────────────────────────────────
+// ─── POINTS ───────────────────────────────────────────────────────────────────
 
-// GET - Fetch user points
 app.get('/points/:username', async (req, res) => {
     try {
         const { username } = req.params;
-        const result = await pool.query(
-            `SELECT points FROM users WHERE username = $1`,
-            [username]
-        );
+        const result = await pool.query(`SELECT points FROM users WHERE username = $1`, [username]);
         if (result.rows.length === 0) return res.status(404).json({ points: 0 });
         res.json({ points: result.rows[0].points || 0 });
     } catch (error) {
@@ -164,7 +142,6 @@ app.get('/points/:username', async (req, res) => {
     }
 });
 
-// POST - Add points
 app.post('/points/add', async (req, res) => {
     try {
         const { username, points } = req.body;

@@ -6,6 +6,7 @@
     <title>QuickBite — Admin Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="admin.css">
+    <link rel="icon" href="data:,">
 </head>
 <body>
 
@@ -30,7 +31,7 @@
         </button>
 
         <div class="nav-label">Management</div>
-        <button class="nav-item" onclick="showPage('menu', this)">
+        <button class="nav-item" onclick="showPage('menu', this); setTimeout(renderMenuStats, 100)">
             <span class="icon">🍔</span> Menu Items
         </button>
     </nav>
@@ -94,7 +95,7 @@
                 <div class="panel">
                     <div class="panel-header">
                         <span class="panel-title">Recent Orders</span>
-                        <button class="btn btn-ghost" style="padding:6px 12px;font-size:12px" onclick="showPage('orders', document.querySelector('.nav-item:nth-child(3)'))">View all</button>
+                        <button class="btn btn-ghost" style="padding:6px 12px;font-size:12px" onclick="showPage('orders', document.querySelectorAll('.nav-item')[1])">View all</button>
                     </div>
                     <div class="panel-body" id="recent-orders-list">
                         <div class="loading">Loading...</div>
@@ -104,7 +105,7 @@
                 <div class="panel">
                     <div class="panel-header">
                         <span class="panel-title">Upcoming Reservations</span>
-                        <button class="btn btn-ghost" style="padding:6px 12px;font-size:12px" onclick="showPage('reservations', document.querySelector('.nav-item:nth-child(4)'))">View all</button>
+                        <button class="btn btn-ghost" style="padding:6px 12px;font-size:12px" onclick="showPage('reservations', document.querySelectorAll('.nav-item')[2])">View all</button>
                     </div>
                     <div class="panel-body" id="recent-reservations-list">
                         <div class="loading">Loading...</div>
@@ -159,7 +160,6 @@
 </main>
 
 <script>
-    // ── ALWAYS POINT TO EXPRESS SERVER ──────────────────────────────────────
     const BASE_URL = 'http://localhost:5000';
 
     let allOrders = [];
@@ -180,15 +180,16 @@
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             const data = await res.json();
             allOrders = data.orders || data || [];
+            // parse items if stored as string
+            allOrders = allOrders.map(o => ({
+                ...o,
+                items: typeof o.items === 'string' ? JSON.parse(o.items) : (o.items || [])
+            }));
             renderStats();
             renderRecentOrders();
             renderOrdersTable(allOrders);
         } catch (e) {
             console.error('fetchOrders failed:', e.message);
-            allOrders = getSampleOrders();
-            renderStats();
-            renderRecentOrders();
-            renderOrdersTable(allOrders);
         }
     }
 
@@ -200,29 +201,10 @@
             allReservations = data.reservations || data || [];
             renderReservations();
             renderRecentReservations();
+            renderStats();
         } catch (e) {
             console.error('fetchReservations failed:', e.message);
-            allReservations = getSampleReservations();
-            renderReservations();
-            renderRecentReservations();
         }
-    }
-
-    function getSampleOrders() {
-        return [
-            { id: 1001, customer_name: 'Juan dela Cruz', customer_email: 'juan@gmail.com', total: 429, status: 'pending', order_type: 'dine-in', items: [{name:'Classic Smash Burger',qty:2},{name:'Fries',qty:1}], created_at: new Date().toISOString() },
-            { id: 1002, customer_name: 'Maria Santos', customer_email: 'maria@gmail.com', total: 199, status: 'preparing', order_type: 'take-out', items: [{name:'Spicy Crispy Chicken',qty:1}], created_at: new Date(Date.now()-300000).toISOString() },
-            { id: 1003, customer_name: 'Carlo Reyes', customer_email: 'carlo@gmail.com', total: 747, status: 'ready', order_type: 'dine-in', items: [{name:'Bacon BBQ Stack',qty:2},{name:'Coke',qty:3}], created_at: new Date(Date.now()-600000).toISOString() },
-            { id: 1004, customer_name: 'Ana Gonzales', customer_email: 'ana@gmail.com', total: 99, status: 'done', order_type: 'take-out', items: [{name:'Cheeseburger',qty:1}], created_at: new Date(Date.now()-900000).toISOString() },
-        ];
-    }
-
-    function getSampleReservations() {
-        return [
-            { id: 1, name: 'Ramon Bautista', email: 'ramon@gmail.com', reservation_date: '2026-05-20', reservation_time: '18:00' },
-            { id: 2, name: 'Liza Dizon', email: 'liza@gmail.com', reservation_date: '2026-05-20', reservation_time: '19:30' },
-            { id: 3, name: 'Mark Villanueva', email: 'mark@gmail.com', reservation_date: '2026-05-21', reservation_time: '12:00' },
-        ];
     }
 
     function renderStats() {
@@ -242,13 +224,13 @@
         if (!recent.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">🧾</div>No orders yet</div>'; return; }
         el.innerHTML = recent.map(o => `
             <div class="reservation-item">
-                <div class="res-avatar">${o.customer_name?.charAt(0).toUpperCase() || 'U'}</div>
+                <div class="res-avatar">${(o.customer_name || 'U').charAt(0).toUpperCase()}</div>
                 <div class="res-info">
-                    <div class="res-name">${o.customer_name}</div>
-                    <div class="res-detail">${Array.isArray(o.items) ? o.items.map(i=>i.name).join(', ') : 'Order #'+o.id}</div>
+                    <div class="res-name">${o.customer_name || 'Unknown'}</div>
+                    <div class="res-detail">${Array.isArray(o.items) ? o.items.map(i => i.name).join(', ') : 'Order #' + o.id}</div>
                 </div>
                 <div>
-                    <div class="res-time">₱${parseFloat(o.total).toFixed(2)}</div>
+                    <div class="res-time">₱${parseFloat(o.total || 0).toFixed(2)}</div>
                     <div style="text-align:right;margin-top:4px"><span class="status-badge status-${o.status}">${o.status}</span></div>
                 </div>
             </div>
@@ -261,12 +243,15 @@
         if (!recent.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">📅</div>No reservations yet</div>'; return; }
         el.innerHTML = recent.map(r => `
             <div class="reservation-item">
-                <div class="res-avatar">${r.name?.charAt(0).toUpperCase() || 'G'}</div>
+                <div class="res-avatar">${(r.name || 'G').charAt(0).toUpperCase()}</div>
                 <div class="res-info">
                     <div class="res-name">${r.name}</div>
-                    <div class="res-detail">${r.email}</div>
+                    <div class="res-detail">${r.phone || r.occasion || ''}</div>
                 </div>
-                <div class="res-time">${r.reservation_date}<br><span style="font-size:12px;color:var(--muted)">${r.reservation_time}</span></div>
+                <div class="res-time">
+                    ${new Date(r.reservation_date).toLocaleDateString()}<br>
+                    <span style="font-size:12px;color:var(--muted)">${r.reservation_time}</span>
+                </div>
             </div>
         `).join('');
     }
@@ -290,23 +275,23 @@
                 <tbody>
                     ${orders.map(o => `
                         <tr>
-                            <td style="color:var(--muted)">#${o.id}</td>
+                            <td style="color:var(--muted);font-size:12px">${String(o.id).substring(0,8)}...</td>
                             <td>
-                                <div style="font-weight:600">${o.customer_name}</div>
-                                <div style="font-size:12px;color:var(--muted)">${o.customer_email}</div>
+                                <div style="font-weight:600">${o.customer_name || 'Unknown'}</div>
+                                <div style="font-size:12px;color:var(--muted)">${o.customer_email || ''}</div>
                             </td>
-                            <td style="font-size:13px;color:var(--muted)">${Array.isArray(o.items) ? o.items.map(i=>i.name).join(', ') : 'N/A'}</td>
+                            <td style="font-size:13px;color:var(--muted)">${Array.isArray(o.items) ? o.items.map(i => i.name).join(', ') : 'N/A'}</td>
                             <td><span class="order-type">${o.order_type || 'dine-in'}</span></td>
-                            <td style="font-weight:700;color:var(--yellow)">₱${parseFloat(o.total).toFixed(2)}</td>
+                            <td style="font-weight:700;color:var(--yellow)">₱${parseFloat(o.total || 0).toFixed(2)}</td>
                             <td><span class="status-badge status-${o.status}">${o.status}</span></td>
                             <td style="display:flex;gap:8px;align-items:center">
-                                <select onchange="updateStatus(${o.id}, this.value)" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);padding:4px 8px;border-radius:6px;font-size:12px;cursor:pointer">
+                                <select onchange="updateStatus('${o.id}', this.value)" style="background:var(--surface2);color:var(--text);border:1px solid var(--border);padding:4px 8px;border-radius:6px;font-size:12px;cursor:pointer">
                                     <option value="pending"   ${o.status==='pending'  ?'selected':''}>Pending</option>
                                     <option value="preparing" ${o.status==='preparing'?'selected':''}>Preparing</option>
                                     <option value="ready"     ${o.status==='ready'    ?'selected':''}>Ready</option>
                                     <option value="done"      ${o.status==='done'     ?'selected':''}>Done</option>
                                 </select>
-                                <button class="btn-delete" onclick="deleteOrder(${o.id})">🗑 Delete</button>
+                                <button class="btn-delete" onclick="deleteOrder('${o.id}')">🗑 Delete</button>
                             </td>
                         </tr>
                     `).join('')}
@@ -324,9 +309,11 @@
                     <tr>
                         <th>#</th>
                         <th>Name</th>
-                        <th>Email</th>
+                        <th>Phone</th>
                         <th>Date</th>
                         <th>Time</th>
+                        <th>Guests</th>
+                        <th>Occasion</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -335,9 +322,11 @@
                         <tr>
                             <td style="color:var(--muted)">${r.id}</td>
                             <td style="font-weight:600">${r.name}</td>
-                            <td style="color:var(--muted)">${r.email}</td>
-                            <td>${r.reservation_date}</td>
+                            <td style="color:var(--muted)">${r.phone || '—'}</td>
+                            <td>${new Date(r.reservation_date).toLocaleDateString()}</td>
                             <td style="color:var(--yellow);font-weight:600">${r.reservation_time}</td>
+                            <td>${r.guests || '—'}</td>
+                            <td>${r.occasion || '—'}</td>
                             <td>
                                 <button class="btn-delete" onclick="deleteReservation(${r.id})">🗑 Delete</button>
                             </td>
@@ -356,13 +345,10 @@
                 itemCounts[item.name] = (itemCounts[item.name] || 0) + (item.qty || 1);
             });
         });
-
         const emojis = { 'Classic Smash Burger':'🍔','Bacon BBQ Stack':'🥓','Spicy Crispy Chicken':'🍗','Mushroom Swiss Burger':'🍄','Signature QB Burger':'⭐','Cheeseburger':'🧀','Fries':'🍟','Coke':'🥤' };
-        const sorted = Object.entries(itemCounts).sort((a,b) => b[1]-a[1]);
+        const sorted = Object.entries(itemCounts).sort((a, b) => b[1] - a[1]);
         const el = document.getElementById('menu-list');
-
         if (!sorted.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">📊</div>No order data yet</div>'; return; }
-
         el.innerHTML = sorted.map(([name, count]) => `
             <div class="menu-item-row">
                 <div class="menu-emoji">${emojis[name] || '🍽️'}</div>
@@ -396,6 +382,7 @@
             const o = allOrders.find(o => o.id === orderId);
             if (o) o.status = newStatus;
             renderStats();
+            renderRecentOrders();
             renderOrdersTable(allOrders);
         } catch (e) {
             alert('Failed to update status');
@@ -405,10 +392,7 @@
     async function deleteOrder(id) {
         if (!confirm('Delete this order? This cannot be undone.')) return;
         try {
-            const res = await fetch(`${BASE_URL}/orders/${id}`, {
-                method: 'DELETE',
-                credentials: 'include'
-            });
+            const res = await fetch(`${BASE_URL}/orders/${id}`, { method: 'DELETE', credentials: 'include' });
             if (!res.ok) throw new Error('Failed');
             allOrders = allOrders.filter(o => o.id !== id);
             renderStats();
@@ -422,10 +406,7 @@
     async function deleteReservation(id) {
         if (!confirm('Delete this reservation? This cannot be undone.')) return;
         try {
-            const res = await fetch(`${BASE_URL}/reservations/${id}`, {
-                method: 'DELETE',
-                credentials: 'include'
-            });
+            const res = await fetch(`${BASE_URL}/reservations/${id}`, { method: 'DELETE', credentials: 'include' });
             if (!res.ok) throw new Error('Failed');
             allReservations = allReservations.filter(r => r.id !== id);
             renderStats();
@@ -452,10 +433,6 @@
     fetchOrders();
     fetchReservations();
     setInterval(refreshAll, 30000);
-
-    document.querySelector('.nav-item:last-child').addEventListener('click', () => {
-        setTimeout(renderMenuStats, 100);
-    });
 </script>
 </body>
 </html>
