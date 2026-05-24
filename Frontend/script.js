@@ -477,3 +477,114 @@ function showToast(msg) {
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 2000);
 }
+
+// ── RESERVATION ───────────────────────────────────────────
+let resSelectedGuests = '';
+
+function openReservationModal() {
+  // Pre-fill name if user is logged in
+  if (currentUser) {
+    const nameInput = document.getElementById('res-name');
+    if (nameInput && !nameInput.value) nameInput.value = currentUser.username;
+  }
+  // Set minimum date to today
+  const today = new Date().toISOString().split('T')[0];
+  const dateInput = document.getElementById('res-date');
+  if (dateInput) dateInput.min = today;
+
+  // Reset to form view
+  document.getElementById('res-form-view').style.display = 'block';
+  document.getElementById('res-success-view').style.display = 'none';
+
+  document.getElementById('reservation-modal').classList.add('active');
+}
+
+function closeReservationModal() {
+  document.getElementById('reservation-modal').classList.remove('active');
+  // Reset form
+  document.getElementById('res-name').value = '';
+  document.getElementById('res-phone').value = '';
+  document.getElementById('res-date').value = '';
+  document.getElementById('res-time').value = '';
+  document.getElementById('res-notes').value = '';
+  document.querySelectorAll('.res-guest-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.res-tag').forEach(b => b.classList.remove('active'));
+  resSelectedGuests = '';
+}
+
+function setResGuests(el, val) {
+  document.querySelectorAll('.res-guest-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  resSelectedGuests = val;
+}
+
+function toggleResTag(el) {
+  el.classList.toggle('active');
+}
+
+async function submitReservation() {
+  const name = document.getElementById('res-name').value.trim();
+  const phone = document.getElementById('res-phone').value.trim();
+  const date = document.getElementById('res-date').value;
+  const time = document.getElementById('res-time').value;
+  const notes = document.getElementById('res-notes').value.trim();
+  const occasion = [...document.querySelectorAll('.res-tag.active')].map(t => t.textContent.trim()).join(', ');
+
+  if (!name || !phone || !date || !time || !resSelectedGuests) {
+    showToast('Please fill in all required fields & select guests');
+    return;
+  }
+
+  const confirmBtn = document.querySelector('.res-btn-confirm');
+  confirmBtn.textContent = 'SENDING...';
+  confirmBtn.disabled = true;
+
+  try {
+    const res = await fetch('/reservation', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({
+        name,
+        phone,
+        date,
+        time,
+        guests: resSelectedGuests,
+        occasion,
+        notes
+      })
+    });
+
+    if (res.ok) {
+      // Earn +5 pts for logged-in users
+      if (currentUser) {
+        await addPoints(5);
+        await fetchPoints();
+      }
+
+      // Show confirmation number
+      const resNum = 'RES-' + Math.floor(1000 + Math.random() * 9000);
+      const d = new Date(date);
+      const dStr = d.toLocaleDateString('en-PH', { weekday: 'short', month: 'short', day: 'numeric' });
+
+      document.getElementById('res-confirm-num').textContent = resNum;
+      document.getElementById('res-confirm-detail').textContent =
+        `${dStr} · ${time} · ${resSelectedGuests} guest${resSelectedGuests === '1' ? '' : 's'}${occasion ? ' · ' + occasion : ''}`;
+
+      document.getElementById('res-form-view').style.display = 'none';
+      document.getElementById('res-success-view').style.display = 'block';
+
+      showToast('Reservation confirmed! 🎉');
+    } else {
+      const data = await res.json();
+      showToast('Reservation failed: ' + (data.message || 'Please try again'));
+      confirmBtn.textContent = 'CONFIRM RESERVATION';
+      confirmBtn.disabled = false;
+    }
+  } catch (err) {
+    console.error('Reservation error:', err);
+    showToast('Connection failed. Is the server running?');
+    confirmBtn.textContent = 'CONFIRM RESERVATION';
+    confirmBtn.disabled = false;
+  }
+}
