@@ -4,14 +4,16 @@ const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const jwt = require('jsonwebtoken'); 
 
 const { pool } = require('./src/database/db');
 const authRouter = require('./src/routes/authRoute');
 const cartRouter = require('./src/routes/cartRoutes');
 
 const app = express();
+const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 
-// MIDDLEWARE
+// ─── MIDDLEWARE ───────────────────────────────────────────────────────────────
 app.use(cors({
     origin: ['http://localhost:5500', 'http://127.0.0.1:5500'],
     credentials: true
@@ -22,7 +24,61 @@ app.use(cookieParser());
 // SERVE STATIC FRONTEND FILES
 app.use(express.static(path.join(__dirname, '..', 'Frontend')));
 
-// ROUTES
+// ─── SECURITY MIDDLEWARE FUNCTIONS (BULLETPROOF COOKIE + HEADER DETECTION) ───
+function verifyToken(req, res, next) {
+    let token = null;
+
+    // 1. Check for token in the standard Authorization Header
+    const authHeader = req.headers['authorization'];
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+        token = authHeader.split(' ')[1];
+    } 
+    
+    // 2. Check standard browser cookies
+    if (!token && req.cookies) {
+        token = req.cookies.token || req.cookies.jwt || req.cookies.session;
+    }
+
+    // 3. Check SIGNED browser cookies (In case your cookies are encrypted)
+    if (!token && req.signedCookies) {
+        token = req.signedCookies.token || req.signedCookies.jwt || req.signedCookies.session;
+    }
+
+    // 4. Emergency Scan: Loop over every cookie to find a valid JWT format ('eyJ...')
+    if (!token) {
+        const allCookies = { ...(req.cookies || {}), ...(req.signedCookies || {}) };
+        for (const name in allCookies) {
+            const val = allCookies[name];
+            if (typeof val === 'string' && val.startsWith('eyJ')) {
+                token = val;
+                break;
+            }
+        }
+    }
+
+    // Process token validation if found
+    if (token) {
+        jwt.verify(token, JWT_SECRET, (err, decodedPayload) => {
+            if (err) {
+                return res.status(403).json({ message: 'Forbidden: Invalid or expired session token.' });
+            }
+            req.user = decodedPayload; 
+            next();
+        });
+    } else {
+        return res.status(401).json({ message: 'Unauthorized: Missing or malformed access token.' });
+    }
+}
+
+function requireAdmin(req, res, next) {
+    if (req.user && req.user.role === 'admin') {
+        next();
+    } else {
+        return res.status(403).json({ message: 'Access Denied: Administrative access privileges required.' });
+    }
+}
+
+// ─── ROUTER ATTACHMENTS ───────────────────────────────────────────────────────
 app.use('/auth', authRouter);
 app.use('/cart', cartRouter);
 
@@ -54,7 +110,7 @@ app.post('/reservation', async (req, res) => {
     }
 });
 
-app.get('/reservations/all', async (req, res) => {
+app.get('/reservations/all', verifyToken, requireAdmin, async (req, res) => {
     try {
         const result = await pool.query(
             `SELECT * FROM reservations ORDER BY reservation_date ASC, reservation_time ASC`
@@ -66,7 +122,7 @@ app.get('/reservations/all', async (req, res) => {
     }
 });
 
-app.delete('/reservations/:id', async (req, res) => {
+app.delete('/reservations/:id', verifyToken, requireAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         await pool.query(`DELETE FROM reservations WHERE id = $1`, [id]);
@@ -95,7 +151,7 @@ app.post('/orders', async (req, res) => {
     }
 });
 
-app.get('/orders/all', async (req, res) => {
+app.get('/orders/all', verifyToken, requireAdmin, async (req, res) => {
     try {
         const result = await pool.query(`SELECT * FROM orders ORDER BY created_at DESC`);
         res.json({ orders: result.rows });
@@ -105,7 +161,7 @@ app.get('/orders/all', async (req, res) => {
     }
 });
 
-app.patch('/orders/:id/status', async (req, res) => {
+app.patch('/orders/:id/status', verifyToken, requireAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         const { status } = req.body;
@@ -117,7 +173,7 @@ app.patch('/orders/:id/status', async (req, res) => {
     }
 });
 
-app.delete('/orders/:id', async (req, res) => {
+app.delete('/orders/:id', verifyToken, requireAdmin, async (req, res) => {
     try {
         const { id } = req.params;
         await pool.query(`DELETE FROM orders WHERE id = $1`, [id]);
@@ -130,9 +186,14 @@ app.delete('/orders/:id', async (req, res) => {
 
 // ─── POINTS ───────────────────────────────────────────────────────────────────
 
-app.get('/points/:username', async (req, res) => {
+app.get('/points/:username', verifyToken, async (req, res) => {
     try {
         const { username } = req.params;
+
+        if (req.user.role !== 'admin' && req.user.username.toLowerCase() !== username.toLowerCase()) {
+            return res.status(403).json({ message: "Forbidden: You cannot view point tracking balances for other accounts." });
+        }
+
         const result = await pool.query(`SELECT points FROM users WHERE username = $1`, [username]);
         if (result.rows.length === 0) return res.status(404).json({ points: 0 });
         res.json({ points: result.rows[0].points || 0 });
@@ -142,9 +203,14 @@ app.get('/points/:username', async (req, res) => {
     }
 });
 
-app.post('/points/add', async (req, res) => {
+app.post('/points/add', verifyToken, async (req, res) => {
     try {
         const { username, points } = req.body;
+
+        if (req.user.role !== 'admin' && req.user.username.toLowerCase() !== username.toLowerCase()) {
+            return res.status(403).json({ message: "Forbidden: Modifying points data logs on alternate profiles is restricted." });
+        }
+
         const result = await pool.query(
             `UPDATE users SET points = COALESCE(points, 0) + $1 WHERE username = $2 RETURNING points`,
             [points, username]
