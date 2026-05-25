@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: require('path').join(__dirname, '.env') });
 
 const express = require('express');
 const cors = require('cors');
@@ -244,9 +244,19 @@ app.get('*path', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 });
 
-// START SERVER
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+// ─── GLOBAL ERROR HANDLER (always return JSON, never HTML) ────────────────────
+app.use((err, req, res, next) => {
+    console.error('Unhandled error:', err);
+    res.status(err.status || 500).json({
+        message: err.message || 'Internal server error'
+    });
 });
+
+// START SERVER (only when not running as a Vercel serverless function)
+if (!process.env.VERCEL) {
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+    });
+}
 module.exports = app;
