@@ -37,7 +37,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // SERVE STATIC FRONTEND FILES
-app.use(express.static(path.join(__dirname, '..', 'Frontend')));
+app.use(express.static(path.join(__dirname, '..', 'public')));
 
 // ─── SECURITY MIDDLEWARE FUNCTIONS (BULLETPROOF COOKIE + HEADER DETECTION) ───
 function verifyToken(req, res, next) {
@@ -241,7 +241,7 @@ app.post('/points/add', verifyToken, async (req, res) => {
 // ─── FALLBACK ─────────────────────────────────────────────────────────────────
 
 app.get('*path', (req, res) => {
-    res.sendFile(path.join(__dirname, '..', 'Frontend', 'index.html'));
+    res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 });
 
 // START SERVER
