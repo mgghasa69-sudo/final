@@ -6,10 +6,19 @@ const pool = new Pool({
     connectionString: process.env.DATABASE_URL
 });
 
-const supabase = createClient(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_KEY
-);
+let supabase = null;
+if (process.env.SUPABASE_URL && process.env.SUPABASE_KEY) {
+    try {
+        supabase = createClient(
+            process.env.SUPABASE_URL,
+            process.env.SUPABASE_KEY
+        );
+    } catch (err) {
+        console.error("Failed to initialize Supabase client:", err.message);
+    }
+} else {
+    console.warn("WARNING: Supabase URL or Key is missing from environment variables.");
+}
 
 pool.on('connect', () => console.log('DB pool connected'));
 pool.on('error', (err) => console.error('DB error:', err.message));
