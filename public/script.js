@@ -110,12 +110,13 @@ document.addEventListener("DOMContentLoaded", () => {
   renderMenu();
 });
 
-// ── AUTH (localStorage-based, no backend needed) ──────────
+// ── AUTH (localStorage-based with Supabase sync) ──────────
 async function initUser() {
   const saved = lsGetUser();
   if (saved) {
     currentUser = saved;
     currentPoints = lsGetPoints();
+    await fetchPoints();
   } else {
     currentUser = null;
     currentPoints = 0;
@@ -151,10 +152,21 @@ function renderUserArea() {
     `;
 }
 
-function fetchPoints() {
-  // Points are stored locally — just read from localStorage
+async function fetchPoints() {
   if (!currentUser) return;
-  currentPoints = lsGetPoints();
+  try {
+    const response = await fetch(`/points/${currentUser.username}`);
+    if (response.ok) {
+      const data = await response.json();
+      currentPoints = data.points || 0;
+      lsSetPoints(currentPoints);
+    } else {
+      currentPoints = lsGetPoints();
+    }
+  } catch (e) {
+    console.warn("Could not fetch points from backend, falling back to local storage:", e);
+    currentPoints = lsGetPoints();
+  }
   updatePointsDisplay(currentPoints);
   updateRedeemButton();
 }
@@ -175,20 +187,70 @@ function logout() {
   showToast('Signed out successfully');
 }
 
-// ── POINTS (localStorage-based, no backend needed) ────────
+// ── POINTS (Supabase-synchronized with local fallback) ────
 async function addPoints(pointsToAdd) {
   if (!currentUser) return 0;
+  
+  // Update local storage first for instant feedback
   currentPoints = lsGetPoints() + pointsToAdd;
   lsSetPoints(currentPoints);
   updatePointsDisplay(currentPoints);
+  
+  // Persist to backend Supabase
+  try {
+    const response = await fetch('/points/add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: currentUser.username,
+        points: pointsToAdd
+      })
+    });
+    if (response.ok) {
+      const data = await response.json();
+      if (data.success) {
+        currentPoints = data.totalPoints;
+        lsSetPoints(currentPoints);
+        updatePointsDisplay(currentPoints);
+      }
+    }
+  } catch (err) {
+    console.error('Failed to sync added points to database:', err);
+  }
+  
   return currentPoints;
 }
 
 async function deductPoints(pointsToDeduct) {
   if (!currentUser) return 0;
+  
+  // Update local storage first
   currentPoints = Math.max(0, lsGetPoints() - pointsToDeduct);
   lsSetPoints(currentPoints);
   updatePointsDisplay(currentPoints);
+  
+  // Persist to backend Supabase (negative value)
+  try {
+    const response = await fetch('/points/add', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: currentUser.username,
+        points: -pointsToDeduct
+      })
+    });
+    if (response.ok) {
+      const data = await response.json();
+      if (data.success) {
+        currentPoints = data.totalPoints;
+        lsSetPoints(currentPoints);
+        updatePointsDisplay(currentPoints);
+      }
+    }
+  } catch (err) {
+    console.error('Failed to sync deducted points to database:', err);
+  }
+  
   return currentPoints;
 }
 
@@ -372,35 +434,60 @@ function updatePrices(subtotal) {
   }
 }
 
-// ── CHECKOUT (no backend — works fully offline) ───────────
+// ── CHECKOUT (Supabase-integrated with offline fallback) ──
 async function checkout() {
   const subtotal = cart.reduce((s, i) => s + i.price * i.quantity, 0);
   const vat = subtotal * 0.12;
   const beforeDiscount = parseFloat((subtotal + vat).toFixed(2));
   const totalAmount = parseFloat(Math.max(0, beforeDiscount - pointsDiscount).toFixed(2));
-  const randomOrderNum = Math.floor(Math.random() * 90) + 10;
 
   const btn = document.getElementById('checkout-btn');
   btn.disabled = true;
   btn.innerText = 'Placing Order...';
 
-  // Simulate a brief processing delay for realism
-  await new Promise(resolve => setTimeout(resolve, 800));
-
   try {
+    let orderId = Math.floor(Math.random() * 90000) + 10000;
+
+    // Send order to backend database
+    try {
+      const response = await fetch('/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customer_name: currentUser ? currentUser.username : 'Guest',
+          customer_email: currentUser ? (currentUser.email || '') : '',
+          items: cart,
+          total: totalAmount,
+          notes: '',
+          order_type: dineMode ? dineMode.toLowerCase() : 'dine-in'
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        if (data.order && data.order.id) {
+          orderId = data.order.id;
+        }
+      } else {
+        console.warn('Backend order placement returned non-ok response, using offline fallback');
+      }
+    } catch (apiErr) {
+      console.error('Failed to place order on backend, using offline fallback:', apiErr);
+    }
+
     // Deduct redeemed points
     if (currentUser && pointsDiscount > 0) {
       await deductPoints(pointsDiscount);
     }
 
-    document.getElementById('modal-num').innerText = randomOrderNum;
+    document.getElementById('modal-num').innerText = orderId;
 
     if (currentUser) {
       const earned = Math.floor(totalAmount / 50);
       if (earned > 0) {
         await addPoints(earned);
       }
-      fetchPoints();
+      await fetchPoints();
       document.getElementById('pts-earned-text').innerText = earned > 0 ? `+${earned} pts earned!` : 'Points redeemed this order';
       document.getElementById('pts-total-text').innerText = currentPoints;
       document.getElementById('points-earned').style.display = 'block';
@@ -511,14 +598,33 @@ async function submitReservation() {
   confirmBtn.textContent = 'SENDING...';
   confirmBtn.disabled = true;
 
-  // Simulate processing delay
-  await new Promise(resolve => setTimeout(resolve, 700));
-
   try {
+    // Send reservation to backend database
+    try {
+      const response = await fetch('/reservation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          phone,
+          date,
+          time,
+          guests: resSelectedGuests,
+          occasion,
+          notes
+        })
+      });
+      if (!response.ok) {
+        console.warn('Backend reservation returned non-ok status');
+      }
+    } catch (apiErr) {
+      console.error('Failed to submit reservation to backend:', apiErr);
+    }
+
     // Earn +5 pts for logged-in users
     if (currentUser) {
       await addPoints(5);
-      fetchPoints();
+      await fetchPoints();
     }
 
     const resNum = 'RES-' + Math.floor(1000 + Math.random() * 9000);
