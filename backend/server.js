@@ -14,13 +14,23 @@ const app = express();
 const JWT_SECRET = process.env.JWT_SECRET || 'your_jwt_secret_key';
 
 // ─── MIDDLEWARE ───────────────────────────────────────────────────────────────
-// ─── MIDDLEWARE UPDATE ───────────────────────────────────────────────────────────────
 app.use(cors({
-    origin: [
-        'http://localhost:5500', 
-        'http://127.0.0.1:5500', 
-        'https://final-git-main-quickbite-s-projects.vercel.app/' // 👈 ADD YOUR LIVE VERCEL URL HERE
-    ],
+    origin: function (origin, callback) {
+        const allowed = [
+            'http://localhost:5500',
+            'http://127.0.0.1:5500',
+            'http://localhost:5000',
+            'http://localhost:3000',
+            'https://final-git-main-quickbite-s-projects.vercel.app'
+        ];
+        // Allow requests with no origin (same-origin, Postman, server-side)
+        // or any *.vercel.app domain for preview deployments
+        if (!origin || allowed.includes(origin) || /\.vercel\.app$/.test(origin)) {
+            callback(null, true);
+        } else {
+            callback(null, true); // Allow all for now during development
+        }
+    },
     credentials: true
 }));
 app.use(express.json());
