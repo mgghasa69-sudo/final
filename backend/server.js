@@ -290,7 +290,7 @@ app.post('/points/add', verifyToken, async (req, res) => {
 });
 
 // ─── FALLBACK ─────────────────────────────────────────────────────────────────
-app.get('*', (req, res) => {
+app.get('/{*path}', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
 });
 
