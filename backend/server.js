@@ -36,6 +36,16 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
+// ─── VERCEL PATH RESTORE ──────────────────────────────────────────────────────
+// Vercel rewrites change req.url to the destination (/api/index.js).
+// We pass the original path via ?route= query param and restore it here.
+app.use((req, res, next) => {
+    if (req.query.route) {
+        req.url = req.query.route;
+    }
+    next();
+});
+
 // SERVE STATIC FRONTEND FILES
 app.use(express.static(path.join(__dirname, '..', 'public')));
 

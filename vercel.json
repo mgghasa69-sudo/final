@@ -1,12 +1,17 @@
 {
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/auth(.*)", "destination": "/api/index.js" },
-    { "source": "/cart(.*)", "destination": "/api/index.js" },
-    { "source": "/db-test", "destination": "/api/index.js" },
-    { "source": "/reservation(.*)", "destination": "/api/index.js" },
-    { "source": "/order(.*)", "destination": "/api/index.js" },
-    { "source": "/points(.*)", "destination": "/api/index.js" },
+    { "source": "/auth/:path*", "destination": "/api/index.js?route=/auth/:path*" },
+    { "source": "/cart/:path*", "destination": "/api/index.js?route=/cart/:path*" },
+    { "source": "/cart", "destination": "/api/index.js?route=/cart" },
+    { "source": "/db-test", "destination": "/api/index.js?route=/db-test" },
+    { "source": "/reservation/:path*", "destination": "/api/index.js?route=/reservation/:path*" },
+    { "source": "/reservation", "destination": "/api/index.js?route=/reservation" },
+    { "source": "/reservations/:path*", "destination": "/api/index.js?route=/reservations/:path*" },
+    { "source": "/order/:path*", "destination": "/api/index.js?route=/order/:path*" },
+    { "source": "/orders/:path*", "destination": "/api/index.js?route=/orders/:path*" },
+    { "source": "/orders", "destination": "/api/index.js?route=/orders" },
+    { "source": "/points/:path*", "destination": "/api/index.js?route=/points/:path*" },
     { "source": "/", "destination": "/home.html" }
   ]
 }
