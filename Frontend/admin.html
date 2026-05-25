@@ -160,7 +160,7 @@
 </main>
 
 <script>
-    const BASE_URL = '';
+    const BASE_URL = (window.location.port === '5500' || window.location.port === '3000') ? 'http://localhost:5000' : '';
 
     let allOrders = [];
     let allReservations = [];

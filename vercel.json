@@ -1,0 +1,13 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/auth:path*", "destination": "/api/index.js" },
+    { "source": "/cart:path*", "destination": "/api/index.js" },
+    { "source": "/db-test", "destination": "/api/index.js" },
+    { "source": "/reservation:path*", "destination": "/api/index.js" },
+    { "source": "/order:path*", "destination": "/api/index.js" },
+    { "source": "/points:path*", "destination": "/api/index.js" },
+    { "source": "/", "destination": "/Frontend/home.html" },
+    { "source": "/:path*", "destination": "/Frontend/:path*" }
+  ]
+}

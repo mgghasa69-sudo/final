@@ -856,7 +856,7 @@ footer {
   </a>
   <div class="nav-links">
     <a href="home.html" class="nav-link active">Home</a>
-    <a href="index.html" class="nav-link">Kiosk</a>
+    <a href="index.html" class="nav-link">Menu</a>
     <a href="#reservation" class="nav-link">Reserve</a>
   </div>
   <div class="nav-user" id="nav-user">
@@ -869,7 +869,7 @@ footer {
   <div class="hero-content">
     <div class="hero-badge">🔥 Now Open — Dine In & Take Out</div>
     <h1>Taste The<br><span>Bold</span><br>Side of Fast</h1>
-    <p class="hero-sub">Smash burgers, crispy chicken, rice meals & more — served fast, made fresh. Order at our kiosk or reserve your table today.</p>
+    <p class="hero-sub">Smash burgers, crispy chicken, rice meals & more — served fast, made fresh. Order from our menu or reserve your table today.</p>
     <div class="hero-actions">
       <a href="index.html" class="btn-hero btn-hero-primary">🍔 Order Now</a>
       <a href="#reservation" class="btn-hero btn-hero-secondary">📅 Book Table</a>
@@ -898,7 +898,7 @@ footer {
     <div class="feature-card">
       <div class="feature-icon">📱</div>
       <div class="feature-title">Easy Ordering</div>
-      <div class="feature-desc">Walk up to our self-service kiosk and tap your way to a perfect meal in seconds.</div>
+      <div class="feature-desc">Browse our interactive self-service menu and tap your way to a perfect meal in seconds.</div>
     </div>
     <div class="feature-card">
       <div class="feature-icon">💰</div>
@@ -1077,7 +1077,7 @@ async function checkSession() {
       
       navUser.innerHTML = `
         <span class="nav-username">👤 ${user.username}</span>
-        <button class="btn-nav btn-kiosk" onclick="window.location.href='index.html'">🍔 Kiosk</button>
+        <button class="btn-nav btn-kiosk" onclick="window.location.href='index.html'">🍔 Menu</button>
         <button class="btn-nav btn-logout" onclick="logout()">Logout</button>
       `;
       document.getElementById('reservation').style.display = 'block';
@@ -1100,7 +1100,7 @@ async function checkSession() {
     if (user) {
       navUser.innerHTML = `
         <span class="nav-username">👤 ${user.username}</span>
-        <button class="btn-nav btn-kiosk" onclick="window.location.href='index.html'">🍔 Kiosk</button>
+        <button class="btn-nav btn-kiosk" onclick="window.location.href='index.html'">🍔 Menu</button>
         <button class="btn-nav btn-logout" onclick="logout()">Logout</button>
       `;
       document.getElementById('reservation').style.display = 'block';
