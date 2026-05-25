@@ -72,7 +72,7 @@ let pointsDiscount = 0;
 
 // ── LOCAL STORAGE HELPERS (replaces broken backend) ───────
 const LS_POINTS_KEY = 'qb_guest_points';
-const LS_USER_KEY = 'qb_guest_user';
+const LS_USER_KEY = 'user';
 
 function lsGetPoints() {
   return parseInt(localStorage.getItem(LS_POINTS_KEY) || '0', 10);
@@ -97,6 +97,9 @@ function lsSetUser(user) {
 function lsClearUser() {
   localStorage.removeItem(LS_USER_KEY);
   localStorage.removeItem(LS_POINTS_KEY);
+  localStorage.removeItem('isAdmin');
+  localStorage.removeItem('adminEmail');
+  localStorage.removeItem('role');
 }
 
 // ── BOOT ──────────────────────────────────────────────────
@@ -127,7 +130,7 @@ function renderUserArea() {
 
   if (!currentUser) {
     area.innerHTML = `
-        <button class="btn-login-redirect" onclick="showGuestSignIn()">Sign In</button>
+        <button class="btn-login-redirect" onclick="window.location.href='login.html'">Sign In</button>
       `;
     return;
   }
@@ -146,20 +149,6 @@ function renderUserArea() {
         <button class="topbar-logout-btn" onclick="logout()">Sign Out</button>
       </div>
     `;
-}
-
-// Simple guest sign-in prompt (no backend required)
-function showGuestSignIn() {
-  const name = prompt('Enter your name to earn & track points:');
-  if (!name || !name.trim()) return;
-  const username = name.trim();
-  currentUser = { id: username.toLowerCase(), username };
-  lsSetUser(currentUser);
-  currentPoints = lsGetPoints();
-  renderUserArea();
-  updatePointsDisplay(currentPoints);
-  updateRedeemButton();
-  showToast(`Welcome, ${username}! 🎉`);
 }
 
 function fetchPoints() {
@@ -421,6 +410,10 @@ async function checkout() {
 
     redeemActive = false;
     pointsDiscount = 0;
+
+    // Reset button before showing modal
+    btn.disabled = false;
+    btn.innerText = 'Place Order →';
 
     document.getElementById('modal').classList.add('active');
 
