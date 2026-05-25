@@ -125,7 +125,7 @@
   async function fetchPoints() {
     if (!currentUser) return;
     try {
-      const res = await fetch(`http://localhost:5000/points/${currentUser.username}`, {
+      const res = await fetch(`/points/${currentUser.username}`, {
         credentials: 'include'
       });
       if (!res.ok) return;

@@ -3,274 +3,341 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>QuickBite — Login</title>
+  <title>QuickBite — Sign In</title>
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'self' http://localhost:5000 http://127.0.0.1:5500 http://127.0.0.1:5000 http://localhost:3000 ws://127.0.0.1:5500 ws://localhost:5500; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-    :root{
-      --red:#DA1B1B;
-      --red-dark:#B01515;
-      --red-light:#FF3B3B;
-      --yellow:#FFC107;
-      --bg:#1A1A1A;
-      --surface:#242424;
-      --surface2:#2E2E2E;
-      --surface3:#383838;
-      --border:#3A3A3A;
-      --text:#FFFFFF;
-      --text-muted:#A0A0A0;
-      --green:#2ECC71;
-      --radius:14px;
-      --radius-sm:8px;
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    html,body{
-      height:100%;
-      font-family:'Barlow',sans-serif;
-      background:var(--bg);
-      color:var(--text);
-    }
-    body{
-      display:flex;
-      flex-direction:column;
-      min-height:100vh;
-    }
-
-    /* TOP BAR */
-    .topbar{
-      background:var(--red);
-      height:70px;
-      display:flex;align-items:center;
-      padding:0 2rem;
-      flex-shrink:0;
-      position:relative;
-      box-shadow:0 4px 20px rgba(0,0,0,0.5);
-    }
-    .topbar::after{
-      content:'';position:absolute;bottom:0;left:0;right:0;
-      height:3px;background:var(--yellow);
-    }
-    .brand{display:flex;align-items:center;gap:12px;}
-    .brand-logo{
-      width:44px;height:44px;border-radius:50%;
-      background:var(--yellow);
-      display:flex;align-items:center;justify-content:center;
-      font-size:1.6rem;font-weight:900;color:var(--red-dark);
-      font-family:'Barlow Condensed',sans-serif;
-      box-shadow:0 2px 12px rgba(0,0,0,0.3);
-    }
-    .brand-name{
-      font-family:'Barlow Condensed',sans-serif;
-      font-size:2rem;font-weight:900;
-      color:#fff;letter-spacing:0.04em;
-      text-transform:uppercase;
-    }
-    .brand-name span{color:var(--yellow);}
-
-    /* MAIN */
-    .page{
-      flex:1;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:2rem;
-      background:
-        radial-gradient(ellipse at 20% 50%, rgba(218,27,27,0.08) 0%, transparent 60%),
-        radial-gradient(ellipse at 80% 50%, rgba(255,193,7,0.05) 0%, transparent 60%),
-        var(--bg);
+    
+    :root {
+      --bg: #090a0f;
+      --bg-gradient: radial-gradient(circle at 50% 50%, #161722 0%, #090a0f 100%);
+      --surface: rgba(22, 23, 30, 0.75);
+      --surface2: rgba(30, 32, 45, 0.6);
+      --surface3: rgba(45, 48, 64, 0.7);
+      --border: rgba(255, 255, 255, 0.08);
+      --primary: #ff4747;
+      --primary-hover: #ff5e62;
+      --primary-glow: rgba(255, 71, 71, 0.35);
+      --primary-gradient: linear-gradient(135deg, #ff5e62 0%, #ff2a2a 100%);
+      --secondary: #ffb703;
+      --secondary-gradient: linear-gradient(135deg, #ffb703 0%, #fb8500 100%);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --green: #06d6a0;
+      --radius: 20px;
+      --radius-sm: 10px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* CARD */
-    .card{
-      background:var(--surface);
-      border:1.5px solid var(--border);
-      border-radius:calc(var(--radius)*1.5);
-      width:100%;max-width:420px;
-      overflow:hidden;
-      box-shadow:0 24px 80px rgba(0,0,0,0.6);
+    html, body {
+      height: 100%;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      background-image: var(--bg-gradient);
+      color: var(--text);
+      overflow: hidden;
+      position: relative;
     }
-    .card-top{
-      background:var(--red);
-      padding:28px 24px 24px;
-      text-align:center;
-      position:relative;
+    
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
-    .card-top::after{
-      content:'';position:absolute;bottom:0;left:0;right:0;
-      height:3px;background:var(--yellow);
+
+    /* Ambient glows */
+    body::before, body::after {
+      content: '';
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      filter: blur(120px);
+      z-index: 0;
+      opacity: 0.15;
+      pointer-events: none;
     }
-    .card-logo{
-      width:60px;height:60px;border-radius:50%;
-      background:var(--yellow);
-      display:flex;align-items:center;justify-content:center;
-      font-size:2rem;font-weight:900;color:var(--red-dark);
-      font-family:'Barlow Condensed',sans-serif;
-      margin:0 auto 12px;
-      box-shadow:0 4px 16px rgba(0,0,0,0.3);
+
+    body::before {
+      top: -50px;
+      left: -50px;
+      background: var(--primary);
     }
-    .card-title{
-      font-family:'Barlow Condensed',sans-serif;
-      font-size:2rem;font-weight:900;
-      color:#fff;text-transform:uppercase;
-      letter-spacing:0.06em;
+
+    body::after {
+      bottom: -50px;
+      right: -50px;
+      background: var(--secondary);
     }
-    .card-title span{color:var(--yellow);}
-    .card-subtitle{
-      font-size:0.85rem;
-      color:rgba(255,255,255,0.7);
-      margin-top:4px;
+
+    /* CARD CONTAINER */
+    .card {
+      background: var(--surface);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      width: 100%;
+      max-width: 440px;
+      overflow: hidden;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+      position: relative;
+      z-index: 10;
+      animation: cardEnter 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes cardEnter {
+      from { transform: scale(0.9) translateY(40px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--secondary-gradient);
+    }
+
+    .card-top {
+      padding: 40px 30px 24px;
+      text-align: center;
+    }
+
+    .card-logo {
+      width: 54px;
+      height: 54px;
+      border-radius: 14px;
+      background: var(--secondary-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #0b0c10;
+      font-family: 'Outfit', sans-serif;
+      margin: 0 auto 16px;
+      box-shadow: 0 4px 15px rgba(255, 183, 3, 0.4);
+    }
+
+    .card-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+
+    .card-title span {
+      background: var(--secondary-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .card-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 6px;
     }
 
     /* TABS */
-    .tabs{
-      display:flex;
-      border-bottom:1px solid var(--border);
-      background:var(--surface2);
+    .tabs {
+      display: flex;
+      border-bottom: 1.5px solid var(--border);
+      background: rgba(14, 15, 23, 0.4);
     }
-    .tab{
-      flex:1;padding:14px;
-      text-align:center;cursor:pointer;
-      font-family:'Barlow Condensed',sans-serif;
-      font-size:1.1rem;font-weight:700;
-      color:var(--text-muted);
-      text-transform:uppercase;letter-spacing:0.06em;
-      border-bottom:3px solid transparent;
-      transition:all 0.2s;
+
+    .tab {
+      flex: 1;
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 3px solid transparent;
+      transition: var(--transition);
     }
-    .tab:hover{color:#fff;background:var(--surface3);}
-    .tab.active{
-      color:var(--yellow);
-      border-bottom-color:var(--yellow);
-      background:var(--surface);
+
+    .tab:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .tab.active {
+      color: var(--secondary);
+      border-bottom-color: var(--secondary);
+      background: transparent;
     }
 
     /* FORM BODY */
-    .card-body{padding:24px;}
-    .form-group{display:flex;flex-direction:column;gap:12px;}
-
-    .input-wrap{position:relative;}
-    .input-wrap input{
-      width:100%;
-      padding:14px 16px;
-      background:var(--surface2);
-      border:1.5px solid var(--border);
-      border-radius:var(--radius-sm);
-      color:#fff;
-      font-family:'Barlow',sans-serif;
-      font-size:0.95rem;
-      transition:border-color 0.2s,box-shadow 0.2s;
-      outline:none;
-    }
-    .input-wrap input::placeholder{color:var(--text-muted);}
-    .input-wrap input:focus{
-      border-color:var(--yellow);
-      box-shadow:0 0 0 3px rgba(255,193,7,0.12);
+    .card-body {
+      padding: 30px;
     }
 
-    .btn-submit{
-      width:100%;margin-top:4px;
-      background:var(--yellow);color:#1A1A1A;
-      border:none;border-radius:var(--radius);
-      padding:16px;
-      font-family:'Barlow Condensed',sans-serif;
-      font-size:1.3rem;font-weight:900;
-      letter-spacing:0.06em;text-transform:uppercase;
-      cursor:pointer;
-      box-shadow:0 4px 16px rgba(255,193,7,0.35);
-      transition:transform 0.15s,box-shadow 0.2s,background 0.15s;
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
-    .btn-submit:hover{background:#FFD740;box-shadow:0 6px 24px rgba(255,193,7,0.5);}
-    .btn-submit:active{transform:scale(0.97);}
 
-    .message{
-      text-align:center;
-      margin-top:12px;
-      font-size:0.85rem;
-      font-weight:600;
-      color:var(--red-light);
-      min-height:20px;
+    .input-wrap {
+      position: relative;
     }
-    .message.success{color:var(--green);}
 
-    .hidden{display:none;}
+    .input-wrap input {
+      width: 100%;
+      padding: 14px 18px;
+      background: rgba(9, 10, 15, 0.6);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.95rem;
+      transition: var(--transition);
+      outline: none;
+    }
 
-    /* BOTTOM STRIP */
-    .card-strip{
-      height:8px;
-      background:repeating-linear-gradient(
-        90deg,var(--red) 0,var(--red) 20px,var(--yellow) 20px,var(--yellow) 40px
-      );
+    .input-wrap input::placeholder {
+      color: var(--text-dim);
+    }
+
+    .input-wrap input:focus {
+      border-color: var(--secondary);
+      box-shadow: 0 0 10px rgba(255, 183, 3, 0.2);
+    }
+
+    .btn-submit {
+      width: 100%;
+      margin-top: 10px;
+      background: var(--secondary-gradient);
+      color: #0b0c10;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 4px 15px var(--secondary-glow);
+      transition: var(--transition);
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px var(--secondary-glow);
+    }
+
+    .btn-submit:active {
+      transform: scale(0.98);
+    }
+
+    .message {
+      text-align: center;
+      margin-top: 16px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--primary-hover);
+      min-height: 20px;
+    }
+
+    .message.success {
+      color: var(--green);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .back-btn {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: var(--transition-fast);
+      z-index: 10;
+    }
+
+    .back-btn:hover {
+      color: #fff;
     }
   </style>
 </head>
 <body>
 
-  <!-- TOP BAR -->
-  <div class="topbar">
-    <div class="brand">
-      <div class="brand-logo">QB</div>
-      <div class="brand-name">Quick<span>Bite</span></div>
+  <!-- BACK TO HOME -->
+  <a href="home.html" class="back-btn">← Back to Home</a>
+
+  <!-- CARD -->
+  <div class="card">
+
+    <!-- CARD TOP -->
+    <div class="card-top">
+      <div class="card-logo">QB</div>
+      <div class="card-title">Quick<span>Bite</span></div>
+      <div class="card-subtitle">Unlock custom table bookings & earn points</div>
     </div>
-  </div>
 
-  <!-- PAGE -->
-  <div class="page">
-    <div class="card">
+    <!-- TABS -->
+    <div class="tabs">
+      <div class="tab active" id="loginTab" onclick="switchTab('login')">Login</div>
+      <div class="tab" id="registerTab" onclick="switchTab('register')">Register</div>
+    </div>
 
-      <!-- CARD TOP -->
-      <div class="card-top">
-        <div class="card-logo">QB</div>
-        <div class="card-title">Quick<span>Bite</span></div>
-        <div class="card-subtitle">Sign in to book your table</div>
-      </div>
+    <!-- CARD BODY -->
+    <div class="card-body">
 
-      <!-- TABS -->
-      <div class="tabs">
-        <div class="tab active" id="loginTab" onclick="switchTab('login')">Login</div>
-        <div class="tab" id="registerTab" onclick="switchTab('register')">Register</div>
-      </div>
-
-      <!-- CARD BODY -->
-      <div class="card-body">
-
-        <!-- LOGIN FORM -->
-        <div id="loginForm">
-          <div class="form-group">
-            <div class="input-wrap">
-              <input type="email" id="loginEmail" placeholder="Email address" />
-            </div>
-            <div class="input-wrap">
-              <input type="password" id="loginPassword" placeholder="Password" />
-            </div>
-            <button class="btn-submit" onclick="login()">Login →</button>
+      <!-- LOGIN FORM -->
+      <div id="loginForm">
+        <div class="form-group">
+          <div class="input-wrap">
+            <input type="email" id="loginEmail" placeholder="Email address" required/>
           </div>
-        </div>
-
-        <!-- REGISTER FORM -->
-        <div id="registerForm" class="hidden">
-          <div class="form-group">
-            <div class="input-wrap">
-              <input type="text" id="regUsername" placeholder="Username" />
-            </div>
-            <div class="input-wrap">
-              <input type="email" id="regEmail" placeholder="Email address" />
-            </div>
-            <div class="input-wrap">
-              <input type="password" id="regPassword" placeholder="Password" />
-            </div>
-            <button class="btn-submit" onclick="register()">Create Account →</button>
+          <div class="input-wrap">
+            <input type="password" id="loginPassword" placeholder="Password" required/>
           </div>
+          <button class="btn-submit" onclick="login()">Login →</button>
         </div>
-
-        <p class="message" id="message"></p>
-
       </div>
 
-      <!-- BOTTOM STRIP -->
-      <div class="card-strip"></div>
+      <!-- REGISTER FORM -->
+      <div id="registerForm" class="hidden">
+        <div class="form-group">
+          <div class="input-wrap">
+            <input type="text" id="regUsername" placeholder="Username" required/>
+          </div>
+          <div class="input-wrap">
+            <input type="email" id="regEmail" placeholder="Email address" required/>
+          </div>
+          <div class="input-wrap">
+            <input type="password" id="regPassword" placeholder="Password" required/>
+          </div>
+          <button class="btn-submit" onclick="register()">Create Account →</button>
+        </div>
+      </div>
+
+      <p class="message" id="message"></p>
 
     </div>
+
   </div>
 
   <script>
@@ -307,7 +374,7 @@
       }
 
       try {
-        const response = await fetch('http://localhost:5000/auth/login', {
+        const response = await fetch('/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email, password })
@@ -322,17 +389,22 @@
 
         displayMessage("Login successful! Redirecting...", true);
 
-        if (data.token) {
-          localStorage.setItem('token', data.token);
+        // Save user session in localStorage for front-end rendering
+        if (data.user) {
+          localStorage.setItem('user', JSON.stringify(data.user));
         }
 
         setTimeout(() => {
-          window.location.href = '/index.html';
+          // If admin logs in, let them redirect to home where they can choose to go to kiosk or book.
+          // Wait, is there a special redirect? Let's check where the old one redirected. It went to '/index.html' (the kiosk).
+          // Let's redirect to 'home.html' so they can see the landing page first, or 'index.html' if they want.
+          // Actually, let's redirect to 'home.html'.
+          window.location.href = 'home.html';
         }, 1500);
 
       } catch (error) {
         console.error("Login Error:", error);
-        displayMessage("Connection failed. Ensure backend server is running on port 5000.");
+        displayMessage("Connection failed. Check if server is running on port 5000.");
       }
     }
 
@@ -348,7 +420,7 @@
       }
 
       try {
-        const response = await fetch('http://localhost:5000/auth/register', {
+        const response = await fetch('/auth/register', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ username, email, password })
@@ -370,7 +442,7 @@
 
       } catch (error) {
         console.error("Registration Error:", error);
-        displayMessage("Connection failed. Ensure backend server is running on port 5000.");
+        displayMessage("Connection failed. Check if server is running on port 5000.");
       }
     }
   </script>

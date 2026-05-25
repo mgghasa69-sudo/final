@@ -160,7 +160,7 @@
 </main>
 
 <script>
-    const BASE_URL = 'http://localhost:5000';
+    const BASE_URL = '';
 
     let allOrders = [];
     let allReservations = [];
@@ -356,8 +356,8 @@
                     <div class="menu-name">${name}</div>
                     <div class="menu-sales">${count} sold</div>
                 </div>
-                <div style="width:100px;background:var(--surface2);border-radius:4px;height:6px;overflow:hidden">
-                    <div style="width:${Math.min(100, count * 20)}%;height:100%;background:var(--red);border-radius:4px"></div>
+                <div class="menu-progress">
+                    <div class="menu-progress-bar" style="width:${Math.min(100, count * 20)}%;"></div>
                 </div>
             </div>
         `).join('');

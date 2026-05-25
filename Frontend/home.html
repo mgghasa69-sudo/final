@@ -3,340 +3,845 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>QuickBite — Home</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<title>QuickBite — Premium Fast Dining</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-:root{
-  --red:#DA1B1B;
-  --red-dark:#B01515;
-  --red-light:#FF3B3B;
-  --yellow:#FFC107;
-  --yellow-dark:#E5A200;
-  --bg:#1A1A1A;
-  --surface:#242424;
-  --surface2:#2E2E2E;
-  --surface3:#383838;
-  --border:#3A3A3A;
-  --text:#FFFFFF;
-  --text-muted:#A0A0A0;
-  --green:#2ECC71;
-  --radius:14px;
-  --radius-sm:8px;
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
-html,body{
-  font-family:'Barlow',sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  min-height:100vh;
+
+:root {
+  --bg: #090a0f;
+  --bg-gradient: radial-gradient(circle at 50% 50%, #161722 0%, #090a0f 100%);
+  --surface: rgba(22, 23, 30, 0.7);
+  --surface2: rgba(30, 32, 45, 0.6);
+  --surface-hover: rgba(33, 35, 47, 0.85);
+  --border: rgba(255, 255, 255, 0.08);
+  --primary: #ff4747;
+  --primary-hover: #ff5e62;
+  --primary-glow: rgba(255, 71, 71, 0.35);
+  --primary-gradient: linear-gradient(135deg, #ff5e62 0%, #ff2a2a 100%);
+  --secondary: #ffb703;
+  --secondary-gradient: linear-gradient(135deg, #ffb703 0%, #fb8500 100%);
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  --green: #06d6a0;
+  --radius: 20px;
+  --radius-sm: 10px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html, body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  background-image: var(--bg-gradient);
+  color: var(--text);
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Background ambient glows */
+body::before, body::after {
+  content: '';
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  filter: blur(150px);
+  z-index: 0;
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+body::before {
+  top: 10%;
+  left: -150px;
+  background: var(--primary);
+}
+
+body::after {
+  bottom: 20%;
+  right: -150px;
+  background: var(--secondary);
 }
 
 /* ── NAV ── */
-nav{
-  background:var(--red);
-  height:70px;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 2rem;
-  position:sticky;top:0;z-index:100;
-  box-shadow:0 4px 20px rgba(0,0,0,0.5);
+nav {
+  background: rgba(14, 15, 23, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 3rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1.5px solid var(--border);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
-nav::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;
-  height:3px;background:var(--yellow);
+
+nav::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--secondary-gradient);
+  opacity: 0.8;
 }
-.brand{display:flex;align-items:center;gap:12px;}
-.brand-logo{
-  width:44px;height:44px;border-radius:50%;
-  background:var(--yellow);
-  display:flex;align-items:center;justify-content:center;
-  font-size:1.6rem;font-weight:900;color:var(--red-dark);
-  font-family:'Barlow Condensed',sans-serif;
-  box-shadow:0 2px 12px rgba(0,0,0,0.3);
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
 }
-.brand-name{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:2rem;font-weight:900;
-  color:#fff;letter-spacing:0.04em;text-transform:uppercase;
+
+.brand-logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--secondary-gradient);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #0b0c10;
+  font-family: 'Outfit', sans-serif;
+  box-shadow: 0 4px 15px rgba(255, 183, 3, 0.4);
 }
-.brand-name span{color:var(--yellow);}
-.nav-links{display:flex;align-items:center;gap:8px;}
-.nav-link{
-  color:rgba(255,255,255,0.8);
-  text-decoration:none;
-  font-weight:600;font-size:0.9rem;
-  padding:8px 14px;border-radius:var(--radius-sm);
-  transition:all 0.2s;letter-spacing:0.03em;
-  text-transform:uppercase;
+
+.brand-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
 }
-.nav-link:hover{background:rgba(255,255,255,0.12);color:#fff;}
-.nav-link.active{background:rgba(255,255,255,0.15);color:#fff;}
-.nav-user{
-  display:flex;align-items:center;gap:12px;
+
+.brand-name span {
+  background: var(--secondary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
-.nav-username{
-  color:var(--yellow);font-weight:700;font-size:0.9rem;
-  display:flex;align-items:center;gap:6px;
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
-.btn-nav{
-  padding:8px 18px;border-radius:var(--radius-sm);
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:1rem;font-weight:700;letter-spacing:0.05em;
-  text-transform:uppercase;cursor:pointer;border:none;
-  transition:all 0.2s;
+
+.nav-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+  letter-spacing: 0.01em;
 }
-.btn-login{background:var(--yellow);color:#1A1A1A;}
-.btn-login:hover{background:#FFD740;}
-.btn-logout{background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);}
-.btn-logout:hover{background:rgba(255,255,255,0.25);}
-.btn-kiosk{
-  background:var(--yellow);color:#1A1A1A;
-  display:flex;align-items:center;gap:6px;
+
+.nav-link:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
 }
-.btn-kiosk:hover{background:#FFD740;}
+
+.nav-link.active {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
+}
+
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nav-username {
+  color: var(--secondary);
+  font-weight: 700;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 183, 3, 0.08);
+  padding: 6px 14px;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 183, 3, 0.2);
+}
+
+.btn-nav {
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+.btn-login {
+  background: var(--secondary-gradient);
+  color: #0b0c10;
+  box-shadow: 0 4px 15px var(--secondary-glow);
+}
+
+.btn-login:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--secondary-glow);
+}
+
+.btn-logout {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1.5px solid var(--border);
+}
+
+.btn-logout:hover {
+  color: #fff;
+  background: rgba(255, 71, 71, 0.15);
+  border-color: var(--primary);
+}
+
+.btn-kiosk {
+  background: var(--primary-gradient);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 15px var(--primary-glow);
+}
+
+.btn-kiosk:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--primary-glow);
+}
 
 /* ── HERO ── */
-.hero{
-  min-height:520px;
-  background:
-    radial-gradient(ellipse at 70% 50%, rgba(218,27,27,0.25) 0%, transparent 65%),
-    radial-gradient(ellipse at 20% 80%, rgba(255,193,7,0.1) 0%, transparent 55%),
-    var(--bg);
-  display:flex;align-items:center;
-  padding:4rem 2rem;
-  position:relative;
-  overflow:hidden;
+.hero {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  padding: 4rem 3rem;
+  position: relative;
+  overflow: hidden;
+  max-width: 1300px;
+  margin: 0 auto;
+  z-index: 1;
 }
-.hero::before{
-  content:'';position:absolute;inset:0;
-  background:repeating-linear-gradient(
-    -45deg,transparent,transparent 60px,rgba(255,255,255,0.012) 60px,rgba(255,255,255,0.012) 61px
-  );
+
+.hero-content {
+  max-width: 650px;
+  position: relative;
+  z-index: 2;
 }
-.hero-content{max-width:600px;position:relative;z-index:1;}
-.hero-badge{
-  display:inline-flex;align-items:center;gap:8px;
-  background:rgba(218,27,27,0.2);border:1px solid rgba(218,27,27,0.4);
-  color:var(--red-light);font-size:0.8rem;font-weight:700;
-  padding:6px 14px;border-radius:20px;
-  letter-spacing:0.08em;text-transform:uppercase;margin-bottom:20px;
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(255, 71, 71, 0.08);
+  border: 1px solid rgba(255, 71, 71, 0.2);
+  color: var(--primary-hover);
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 8px 18px;
+  border-radius: 50px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
 }
-.hero h1{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:clamp(3rem,7vw,5.5rem);font-weight:900;
-  line-height:0.95;text-transform:uppercase;letter-spacing:0.02em;
-  margin-bottom:20px;
+
+.hero h1 {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(3.5rem, 8vw, 6rem);
+  font-weight: 900;
+  line-height: 0.95;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
 }
-.hero h1 span{color:var(--yellow);}
-.hero-sub{
-  font-size:1.1rem;color:var(--text-muted);
-  line-height:1.6;max-width:480px;margin-bottom:32px;
+
+.hero h1 span {
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
-.hero-actions{display:flex;gap:14px;flex-wrap:wrap;}
-.btn-hero{
-  padding:16px 32px;border-radius:var(--radius);
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:1.3rem;font-weight:900;letter-spacing:0.06em;
-  text-transform:uppercase;cursor:pointer;border:none;
-  text-decoration:none;display:inline-flex;align-items:center;gap:8px;
-  transition:all 0.2s;
+
+.hero-sub {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 540px;
+  margin-bottom: 40px;
 }
-.btn-hero-primary{
-  background:var(--yellow);color:#1A1A1A;
-  box-shadow:0 4px 20px rgba(255,193,7,0.4);
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
 }
-.btn-hero-primary:hover{background:#FFD740;box-shadow:0 6px 28px rgba(255,193,7,0.55);transform:translateY(-2px);}
-.btn-hero-secondary{
-  background:transparent;color:#fff;
-  border:2px solid rgba(255,255,255,0.25);
+
+.btn-hero {
+  padding: 18px 36px;
+  border-radius: var(--radius);
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: var(--transition);
 }
-.btn-hero-secondary:hover{border-color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.05);}
-.hero-emoji{
-  position:absolute;right:8%;top:50%;transform:translateY(-50%);
-  font-size:clamp(8rem,15vw,14rem);
-  animation:float 3s ease-in-out infinite;
-  filter:drop-shadow(0 20px 40px rgba(0,0,0,0.5));
-  user-select:none;
+
+.btn-hero-primary {
+  background: var(--primary-gradient);
+  color: #fff;
+  box-shadow: 0 8px 25px var(--primary-glow);
 }
-@keyframes float{
-  0%,100%{transform:translateY(-50%);}
-  50%{transform:translateY(calc(-50% - 18px));}
+
+.btn-hero-primary:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px var(--primary-glow);
+}
+
+.btn-hero-secondary {
+  background: rgba(255, 255, 255, 0.03);
+  color: #fff;
+  border: 2px solid var(--border);
+}
+
+.btn-hero-secondary:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.06);
+  transform: translateY(-4px);
+}
+
+.hero-emoji {
+  position: absolute;
+  right: 5%;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: clamp(10rem, 20vw, 22rem);
+  animation: float-hero 4s ease-in-out infinite;
+  filter: drop-shadow(0 25px 50px rgba(0,0,0,0.6));
+  user-select: none;
+  z-index: 1;
+}
+
+@keyframes float-hero {
+  0%, 100% { transform: translateY(-50%) rotate(0deg); }
+  50% { transform: translateY(calc(-50% - 20px)) rotate(6deg); }
+}
+
+@media(max-width: 992px) {
+  .hero {
+    min-height: auto;
+    padding: 6rem 2rem 4rem;
+  }
+  .hero-emoji {
+    display: none;
+  }
 }
 
 /* ── STRIP ── */
-.strip{
-  height:10px;
-  background:repeating-linear-gradient(
-    90deg,var(--red) 0,var(--red) 30px,var(--yellow) 30px,var(--yellow) 60px
+.strip {
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--primary) 0,
+    var(--primary) 40px,
+    var(--secondary) 40px,
+    var(--secondary) 80px
   );
 }
 
 /* ── FEATURES ── */
-.features{
-  padding:4rem 2rem;
-  max-width:1100px;margin:0 auto;
+.features {
+  padding: 8rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
 }
-.section-label{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:0.8rem;font-weight:700;letter-spacing:0.15em;
-  text-transform:uppercase;color:var(--red-light);
-  margin-bottom:10px;
+
+.section-label {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--primary-hover);
+  margin-bottom: 12px;
 }
-.section-title{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:2.5rem;font-weight:900;text-transform:uppercase;
-  letter-spacing:0.04em;margin-bottom:40px;
+
+.section-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin-bottom: 50px;
+  line-height: 1.1;
 }
-.section-title span{color:var(--yellow);}
-.features-grid{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:20px;
+
+.section-title span {
+  background: var(--secondary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
-.feature-card{
-  background:var(--surface);border:1.5px solid var(--border);
-  border-radius:var(--radius);padding:28px 24px;
-  transition:border-color 0.2s,transform 0.2s;
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
 }
-.feature-card:hover{border-color:#555;transform:translateY(-4px);}
-.feature-icon{font-size:2.5rem;margin-bottom:16px;}
-.feature-title{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:1.3rem;font-weight:900;text-transform:uppercase;
-  letter-spacing:0.04em;margin-bottom:8px;
+
+.feature-card {
+  background: var(--surface2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 36px 28px;
+  transition: var(--transition);
+  position: relative;
 }
-.feature-desc{font-size:0.88rem;color:var(--text-muted);line-height:1.6;}
+
+.feature-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  padding: 1.5px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.01) 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+
+.feature-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(255, 255, 255, 0.15);
+  background: var(--surface-hover);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+}
+
+.feature-icon {
+  font-size: 3rem;
+  margin-bottom: 24px;
+  display: inline-block;
+}
+
+.feature-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 12px;
+}
+
+.feature-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
 
 /* ── MENU PREVIEW ── */
-.menu-preview{
-  background:var(--surface);
-  border-top:1px solid var(--border);
-  border-bottom:1px solid var(--border);
-  padding:4rem 2rem;
+.menu-preview {
+  background: rgba(14, 15, 23, 0.4);
+  border-top: 1.5px solid var(--border);
+  border-bottom: 1.5px solid var(--border);
+  padding: 8rem 2rem;
+  position: relative;
+  z-index: 2;
 }
-.menu-preview-inner{max-width:1100px;margin:0 auto;}
-.menu-cards{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-  gap:16px;margin-top:32px;
+
+.menu-preview-inner {
+  max-width: 1200px;
+  margin: 0 auto;
 }
-.menu-card{
-  background:var(--surface2);border:1.5px solid var(--border);
-  border-radius:var(--radius);overflow:hidden;
-  transition:all 0.2s;cursor:pointer;
+
+.menu-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+  margin-top: 40px;
 }
-.menu-card:hover{border-color:var(--yellow);transform:translateY(-3px);}
-.menu-card-img{
-  height:110px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:3.5rem;background:var(--surface3);
+
+.menu-card {
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: var(--transition);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
 }
-.menu-card-body{padding:14px;}
-.menu-card-name{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:1.05rem;font-weight:900;text-transform:uppercase;
-  margin-bottom:4px;
+
+.menu-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255, 183, 3, 0.3);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.6);
 }
-.menu-card-price{
-  font-size:1.1rem;font-weight:700;color:var(--yellow);
-  font-family:'Barlow Condensed',sans-serif;
+
+.menu-card-img {
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1.5px solid var(--border);
+  transition: var(--transition);
 }
-.menu-card-desc{font-size:0.75rem;color:var(--text-muted);margin-top:4px;line-height:1.4;}
+
+.menu-card:hover .menu-card-img {
+  transform: scale(1.05);
+}
+
+.menu-card-body {
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.menu-card-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.menu-card-price {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--secondary);
+  font-family: 'Outfit', sans-serif;
+}
+
+.menu-card-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
 
 /* ── RESERVATION ── */
-#reservation{
-  padding:4rem 2rem;
-  max-width:1100px;margin:0 auto;
+#reservation {
+  padding: 8rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
 }
-.reservation-wrap{
-  display:grid;grid-template-columns:1fr 1fr;
-  gap:40px;align-items:start;
+
+.reservation-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 60px;
+  align-items: start;
 }
-@media(max-width:700px){
-  .reservation-wrap{grid-template-columns:1fr;}
-  .hero-emoji{display:none;}
+
+@media(max-width: 900px){
+  .reservation-wrap {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
 }
-.reservation-info h3{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:1.2rem;font-weight:700;text-transform:uppercase;
-  color:var(--text-muted);letter-spacing:0.08em;margin-bottom:16px;
+
+.reservation-info h3 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #fff;
+  letter-spacing: 0.02em;
+  margin-bottom: 24px;
 }
-.reservation-info ul{list-style:none;display:flex;flex-direction:column;gap:12px;}
-.reservation-info li{
-  display:flex;align-items:flex-start;gap:12px;
-  font-size:0.9rem;color:var(--text-muted);line-height:1.5;
+
+.reservation-info ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
-.reservation-info li span:first-child{font-size:1.3rem;flex-shrink:0;}
-.res-form{
-  background:var(--surface);border:1.5px solid var(--border);
-  border-radius:var(--radius);overflow:hidden;
+
+.reservation-info li {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.6;
 }
-.res-form-top{
-  background:var(--red);padding:20px 24px;
-  position:relative;
+
+.reservation-info li span:first-child {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+  background: rgba(255, 71, 71, 0.08);
+  padding: 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 71, 71, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.res-form-top::after{
-  content:'';position:absolute;bottom:0;left:0;right:0;
-  height:3px;background:var(--yellow);
+
+.res-form {
+  background: var(--surface2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  position: relative;
 }
-.res-form-top h3{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:1.6rem;font-weight:900;text-transform:uppercase;
-  letter-spacing:0.06em;color:#fff;
+
+.res-form::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  background: var(--primary-gradient);
 }
-.res-form-top p{font-size:0.82rem;color:rgba(255,255,255,0.7);margin-top:4px;}
-.res-form-body{padding:24px;display:flex;flex-direction:column;gap:14px;}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.field{display:flex;flex-direction:column;gap:6px;}
-.field label{
-  font-size:0.75rem;font-weight:700;
-  text-transform:uppercase;letter-spacing:0.06em;
-  color:var(--text-muted);
+
+.res-form-top {
+  padding: 30px 30px 20px;
 }
-.field input{
-  padding:13px 16px;
-  background:var(--surface2);border:1.5px solid var(--border);
-  border-radius:var(--radius-sm);color:#fff;
-  font-family:'Barlow',sans-serif;font-size:0.95rem;
-  outline:none;transition:border-color 0.2s,box-shadow 0.2s;
+
+.res-form-top h3 {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #fff;
 }
-.field input::placeholder{color:var(--text-muted);}
-.field input:focus{
-  border-color:var(--yellow);
-  box-shadow:0 0 0 3px rgba(255,193,7,0.12);
+
+.res-form-top p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: 4px;
 }
-.btn-reserve{
-  width:100%;padding:16px;
-  background:var(--yellow);color:#1A1A1A;
-  border:none;border-radius:var(--radius);
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:1.3rem;font-weight:900;letter-spacing:0.06em;
-  text-transform:uppercase;cursor:pointer;
-  box-shadow:0 4px 16px rgba(255,193,7,0.35);
-  transition:all 0.2s;
+
+.res-form-body {
+  padding: 0 30px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
-.btn-reserve:hover{background:#FFD740;box-shadow:0 6px 24px rgba(255,193,7,0.5);}
-.btn-reserve:active{transform:scale(0.97);}
-#res-message{
-  text-align:center;font-size:0.85rem;font-weight:600;
-  color:var(--red-light);min-height:18px;
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 }
-#res-message.success{color:var(--green);}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.field input, .field select, .field textarea {
+  padding: 12px 16px;
+  background: rgba(9, 10, 15, 0.6);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: #fff;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  transition: var(--transition);
+}
+
+.field input:focus, .field select:focus, .field textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 10px rgba(255, 71, 71, 0.2);
+}
+
+.guests-wrap {
+  display: flex;
+  gap: 8px;
+}
+
+.guest-btn {
+  flex: 1;
+  background: rgba(9, 10, 15, 0.6);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 4px;
+  color: var(--text-muted);
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.guest-btn:hover {
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.guest-btn.active {
+  background: var(--primary-gradient);
+  border-color: transparent;
+  color: #fff;
+}
+
+.tag-btn {
+  background: transparent;
+  border: 1.5px solid var(--border);
+  border-radius: 50px;
+  padding: 6px 14px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.tag-btn:hover {
+  border-color: var(--primary);
+  color: #fff;
+}
+
+.tag-btn.active {
+  background: var(--primary-gradient);
+  border-color: transparent;
+  color: #fff;
+}
+
+.btn-reserve {
+  width: 100%;
+  padding: 16px;
+  background: var(--primary-gradient);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 15px var(--primary-glow);
+  transition: var(--transition);
+}
+
+.btn-reserve:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--primary-glow);
+}
+
+.btn-reserve:active {
+  transform: scale(0.98);
+}
+
+#res-message {
+  text-align: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+  min-height: 20px;
+  color: var(--primary-hover);
+}
+
+#res-message.success {
+  color: var(--green);
+}
+
+.res-success-view {
+  padding: 40px 30px;
+  text-align: center;
+}
+
+.res-success-num {
+  font-family: 'Outfit', sans-serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  color: var(--secondary);
+  margin: 10px 0;
+  text-shadow: 0 0 15px var(--secondary-glow);
+}
+
+.res-success-detail {
+  font-size: 1.05rem;
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
 
 /* ── FOOTER ── */
-footer{
-  background:var(--surface);
-  border-top:1px solid var(--border);
-  padding:2rem;text-align:center;
+footer {
+  background: rgba(14, 15, 23, 0.85);
+  border-top: 1.5px solid var(--border);
+  padding: 3rem;
+  text-align: center;
+  position: relative;
+  z-index: 2;
 }
-.footer-brand{
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:1.8rem;font-weight:900;text-transform:uppercase;
-  letter-spacing:0.06em;margin-bottom:8px;
+
+.footer-brand {
+  font-family: 'Outfit', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin-bottom: 12px;
 }
-.footer-brand span{color:var(--yellow);}
-.footer-text{font-size:0.8rem;color:var(--text-muted);}
-.footer-strip{
-  height:6px;
-  background:repeating-linear-gradient(
-    90deg,var(--red) 0,var(--red) 20px,var(--yellow) 20px,var(--yellow) 40px
+
+.footer-brand span {
+  background: var(--secondary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.footer-text {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+
+.footer-strip {
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--primary) 0,
+    var(--primary) 30px,
+    var(--secondary) 30px,
+    var(--secondary) 60px
   );
 }
 </style>
@@ -345,10 +850,10 @@ footer{
 
 <!-- NAV -->
 <nav>
-  <div class="brand">
+  <a href="home.html" class="brand">
     <div class="brand-logo">QB</div>
     <div class="brand-name">Quick<span>Bite</span></div>
-  </div>
+  </a>
   <div class="nav-links">
     <a href="home.html" class="nav-link active">Home</a>
     <a href="index.html" class="nav-link">Kiosk</a>
@@ -367,7 +872,7 @@ footer{
     <p class="hero-sub">Smash burgers, crispy chicken, rice meals & more — served fast, made fresh. Order at our kiosk or reserve your table today.</p>
     <div class="hero-actions">
       <a href="index.html" class="btn-hero btn-hero-primary">🍔 Order Now</a>
-      <a href="#reservation" class="btn-hero btn-hero-secondary">📅 Reserve a Table</a>
+      <a href="#reservation" class="btn-hero btn-hero-secondary">📅 Book Table</a>
     </div>
   </div>
   <div class="hero-emoji">🍔</div>
@@ -433,79 +938,108 @@ footer{
           <div class="menu-card-desc">Loaded with creamy nacho cheese sauce</div>
         </div>
       </div>
-      <div class="menu-card" onclick="window.location.href='index.html'">
-        <div class="menu-card-img">🎁</div>
-        <div class="menu-card-body">
-          <div class="menu-card-name">QB Value Meal 1</div>
-          <div class="menu-card-price">₱149</div>
-          <div class="menu-card-desc">Cheeseburger + Small Fries + Medium Cola</div>
-        </div>
-      </div>
-      <div class="menu-card" onclick="window.location.href='index.html'">
-        <div class="menu-card-img">🥤</div>
-        <div class="menu-card-body">
-          <div class="menu-card-name">Chocolate Shake</div>
-          <div class="menu-card-price">₱95</div>
-          <div class="menu-card-desc">Thick, creamy chocolate milkshake</div>
-        </div>
-      </div>
-      <div class="menu-card" onclick="window.location.href='index.html'">
-        <div class="menu-card-img">🍦</div>
-        <div class="menu-card-body">
-          <div class="menu-card-name">Soft Serve Cone</div>
-          <div class="menu-card-price">₱39</div>
-          <div class="menu-card-desc">Classic creamy vanilla soft serve</div>
-        </div>
-      </div>
     </div>
   </div>
 </section>
 
 <!-- RESERVATION -->
 <section id="reservation">
-  <div class="section-label" style="padding-top:4rem;padding-left:2rem;">Book a Table</div>
-  <div style="padding:0 2rem;margin-bottom:32px;">
-    <div class="section-title">Reserve Your <span>Spot</span></div>
+  <div class="section-label" style="text-align:center;">Book a Table</div>
+  <div style="text-align:center; margin-bottom: 50px;">
+    <div class="section-title" style="margin-bottom:0;">Reserve Your <span>Spot</span></div>
   </div>
-  <div class="reservation-wrap" style="padding:0 2rem 4rem;">
+  
+  <div class="reservation-wrap">
     <div class="reservation-info">
       <h3>What to Expect</h3>
       <ul>
-        <li><span>📍</span><span>We're located at the heart of the city — easy to find, easier to love.</span></li>
-        <li><span>🕐</span><span>Open daily from 7:00 AM to 10:00 PM. Breakfast, lunch, dinner — we've got you.</span></li>
-        <li><span>👥</span><span>Tables for 1 to 10 guests. Perfect for solo meals, dates, and family feasts.</span></li>
-        <li><span>✅</span><span>Reservation confirmation sent to your email within minutes.</span></li>
-        <li><span>📞</span><span>Need help? Call us at (02) 8-QUICKBITE.</span></li>
+        <li><span>📍</span><span>Located in the city center. Easy parking and direct street access.</span></li>
+        <li><span>🕐</span><span>Open daily from 7:00 AM to 10:00 PM. Breakfast, lunch, dinner options available.</span></li>
+        <li><span>👥</span><span>Capacity for 1 to 10+ guests. Ideal for family celebrations, dates, or business.</span></li>
+        <li><span>⭐</span><span>Earn loyalty points (+5 pts) immediately with every table booked.</span></li>
+        <li><span>📞</span><span>Instant confirmation code will show right here on verification.</span></li>
       </ul>
     </div>
-    <div class="res-form">
-      <div class="res-form-top">
-        <h3>Book a Table</h3>
-        <p>Fill in the details and we'll save your spot</p>
+    
+    <div class="res-form" id="res-form-container">
+      <div id="res-form-view">
+        <div class="res-form-top">
+          <h3>Book a Table</h3>
+          <p>Fill in the details and we'll save your spot</p>
+        </div>
+        <div class="res-form-body">
+          <div class="form-row">
+            <div class="field">
+              <label>Full Name</label>
+              <input type="text" id="res-name" placeholder="Juan dela Cruz" required/>
+            </div>
+            <div class="field">
+              <label>Contact No.</label>
+              <input type="tel" id="res-phone" placeholder="09XX XXX XXXX" required/>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label>Date</label>
+              <input type="date" id="res-date" required/>
+            </div>
+            <div class="field">
+              <label>Time</label>
+              <select id="res-time" required>
+                <option value="">Select time</option>
+                <option>10:00 AM</option><option>10:30 AM</option>
+                <option>11:00 AM</option><option>11:30 AM</option>
+                <option>12:00 PM</option><option>12:30 PM</option>
+                <option>1:00 PM</option><option>1:30 PM</option>
+                <option>2:00 PM</option><option>2:30 PM</option>
+                <option>6:00 PM</option><option>6:30 PM</option>
+                <option>7:00 PM</option><option>7:30 PM</option>
+                <option>8:00 PM</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label>Number of Guests</label>
+            <div class="guests-wrap">
+              <button type="button" class="guest-btn" onclick="setGuests(this, '1')">1</button>
+              <button type="button" class="guest-btn" onclick="setGuests(this, '2')">2</button>
+              <button type="button" class="guest-btn" onclick="setGuests(this, '3')">3</button>
+              <button type="button" class="guest-btn" onclick="setGuests(this, '4')">4</button>
+              <button type="button" class="guest-btn" onclick="setGuests(this, '5')">5</button>
+              <button type="button" class="guest-btn" onclick="setGuests(this, '6+')">6+</button>
+            </div>
+          </div>
+          
+          <div class="field">
+            <label>Occasion (optional)</label>
+            <div class="res-tags">
+              <button type="button" class="tag-btn" onclick="toggleTag(this)">🎂 Birthday</button>
+              <button type="button" class="tag-btn" onclick="toggleTag(this)">💍 Anniversary</button>
+              <button type="button" class="tag-btn" onclick="toggleTag(this)">👔 Business</button>
+              <button type="button" class="tag-btn" onclick="toggleTag(this)">👨‍👩‍👧 Family</button>
+            </div>
+          </div>
+          
+          <div class="field">
+            <label>Special Requests</label>
+            <textarea id="res-notes" rows="2" placeholder="Seating preferences, high chairs, dietary restrictions, etc."></textarea>
+          </div>
+          
+          <button class="btn-reserve" onclick="submitReservation()">Book Table →</button>
+          <p id="res-message"></p>
+        </div>
       </div>
-      <div class="res-form-body">
-        <div class="form-row">
-          <div class="field">
-            <label>Full Name</label>
-            <input type="text" id="name" placeholder="Juan dela Cruz"/>
-          </div>
-          <div class="field">
-            <label>Email</label>
-            <input type="email" id="email" placeholder="juan@email.com"/>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="field">
-            <label>Date</label>
-            <input type="date" id="date"/>
-          </div>
-          <div class="field">
-            <label>Time</label>
-            <input type="time" id="time"/>
-          </div>
-        </div>
-        <button class="btn-reserve" onclick="submitReservation()">Reserve My Table →</button>
-        <p id="res-message"></p>
+      
+      <!-- SUCCESS VIEW -->
+      <div id="res-success-view" class="res-success-view" style="display: none;">
+        <div class="res-success-icon">✅</div>
+        <div class="res-success-title">Booking Confirmed!</div>
+        <p>Show your reservation code at the counter</p>
+        <div class="res-success-num" id="res-confirm-num">—</div>
+        <div class="res-success-detail" id="res-confirm-detail">—</div>
+        <p class="res-success-msg">Your table is successfully saved. Please arrive <strong>5 minutes early</strong>.</p>
+        <div class="res-pts-badge">Loyalty Points Earned!</div>
+        <button class="btn-reserve" style="margin-top:24px;" onclick="resetForm()">Book Another Table</button>
       </div>
     </div>
   </div>
@@ -515,79 +1049,172 @@ footer{
 <div class="footer-strip"></div>
 <footer>
   <div class="footer-brand">Quick<span>Bite</span></div>
-  <div class="footer-text">© 2025 QuickBite. All rights reserved. Fast food, real flavour.</div>
+  <div class="footer-text">© 2026 QuickBite. All rights reserved. Fast food, real flavor.</div>
 </footer>
 
 <script>
-// ── AUTH ──────────────────────────────────────────────────
-const user = JSON.parse(localStorage.getItem('user'));
-const navUser = document.getElementById('nav-user');
+let selectedGuests = '';
 
-if (user) {
-  navUser.innerHTML = `
-    <span class="nav-username">👤 ${user.username}</span>
-    <button class="btn-nav btn-kiosk" onclick="window.location.href='index.html'">🍔 Kiosk</button>
-    <button class="btn-nav btn-logout" onclick="logout()">Logout</button>
-  `;
-} else {
-  navUser.innerHTML = `
-    <button class="btn-nav btn-login" onclick="window.location.href='login.html'">Login / Register</button>
-  `;
-  // Hide reservation if not logged in
-  document.getElementById('reservation').style.display = 'none';
+document.addEventListener('DOMContentLoaded', () => {
+  checkSession();
+  
+  // Set minimum date to today
+  const today = new Date().toISOString().split('T')[0];
+  const dateInput = document.getElementById('res-date');
+  if (dateInput) dateInput.min = today;
+});
+
+// ── AUTH SESSION CHECK ──
+async function checkSession() {
+  const navUser = document.getElementById('nav-user');
+  if (!navUser) return;
+  
+  try {
+    const response = await fetch('/auth/me');
+    if (response.ok) {
+      const user = await response.json();
+      localStorage.setItem('user', JSON.stringify(user));
+      
+      navUser.innerHTML = `
+        <span class="nav-username">👤 ${user.username}</span>
+        <button class="btn-nav btn-kiosk" onclick="window.location.href='index.html'">🍔 Kiosk</button>
+        <button class="btn-nav btn-logout" onclick="logout()">Logout</button>
+      `;
+      document.getElementById('reservation').style.display = 'block';
+      
+      // Pre-fill name in form
+      const nameInput = document.getElementById('res-name');
+      if (nameInput) nameInput.value = user.username;
+    } else {
+      localStorage.removeItem('user');
+      navUser.innerHTML = `
+        <button class="btn-nav btn-login" onclick="window.location.href='login.html'">Login / Register</button>
+      `;
+      // Hide reservation if not logged in
+      document.getElementById('reservation').style.display = 'none';
+    }
+  } catch (err) {
+    console.error("Session check error:", err);
+    // fallback to localStorage if network fails
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
+      navUser.innerHTML = `
+        <span class="nav-username">👤 ${user.username}</span>
+        <button class="btn-nav btn-kiosk" onclick="window.location.href='index.html'">🍔 Kiosk</button>
+        <button class="btn-nav btn-logout" onclick="logout()">Logout</button>
+      `;
+      document.getElementById('reservation').style.display = 'block';
+    } else {
+      navUser.innerHTML = `
+        <button class="btn-nav btn-login" onclick="window.location.href='login.html'">Login / Register</button>
+      `;
+      document.getElementById('reservation').style.display = 'none';
+    }
+  }
 }
 
 async function logout() {
   try {
-    await fetch('http://localhost:3000/auth/logout', {
-      method: 'POST',
-      credentials: 'include'
-    });
+    await fetch('/auth/logout', { method: 'POST' });
   } catch(e) {}
   localStorage.removeItem('user');
   window.location.href = 'login.html';
 }
 
-// ── RESERVATION ───────────────────────────────────────────
-async function submitReservation() {
-  const name  = document.getElementById('name').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const date  = document.getElementById('date').value;
-  const time  = document.getElementById('time').value;
-  const msg   = document.getElementById('res-message');
+// ── RESERVATION FORM LOGIC ──
+function setGuests(btn, num) {
+  document.querySelectorAll('.guest-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedGuests = num;
+}
 
-  if (!name || !email || !date || !time) {
-    msg.textContent = 'Please fill in all fields.';
+function toggleTag(btn) {
+  btn.classList.toggle('active');
+}
+
+async function submitReservation() {
+  const name = document.getElementById('res-name').value.trim();
+  const phone = document.getElementById('res-phone').value.trim();
+  const date = document.getElementById('res-date').value;
+  const time = document.getElementById('res-time').value;
+  const notes = document.getElementById('res-notes').value.trim();
+  const occasion = [...document.querySelectorAll('.tag-btn.active')].map(b => b.textContent.trim()).join(', ');
+  
+  const msg = document.getElementById('res-message');
+  
+  if (!name || !phone || !date || !time || !selectedGuests) {
+    msg.textContent = 'Please fill in all fields and select guest count.';
     msg.className = '';
     return;
   }
-
-  msg.textContent = 'Sending reservation...';
+  
+  msg.textContent = 'Submitting reservation...';
   msg.className = '';
-
+  
+  const reserveBtn = document.querySelector('.btn-reserve');
+  reserveBtn.disabled = true;
+  
   try {
-    const response = await fetch('http://localhost:3000/reservation', {
+    const response = await fetch('/reservation', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify({ name, email, date, time })
+      body: JSON.stringify({
+        name,
+        phone,
+        date,
+        time,
+        guests: selectedGuests,
+        occasion,
+        notes
+      })
     });
+    
     const data = await response.json();
+    
     if (response.ok) {
-      msg.textContent = '✅ ' + (data.message || 'Reservation confirmed!');
-      msg.className = 'success';
-      document.getElementById('name').value = '';
-      document.getElementById('email').value = '';
-      document.getElementById('date').value = '';
-      document.getElementById('time').value = '';
+      // Show Success View
+      const resNum = 'RES-' + Math.floor(1000 + Math.random() * 9000);
+      const formattedDate = new Date(date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+      
+      document.getElementById('res-confirm-num').textContent = resNum;
+      document.getElementById('res-confirm-detail').textContent = 
+        `${formattedDate} · ${time} · ${selectedGuests} guest${selectedGuests === '1' ? '' : 's'}${occasion ? ' · ' + occasion : ''}`;
+      
+      document.getElementById('res-form-view').style.display = 'none';
+      document.getElementById('res-success-view').style.display = 'block';
     } else {
-      msg.textContent = data.message || 'Reservation failed.';
+      msg.textContent = data.message || 'Reservation failed. Please try again.';
       msg.className = '';
+      reserveBtn.disabled = false;
     }
   } catch (err) {
     console.error(err);
-    msg.textContent = 'Could not connect to server.';
+    msg.textContent = 'Could not connect to server. Is it running?';
     msg.className = '';
+    reserveBtn.disabled = false;
+  }
+}
+
+function resetForm() {
+  document.getElementById('res-phone').value = '';
+  document.getElementById('res-date').value = '';
+  document.getElementById('res-time').value = '';
+  document.getElementById('res-notes').value = '';
+  document.querySelectorAll('.guest-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+  selectedGuests = '';
+  
+  const reserveBtn = document.querySelector('.btn-reserve');
+  if (reserveBtn) reserveBtn.disabled = false;
+  
+  document.getElementById('res-message').textContent = '';
+  document.getElementById('res-success-view').style.display = 'none';
+  document.getElementById('res-form-view').style.display = 'block';
+  
+  // Keep username filled
+  const user = JSON.parse(localStorage.getItem('user'));
+  if (user) {
+    document.getElementById('res-name').value = user.username;
   }
 }
 </script>
