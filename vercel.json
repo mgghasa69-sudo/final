@@ -7,7 +7,14 @@
     { "source": "/reservation:path*", "destination": "/api/index.js" },
     { "source": "/order:path*", "destination": "/api/index.js" },
     { "source": "/points:path*", "destination": "/api/index.js" },
-    { "source": "/", "destination": "/Frontend/home.html" },
-    { "source": "/:path*", "destination": "/Frontend/:path*" }
+    
+    { "source": "/admin.html", "destination": "/Frontend/admin.html" },
+    { "source": "/admin.css", "destination": "/Frontend/admin.css" },
+    { "source": "/home.html", "destination": "/Frontend/home.html" },
+    { "source": "/index.html", "destination": "/Frontend/index.html" },
+    { "source": "/login.html", "destination": "/Frontend/login.html" },
+    { "source": "/script.js", "destination": "/Frontend/script.js" },
+    { "source": "/style.css", "destination": "/Frontend/style.css" },
+    { "source": "/", "destination": "/Frontend/home.html" }
   ]
 }
