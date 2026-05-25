@@ -12,9 +12,9 @@ const cookieOptions = {
     maxAge: 30 * 24 * 60 * 60 * 1000 // 30 days
 };
 
-// ✅ FIXED: now includes username in token
-const generateToken = (id, username) => {
-    return jwt.sign({ id, username }, process.env.JWT_SECRET, {
+// ✅ FIXED: now includes username and role in token
+const generateToken = (id, username, role = 'customer') => {
+    return jwt.sign({ id, username, role }, process.env.JWT_SECRET, {
         expiresIn: '30d'
     });
 };
@@ -81,8 +81,11 @@ router.post('/login', async (req, res) => {
         return res.status(400).json({ message: 'Invalid credentials' });
     }
 
-    // ✅ FIXED: pass username to generateToken
-    const token = generateToken(userData.id, userData.username);
+    // Determine role based on email
+    const role = (email === 'admin@gmail.com') ? 'admin' : 'customer';
+
+    // ✅ FIXED: pass username and role to generateToken
+    const token = generateToken(userData.id, userData.username, role);
 
     res.cookie('token', token, cookieOptions);
 
@@ -90,7 +93,8 @@ router.post('/login', async (req, res) => {
         user: {
             id: userData.id,
             username: userData.username,
-            email: userData.email
+            email: userData.email,
+            role: role
         }
     });
 });
