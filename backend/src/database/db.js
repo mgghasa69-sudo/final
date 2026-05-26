@@ -3,7 +3,10 @@ const { Pool } = require('pg');
 const { createClient } = require('@supabase/supabase-js');
 
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL
+    connectionString: process.env.DATABASE_URL,
+    max: 10,                 // Highly optimized for Supabase limits (prevents connection starvation)
+    idleTimeoutMillis: 30000, // Terminate idle clients after 30 seconds
+    connectionTimeoutMillis: 2000 // Timeout fast if connection fails
 });
 
 let supabase = null;
