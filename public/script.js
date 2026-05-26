@@ -480,7 +480,28 @@ async function checkout() {
       await deductPoints(pointsDiscount);
     }
 
-    document.getElementById('modal-num').innerText = orderId;
+    let displayNum = orderId;
+    const refContainer = document.getElementById('modal-ref');
+
+    if (typeof orderId === 'string' && orderId.includes('-')) {
+      // It's a UUID — generate a clean 3-digit kiosk order number
+      let hash = 0;
+      for (let i = 0; i < orderId.length; i++) {
+        hash = orderId.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      displayNum = 'QB-' + (Math.abs(hash % 900) + 100);
+
+      if (refContainer) {
+        refContainer.innerText = `ID: ${orderId}`;
+        refContainer.style.display = 'block';
+      }
+    } else {
+      if (refContainer) {
+        refContainer.style.display = 'none';
+      }
+    }
+
+    document.getElementById('modal-num').innerText = displayNum;
 
     if (currentUser) {
       const earned = Math.floor(totalAmount / 50);
