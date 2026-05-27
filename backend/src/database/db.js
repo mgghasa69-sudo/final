@@ -6,7 +6,10 @@ const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
     max: 10,                 // Highly optimized for Supabase limits (prevents connection starvation)
     idleTimeoutMillis: 30000, // Terminate idle clients after 30 seconds
-    connectionTimeoutMillis: 2000 // Timeout fast if connection fails
+    connectionTimeoutMillis: 2000, // Timeout fast if connection fails
+    ssl: process.env.DATABASE_URL && (process.env.DATABASE_URL.includes('supabase.co') || process.env.DATABASE_URL.includes('supabase.com'))
+        ? { rejectUnauthorized: false }
+        : false
 });
 
 let supabase = null;

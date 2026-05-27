@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node backend/server.js",
-    "dev": "cd backend && nodemon server.js",
+    "dev": "cd backend && npm run dev",
     "vercel-build": "echo 'No build required'"
   },
   "dependencies": {

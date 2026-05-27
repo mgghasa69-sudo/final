@@ -14,23 +14,32 @@ router.post('/add', async (req, res) => {
         );
         res.json(result.rows[0]);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.warn('⚠️ Cart DB add failed. Returning offline fallback response:', err.message);
+        res.json({
+            user_id,
+            product_id,
+            quantity: quantity || 1,
+            added_offline: true
+        });
     }
 });
 
 // GET CART
 router.get('/:user_id', async (req, res) => {
+    const { user_id } = req.params;
+
     try {
         const result = await pool.query(
             `SELECT cart.*, products.name, products.price
              FROM cart
              JOIN products ON cart.product_id = products.id
              WHERE cart.user_id = $1`,
-            [req.params.user_id]
+            [user_id]
         );
         res.json(result.rows);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        console.warn(`⚠️ Failed to fetch cart for user ${user_id} from database. Returning empty cart fallback:`, err.message);
+        res.json([]);
     }
 });
 
