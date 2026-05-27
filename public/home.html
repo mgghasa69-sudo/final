@@ -870,7 +870,7 @@ footer {
     <h1>Taste The<br><span>Bold</span><br>Side of Fast</h1>
     <p class="hero-sub">Smash burgers, crispy chicken, rice meals & more — served fast, made fresh. Order from our menu or reserve your table today.</p>
     <div class="hero-actions">
-      <a href="index.html" class="btn-hero btn-hero-primary">🍔 Order Now</a>
+      <a href="index.html" class="btn-hero btn-hero-primary">Order Now</a>
       <a href="#reservation" class="btn-hero btn-hero-secondary">📅 Book Table</a>
     </div>
   </div>
@@ -1077,7 +1077,7 @@ async function checkSession() {
       
       navUser.innerHTML = `
         <span class="nav-username" onclick="showProfileModal()" style="cursor:pointer" title="Click to view profile card">👤 ${user.username}</span>
-        <button class="btn-nav btn-kiosk" onclick="window.location.href='index.html'">🍔 Menu</button>
+        <button class="btn-nav btn-kiosk" onclick="window.location.href='index.html'">Menu</button>
         <button class="btn-nav btn-logout" onclick="logout()">Logout</button>
       `;
       document.getElementById('reservation').style.display = 'block';
@@ -1101,7 +1101,7 @@ async function checkSession() {
       currentUser = user;
       navUser.innerHTML = `
         <span class="nav-username" onclick="showProfileModal()" style="cursor:pointer" title="Click to view profile card">👤 ${user.username}</span>
-        <button class="btn-nav btn-kiosk" onclick="window.location.href='index.html'">🍔 Menu</button>
+        <button class="btn-nav btn-kiosk" onclick="window.location.href='index.html'">Menu</button>
         <button class="btn-nav btn-logout" onclick="logout()">Logout</button>
       `;
       document.getElementById('reservation').style.display = 'block';
