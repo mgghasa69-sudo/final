@@ -1053,6 +1053,7 @@ footer {
 
 <script>
 let selectedGuests = '';
+let currentUser = null;
 
 document.addEventListener('DOMContentLoaded', () => {
   checkSession();
@@ -1072,10 +1073,11 @@ async function checkSession() {
     const response = await fetch('/auth/me');
     if (response.ok) {
       const user = await response.json();
+      currentUser = user;
       localStorage.setItem('user', JSON.stringify(user));
       
       navUser.innerHTML = `
-        <span class="nav-username">👤 ${user.username}</span>
+        <span class="nav-username" onclick="showProfileModal()" style="cursor:pointer" title="Click to view profile card">👤 ${user.username}</span>
         <button class="btn-nav btn-kiosk" onclick="window.location.href='index.html'">🍔 Menu</button>
         <button class="btn-nav btn-logout" onclick="logout()">Logout</button>
       `;
@@ -1097,8 +1099,9 @@ async function checkSession() {
     // fallback to localStorage if network fails
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
+      currentUser = user;
       navUser.innerHTML = `
-        <span class="nav-username">👤 ${user.username}</span>
+        <span class="nav-username" onclick="showProfileModal()" style="cursor:pointer" title="Click to view profile card">👤 ${user.username}</span>
         <button class="btn-nav btn-kiosk" onclick="window.location.href='index.html'">🍔 Menu</button>
         <button class="btn-nav btn-logout" onclick="logout()">Logout</button>
       `;
@@ -1215,6 +1218,171 @@ function resetForm() {
   if (user) {
     document.getElementById('res-name').value = user.username;
   }
+}
+
+// ── CUSTOM DYNAMIC PROFILE CARD MODAL ──
+function showProfileModal() {
+  if (!currentUser) return;
+
+  const currentPoints = currentUser.points || 0;
+
+  // Calculate Loyalty Tiers and Progress Bar calculations
+  let tier = 'Bronze Member 🥉';
+  let tierColor = '#cd7f32';
+  let nextTier = 'Silver Tier';
+  let pointsNeeded = 100 - currentPoints;
+  let progressPct = (currentPoints / 100) * 100;
+
+  if (currentPoints >= 600) {
+    tier = 'Platinum VIP 👑';
+    tierColor = '#e5e4e2';
+    nextTier = 'Ultimate Legend';
+    pointsNeeded = 0;
+    progressPct = 100;
+  } else if (currentPoints >= 300) {
+    tier = 'Gold Tier 🥇';
+    tierColor = '#ffd700';
+    nextTier = 'Platinum VIP';
+    pointsNeeded = 600 - currentPoints;
+    progressPct = ((currentPoints - 300) / 300) * 100;
+  } else if (currentPoints >= 100) {
+    tier = 'Silver Tier 🥈';
+    tierColor = '#c0c0c0';
+    nextTier = 'Gold Tier';
+    pointsNeeded = 300 - currentPoints;
+    progressPct = ((currentPoints - 100) / 200) * 100;
+  }
+
+  progressPct = Math.max(0, Math.min(100, progressPct));
+
+  // Check if modal container exists
+  let modal = document.getElementById('profile-modal-dynamic');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'profile-modal-dynamic';
+    modal.style.cssText = `
+      position: fixed;
+      inset: 0;
+      background: rgba(9, 10, 15, 0.85);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    `;
+    document.body.appendChild(modal);
+  }
+
+  const initials = currentUser.username ? currentUser.username.slice(0, 2).toUpperCase() : 'QB';
+
+  modal.innerHTML = `
+    <div class="profile-card" style="
+      background: rgba(22, 23, 30, 0.85);
+      border: 1.5px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      width: 90%;
+      max-width: 420px;
+      padding: 40px 30px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+      text-align: center;
+      position: relative;
+      transform: scale(0.9);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    ">
+      <button onclick="closeProfileModal()" style="
+        position: absolute;
+        top: 20px; right: 20px;
+        background: none; border: none;
+        color: #94a3b8; font-size: 1.5rem;
+        cursor: pointer; transition: color 0.2s;
+      " onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#94a3b8'">✕</button>
+
+      <div style="
+        width: 80px; height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #ffb703 0%, #fb8500 100%);
+        display: flex; align-items: center; justify-content: center;
+        font-size: 2.2rem; font-weight: 900; color: #0b0c10;
+        margin: 0 auto 20px;
+        box-shadow: 0 8px 25px rgba(255, 183, 3, 0.3);
+      ">${initials}</div>
+
+      <h2 style="font-family: 'Outfit', sans-serif; font-size: 1.8rem; margin-bottom: 6px; color: #fff;">${currentUser.username}</h2>
+      <p style="color: #94a3b8; font-size: 0.95rem; margin-bottom: 24px;">${currentUser.email || 'kiosk-user@quickbite.com'}</p>
+
+      <div style="
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 20px;
+        margin-bottom: 24px;
+        text-align: left;
+      ">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+          <span style="color: #94a3b8; font-size: 0.85rem; font-weight: 700; text-transform: uppercase;">Loyalty Status</span>
+          <span style="color: ${tierColor}; font-weight: 800; font-size: 0.95rem; text-shadow: 0 0 10px rgba(255,255,255,0.1);">${tier}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+          <span style="color: #94a3b8; font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">Points Balance</span>
+          <span style="color: #ffb703; font-weight: 800; font-size: 1.2rem;">⭐ ${currentPoints} pts</span>
+        </div>
+
+        ${pointsNeeded > 0 ? `
+          <div style="margin-top: 16px;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: #94a3b8; margin-bottom: 6px;">
+              <span>Next Reward Status: <strong>${nextTier}</strong></span>
+              <span>${pointsNeeded} pts left</span>
+            </div>
+            <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden;">
+              <div style="width: ${progressPct}%; height: 100%; background: linear-gradient(90deg, #ffb703, #fb8500); border-radius: 4px;"></div>
+            </div>
+          </div>
+        ` : `
+          <div style="margin-top: 16px; font-size: 0.85rem; color: #06d6a0; font-weight: 700; text-align: center;">
+            👑 You have reached maximum Loyalty Status!
+          </div>
+        `}
+      </div>
+
+      <button onclick="closeProfileModal()" style="
+        background: linear-gradient(135deg, #ffb703 0%, #fb8500 100%);
+        color: #0b0c10;
+        border: none;
+        border-radius: 12px;
+        padding: 14px 28px;
+        font-family: 'Outfit', sans-serif;
+        font-size: 1.05rem;
+        font-weight: 800;
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 4px 15px rgba(255, 183, 3, 0.3);
+      " onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">Done</button>
+    </div>
+  `;
+
+  // Animate Open
+  setTimeout(() => {
+    modal.style.opacity = '1';
+    modal.querySelector('.profile-card').style.transform = 'scale(1)';
+  }, 10);
+
+  // Close on outer click
+  modal.onclick = (e) => {
+    if (e.target === modal) closeProfileModal();
+  };
+}
+
+function closeProfileModal() {
+  const modal = document.getElementById('profile-modal-dynamic');
+  if (!modal) return;
+  modal.style.opacity = '0';
+  modal.querySelector('.profile-card').style.transform = 'scale(0.9)';
+  setTimeout(() => {
+    modal.remove();
+  }, 300);
 }
 </script>
 

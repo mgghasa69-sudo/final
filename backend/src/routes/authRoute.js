@@ -141,7 +141,7 @@ router.get('/me', protect, async (req, res) => {
         let result;
         try {
             result = await pool.query(
-                'SELECT id, username, email FROM users WHERE id = $1',
+                'SELECT id, username, email, points FROM users WHERE id = $1',
                 [req.user.id]
             );
         } catch (dbErr) {
@@ -149,7 +149,8 @@ router.get('/me', protect, async (req, res) => {
             return res.json({
                 id: req.user.id,
                 username: req.user.username,
-                email: req.user.email
+                email: req.user.email,
+                points: req.user.points || 0
             });
         }
 
