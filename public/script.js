@@ -10,9 +10,9 @@ const MENU = {
   ],
   Chicken: [
     { emoji: '🍗', name: 'Crispy Fried Chicken', desc: '3-piece golden-fried chicken, seasoned with secret spices', price: 179, kcal: 720, img: 'images/fried_chicken.png' },
-    { emoji: '🥩', name: 'Grilled Chicken Platter', desc: 'Herb-marinated grilled breast, steamed veggies & gravy', price: 195, kcal: 480, img: 'images/fried_chicken.png' },
+    { emoji: '🥩', name: 'Grilled Chicken Platter', desc: 'Herb-marinated grilled breast, steamed veggies & gravy', price: 195, kcal: 480, img: 'images/rice_meal.png' },
     { emoji: '🍗', name: 'Chicken Strips x5', desc: 'Tender chicken strips with your choice of dipping sauce', price: 149, kcal: 420, img: 'images/fried_chicken.png' },
-    { emoji: '🌮', name: 'Chicken Wrap', desc: 'Crispy chicken, lettuce, tomato, ranch in a warm tortilla', price: 165, kcal: 510, img: 'images/fried_chicken.png' },
+    { emoji: '🌮', name: 'Chicken Wrap', desc: 'Crispy chicken, lettuce, tomato, ranch in a warm tortilla', price: 165, kcal: 510 },
     { emoji: '🍗', name: 'Spicy Buffalo Wings', desc: '8-piece wings tossed in fiery buffalo sauce', price: 219, kcal: 640, img: 'images/fried_chicken.png' },
     { emoji: '🍗', name: 'Chickenjoy Family Bucket', desc: '8-piece mixed chicken, perfect for sharing', price: 459, kcal: 0, img: 'images/fried_chicken.png' },
   ],
@@ -40,11 +40,11 @@ const MENU = {
     { emoji: '🧃', name: 'Orange Juice', desc: 'Fresh-squeezed orange juice, 350ml', price: 75, kcal: 140, img: 'images/lemonade.png' },
   ],
   Desserts: [
-    { emoji: '🍦', name: 'Soft Serve Cone', desc: 'Classic creamy vanilla soft serve', price: 39, kcal: 200, img: 'images/chocolate_shake.png' },
+    { emoji: '🍦', name: 'Soft Serve Cone', desc: 'Classic creamy vanilla soft serve', price: 39, kcal: 200 },
     { emoji: '🍫', name: 'Hot Fudge Sundae', desc: 'Vanilla ice cream, rich hot fudge sauce', price: 75, kcal: 390, img: 'images/chocolate_shake.png' },
-    { emoji: '🥧', name: 'Buko Pie Slice', desc: 'Flaky crust, tender young coconut filling', price: 65, kcal: 310, img: 'images/glazed_donut.png' },
+    { emoji: '🥧', name: 'Buko Pie Slice', desc: 'Flaky crust, tender young coconut filling', price: 65, kcal: 310 },
     { emoji: '🍩', name: 'Glazed Donut x2', desc: 'Fluffy yeast donuts with sweet glaze', price: 55, kcal: 480, img: 'images/glazed_donut.png' },
-    { emoji: '🎂', name: 'Birthday Cake Slice', desc: 'Vanilla sponge with sprinkles & cream', price: 89, kcal: 440, img: 'images/glazed_donut.png' },
+    { emoji: '🎂', name: 'Birthday Cake Slice', desc: 'Vanilla sponge with sprinkles & cream', price: 89, kcal: 440, img: 'images/pancakes.png' },
   ],
   'Value Meals': [
     { emoji: '🎁', name: 'QB Value Meal 1', desc: 'Cheeseburger + Small Fries + Medium Cola', price: 149, kcal: 820, img: 'images/qb_burger.png' },
@@ -54,9 +54,9 @@ const MENU = {
   ],
   Breakfast: [
     { emoji: '🥞', name: 'Pancake Platter', desc: '3 fluffy pancakes, butter & maple syrup', price: 109, kcal: 520, img: 'images/pancakes.png' },
-    { emoji: '🥚', name: 'Egg McMuffin', desc: 'Egg, Canadian bacon & cheese on toasted muffin', price: 99, kcal: 300, img: 'images/pancakes.png' },
-    { emoji: '🌯', name: 'Breakfast Burrito', desc: 'Scrambled eggs, sausage, cheese in tortilla', price: 119, kcal: 450, img: 'images/pancakes.png' },
-    { emoji: '🥣', name: 'Oatmeal Bowl', desc: 'Creamy oats with brown sugar & almonds', price: 79, kcal: 290, img: 'images/pancakes.png' },
+    { emoji: '🥚', name: 'Egg McMuffin', desc: 'Egg, Canadian bacon & cheese on toasted muffin', price: 99, kcal: 300 },
+    { emoji: '🌯', name: 'Breakfast Burrito', desc: 'Scrambled eggs, sausage, cheese in tortilla', price: 119, kcal: 450 },
+    { emoji: '🥣', name: 'Oatmeal Bowl', desc: 'Creamy oats with brown sugar & almonds', price: 79, kcal: 290 },
     { emoji: '☕', name: 'Breakfast Combo', desc: 'Pancakes + Egg + Coffee — start your day right', price: 169, kcal: 700, img: 'images/pancakes.png' },
   ],
 };
