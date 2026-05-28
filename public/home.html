@@ -871,7 +871,7 @@ footer {
     <p class="hero-sub">Smash burgers, crispy chicken, rice meals & more — served fast, made fresh. Order from our menu or reserve your table today.</p>
     <div class="hero-actions">
       <a href="index.html" class="btn-hero btn-hero-primary">Order Now</a>
-      <a href="#reservation" class="btn-hero btn-hero-secondary">📅 Book Table</a>
+      <a href="#reservation" class="btn-hero btn-hero-secondary">Book Table</a>
     </div>
   </div>
 </section>
@@ -1076,7 +1076,7 @@ async function checkSession() {
       localStorage.setItem('user', JSON.stringify(user));
       
       navUser.innerHTML = `
-        <span class="nav-username" onclick="showProfileModal()" style="cursor:pointer" title="Click to view profile card">👤 ${user.username}</span>
+        <span class="nav-username" onclick="showProfileModal()" style="cursor:pointer" title="Click to view profile card">${user.username}</span>
         <button class="btn-nav btn-kiosk" onclick="window.location.href='index.html'">Menu</button>
         <button class="btn-nav btn-logout" onclick="logout()">Logout</button>
       `;
@@ -1100,7 +1100,7 @@ async function checkSession() {
     if (user) {
       currentUser = user;
       navUser.innerHTML = `
-        <span class="nav-username" onclick="showProfileModal()" style="cursor:pointer" title="Click to view profile card">👤 ${user.username}</span>
+        <span class="nav-username" onclick="showProfileModal()" style="cursor:pointer" title="Click to view profile card">${user.username}</span>
         <button class="btn-nav btn-kiosk" onclick="window.location.href='index.html'">Menu</button>
         <button class="btn-nav btn-logout" onclick="logout()">Logout</button>
       `;

@@ -1,348 +1,357 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>QuickBite Menu</title>
 
-<meta http-equiv="Content-Security-Policy"
-content="default-src 'self';
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuickBite Menu</title>
+
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self';
 connect-src 'self' http://localhost:5000 http://127.0.0.1:5500 http://127.0.0.1:5000 http://localhost:3000 https://*.vercel.app ws://127.0.0.1:5500 ws://localhost:5500;
 script-src 'self' 'unsafe-inline';
 style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
 font-src 'self' https://fonts.gstatic.com;">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
-<link rel="stylesheet" href="style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
-<!-- SCREENSAVER -->
-<div class="screensaver" id="screensaver" onclick="startSession()">
-  <div class="ss-logo">🍔</div>
-  <div class="ss-title">Quick<span>Bite</span></div>
-  <div class="ss-tap">👆 Tap anywhere to start your order</div>
-  <div class="ss-strips"></div>
-</div>
-
-<!-- TOP BAR -->
-<div class="topbar">
-
-  <div class="brand">
-    <div class="brand-logo">QB</div>
-    <div class="brand-name">Quick<span>Bite</span></div>
+  <!-- SCREENSAVER -->
+  <div class="screensaver" id="screensaver" onclick="startSession()">
+    <div class="ss-logo">🍔</div>
+    <div class="ss-title">Quick<span>Bite</span></div>
+    <div class="ss-tap">👆 Tap anywhere to start your order</div>
+    <div class="ss-strips"></div>
   </div>
 
-  <div class="topbar-center">
-    Touch to Order
-  </div>
+  <!-- TOP BAR -->
+  <div class="topbar">
 
-  <div class="topbar-right">
-
-    <div class="dine-toggle">
-      <button class="dine-btn active" onclick="setDine(this,'Dine In')">
-        Dine In
-      </button>
-
-      <button class="dine-btn" onclick="setDine(this,'Take Out')">
-        Take Out
-      </button>
+    <div class="brand">
+      <div class="brand-logo">QB</div>
+      <div class="brand-name">Quick<span>Bite</span></div>
     </div>
 
-    <div class="time-display" id="clock">12:00</div>
-
-    <!-- USER AREA -->
-    <div class="user-area" id="user-area"></div>
-
-  </div>
-</div>
-
-<!-- MAIN -->
-<div class="main">
-
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-
-    <div class="cat-item active" onclick="setCategory(this,'Burgers')">
-      <div class="cat-icon-wrap">🍔</div>
-      <div class="cat-label">Burgers</div>
+    <div class="topbar-center">
+      Touch to Order
     </div>
 
-    <div class="cat-item" onclick="setCategory(this,'Chicken')">
-      <div class="cat-icon-wrap">🍗</div>
-      <div class="cat-label">Chicken</div>
-    </div>
+    <div class="topbar-right">
 
-    <div class="cat-item" onclick="setCategory(this,'Fries & Sides')">
-      <div class="cat-icon-wrap">🍟</div>
-      <div class="cat-label">Fries & Sides</div>
-    </div>
-
-    <div class="cat-item" onclick="setCategory(this,'Rice Meals')">
-      <div class="cat-icon-wrap">🍚</div>
-      <div class="cat-label">Rice Meals</div>
-    </div>
-
-    <div class="cat-item" onclick="setCategory(this,'Beverages')">
-      <div class="cat-icon-wrap">🥤</div>
-      <div class="cat-label">Beverages</div>
-    </div>
-
-    <div class="cat-item" onclick="setCategory(this,'Desserts')">
-      <div class="cat-icon-wrap">🍦</div>
-      <div class="cat-label">Desserts</div>
-    </div>
-
-    <div class="cat-item" onclick="setCategory(this,'Value Meals')">
-      <div class="cat-icon-wrap">🎁</div>
-      <div class="cat-label">Value Meals</div>
-    </div>
-
-    <div class="cat-item" onclick="setCategory(this,'Breakfast')">
-      <div class="cat-icon-wrap">🥞</div>
-      <div class="cat-label">Breakfast</div>
-    </div>
-
-    <div class="cat-item cat-reserve" onclick="openReservationModal()">
-      <div class="cat-icon-wrap">📅</div>
-      <div class="cat-label">Reserve</div>
-    </div>
-
-  </div>
-
-  <!-- MENU AREA -->
-  <div class="menu-area">
-
-    <div class="menu-header">
-      <h2 id="menu-title">Burgers</h2>
-      <div class="promo-pill">🔥 Today's Deals</div>
-    </div>
-
-    <div class="menu-grid" id="menu-grid"></div>
-
-  </div>
-
-  <!-- ORDER PANEL -->
-  <div class="order-panel">
-
-    <div class="order-header">
-      <h3>Your Order</h3>
-      <div class="order-count" id="order-count">0</div>
-    </div>
-
-    <div class="order-items" id="order-items">
-
-      <div class="empty-order" id="empty-order">
-        <div class="empty-icon">🛒</div>
-        <p>
-          No items yet.<br>
-          Tap a menu item to add it.
-        </p>
-      </div>
-
-    </div>
-
-    <div class="order-summary">
-
-      <div class="summary-row">
-        <span>Subtotal</span>
-        <span id="subtotal">₱0.00</span>
-      </div>
-
-      <div class="summary-row">
-        <span>VAT (12%)</span>
-        <span id="vat">₱0.00</span>
-      </div>
-
-      <!-- POINTS DISCOUNT ROW (hidden by default) -->
-      <div class="summary-row points-discount-row" id="points-discount-row" style="display:none;">
-        <span>⭐ Points Discount</span>
-        <span id="points-discount-amt" style="color:var(--green); font-weight:700;">-₱0.00</span>
-      </div>
-
-      <div class="summary-row total">
-        <span>TOTAL</span>
-        <span id="total">₱0.00</span>
-      </div>
-
-      <!-- REDEEM POINTS BUTTON -->
-      <div id="redeem-wrap" style="display:none;">
-        <button class="btn-redeem" id="redeem-btn" onclick="toggleRedeem()">
-          ⭐ Redeem Points (<span id="redeem-pts-available">0</span> pts)
+      <div class="dine-toggle">
+        <button class="dine-btn active" onclick="setDine(this,'Dine In')">
+          Dine In
         </button>
-        <p class="redeem-hint" id="redeem-hint">50 pts = ₱50 off your order</p>
+
+        <button class="dine-btn" onclick="setDine(this,'Take Out')">
+          Take Out
+        </button>
       </div>
 
-      <!-- CHECKOUT BUTTON -->
-      <button
-        class="btn-checkout"
-        id="checkout-btn"
-        onclick="checkout()"
-        disabled>
-        Place Order →
+      <div class="time-display" id="clock">12:00</div>
+
+      <!-- USER AREA -->
+      <div class="user-area" id="user-area"></div>
+
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+      <div class="cat-item active" onclick="setCategory(this,'Burgers')">
+        <div class="cat-icon-wrap">🍔</div>
+        <div class="cat-label">Burgers</div>
+      </div>
+
+      <div class="cat-item" onclick="setCategory(this,'Chicken')">
+        <div class="cat-icon-wrap">🍗</div>
+        <div class="cat-label">Chicken</div>
+      </div>
+
+      <div class="cat-item" onclick="setCategory(this,'Fries & Sides')">
+        <div class="cat-icon-wrap">🍟</div>
+        <div class="cat-label">Fries & Sides</div>
+      </div>
+
+      <div class="cat-item" onclick="setCategory(this,'Rice Meals')">
+        <div class="cat-icon-wrap">🍚</div>
+        <div class="cat-label">Rice Meals</div>
+      </div>
+
+      <div class="cat-item" onclick="setCategory(this,'Beverages')">
+        <div class="cat-icon-wrap">🥤</div>
+        <div class="cat-label">Beverages</div>
+      </div>
+
+      <div class="cat-item" onclick="setCategory(this,'Desserts')">
+        <div class="cat-icon-wrap">🍦</div>
+        <div class="cat-label">Desserts</div>
+      </div>
+
+      <div class="cat-item" onclick="setCategory(this,'Value Meals')">
+        <div class="cat-icon-wrap">🎁</div>
+        <div class="cat-label">Value Meals</div>
+      </div>
+
+      <div class="cat-item" onclick="setCategory(this,'Breakfast')">
+        <div class="cat-icon-wrap">🥞</div>
+        <div class="cat-label">Breakfast</div>
+      </div>
+
+      <div class="cat-item cat-reserve" onclick="openReservationModal()">
+        <div class="cat-icon-wrap">📅</div>
+        <div class="cat-label">Reserve</div>
+      </div>
+
+    </div>
+
+    <!-- MENU AREA -->
+    <div class="menu-area">
+
+      <div class="menu-header">
+        <h2 id="menu-title">Burgers</h2>
+        <div class="promo-pill">🔥 Today's Deals</div>
+      </div>
+
+      <div class="menu-grid" id="menu-grid"></div>
+
+    </div>
+
+    <!-- ORDER PANEL -->
+    <div class="order-panel">
+
+      <div class="order-header">
+        <h3>Your Order</h3>
+        <div class="order-count" id="order-count">0</div>
+      </div>
+
+      <div class="order-items" id="order-items">
+
+        <div class="empty-order" id="empty-order">
+          <div class="empty-icon">🛒</div>
+          <p>
+            No items yet.<br>
+            Tap a menu item to add it.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="order-summary">
+
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span id="subtotal">₱0.00</span>
+        </div>
+
+        <div class="summary-row">
+          <span>VAT (12%)</span>
+          <span id="vat">₱0.00</span>
+        </div>
+
+        <!-- POINTS DISCOUNT ROW (hidden by default) -->
+        <div class="summary-row points-discount-row" id="points-discount-row" style="display:none;">
+          <span>⭐ Points Discount</span>
+          <span id="points-discount-amt" style="color:var(--green); font-weight:700;">-₱0.00</span>
+        </div>
+
+        <div class="summary-row total">
+          <span>TOTAL</span>
+          <span id="total">₱0.00</span>
+        </div>
+
+        <!-- REDEEM POINTS BUTTON -->
+        <div id="redeem-wrap" style="display:none;">
+          <button class="btn-redeem" id="redeem-btn" onclick="toggleRedeem()">
+            ⭐ Redeem Points (<span id="redeem-pts-available">0</span> pts)
+          </button>
+          <p class="redeem-hint" id="redeem-hint">50 pts = ₱50 off your order</p>
+        </div>
+
+        <!-- CHECKOUT BUTTON -->
+        <button class="btn-checkout" id="checkout-btn" onclick="checkout()" disabled>
+          Place Order →
+        </button>
+
+        <button class="btn-clear" onclick="clearOrder()">
+          Clear Order
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div id="modal" class="modal">
+
+    <div class="modal-content">
+
+      <h2>Order Successful!</h2>
+
+      <p>Your order number:</p>
+
+      <h1 id="modal-num">00</h1>
+      <div id="modal-ref" class="order-ref-id"></div>
+
+      <div id="points-earned">
+
+        <p id="pts-earned-text"></p>
+
+        <p>
+          Total Points:
+          <span id="pts-total-text">0</span>
+        </p>
+
+      </div>
+
+      <div class="modal-info">
+        Your order is being prepared.
+        Please wait near the <strong>counter</strong>.
+        <br><br>
+        Estimated time:
+        <strong>5–8 minutes</strong>
+      </div>
+
+      <button class="modal-close" onclick="closeModal()">
+        Start New Order
       </button>
 
-      <button class="btn-clear" onclick="clearOrder()">
-        Clear Order
-      </button>
+    </div>
+  </div>
+
+  <!-- RESERVATION MODAL -->
+  <div id="reservation-modal" class="res-modal-overlay">
+    <div class="res-modal">
+
+      <div class="res-modal-header">
+        <div class="res-header-left">
+          <div class="brand-logo" style="width:36px;height:36px;font-size:1.2rem;">QB</div>
+          <div>
+            <div class="res-modal-title">Table Reservation</div>
+            <div class="res-modal-sub">Reserve your spot — skip the wait</div>
+          </div>
+        </div>
+        <button class="res-close-btn" onclick="closeReservationModal()">✕</button>
+      </div>
+
+      <!-- FORM VIEW -->
+      <div id="res-form-view">
+        <div class="res-modal-body">
+
+          <div class="res-section-title">Guest Details</div>
+          <div class="res-grid">
+            <div class="res-field">
+              <label class="res-label">Full Name</label>
+              <input class="res-input" id="res-name" type="text" placeholder="Juan Dela Cruz" />
+            </div>
+            <div class="res-field">
+              <label class="res-label">Contact No.</label>
+              <input class="res-input" id="res-phone" type="tel" placeholder="09XX XXX XXXX" />
+            </div>
+          </div>
+
+          <div class="res-divider"></div>
+          <div class="res-section-title">Reservation Details</div>
+
+          <div class="res-grid">
+            <div class="res-field">
+              <label class="res-label">Date</label>
+              <input class="res-input" id="res-date" type="date" />
+            </div>
+            <div class="res-field">
+              <label class="res-label">Time</label>
+              <select class="res-input" id="res-time">
+                <option value="">Select time</option>
+                <option>10:00 AM</option>
+                <option>10:30 AM</option>
+                <option>11:00 AM</option>
+                <option>11:30 AM</option>
+                <option>12:00 PM</option>
+                <option>12:30 PM</option>
+                <option>1:00 PM</option>
+                <option>1:30 PM</option>
+                <option>2:00 PM</option>
+                <option>2:30 PM</option>
+                <option>6:00 PM</option>
+                <option>6:30 PM</option>
+                <option>7:00 PM</option>
+                <option>7:30 PM</option>
+                <option>8:00 PM</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="res-field">
+            <label class="res-label">Number of Guests</label>
+            <div class="res-guests">
+              <button class="res-guest-btn" onclick="setResGuests(this,'1')">1</button>
+              <button class="res-guest-btn" onclick="setResGuests(this,'2')">2</button>
+              <button class="res-guest-btn" onclick="setResGuests(this,'3')">3</button>
+              <button class="res-guest-btn" onclick="setResGuests(this,'4')">4</button>
+              <button class="res-guest-btn" onclick="setResGuests(this,'5')">5</button>
+              <button class="res-guest-btn" onclick="setResGuests(this,'6+')">6+</button>
+            </div>
+          </div>
+
+          <div class="res-field" style="margin-top:14px;">
+            <label class="res-label">Occasion (optional)</label>
+            <div class="res-tags">
+              <button class="res-tag" onclick="toggleResTag(this)">🎂 Birthday</button>
+              <button class="res-tag" onclick="toggleResTag(this)">💍 Anniversary</button>
+              <button class="res-tag" onclick="toggleResTag(this)">👔 Business</button>
+              <button class="res-tag" onclick="toggleResTag(this)">👨‍👩‍👧 Family</button>
+              <button class="res-tag" onclick="toggleResTag(this)">🎉 Celebration</button>
+            </div>
+          </div>
+
+          <div class="res-field" style="margin-top:14px;">
+            <label class="res-label">Special Requests</label>
+            <textarea class="res-input res-textarea" id="res-notes" rows="2"
+              placeholder="Dietary restrictions, seating preferences, high chair needed, etc."></textarea>
+          </div>
+
+        </div>
+
+        <div class="res-modal-footer">
+          <button class="res-btn-cancel" onclick="closeReservationModal()">Cancel</button>
+          <button class="res-btn-confirm" onclick="submitReservation()">CONFIRM RESERVATION</button>
+        </div>
+      </div>
+
+      <!-- SUCCESS VIEW -->
+      <div id="res-success-view" style="display:none;">
+        <div class="res-success">
+          <div class="res-success-icon">✅</div>
+          <div class="res-success-title">Reservation Confirmed!</div>
+          <div class="res-success-num" id="res-confirm-num">—</div>
+          <div class="res-success-detail" id="res-confirm-detail"></div>
+          <div class="res-success-msg">Your table is reserved. Please arrive <strong>5 minutes early</strong> and show
+            your reservation number at the counter.</div>
+          <div class="res-pts-badge">+5 pts earned!</div>
+          <button class="res-btn-confirm" style="width:100%;margin-top:20px;"
+            onclick="closeReservationModal()">DONE</button>
+        </div>
+      </div>
 
     </div>
   </div>
-</div>
 
-<!-- MODAL -->
-<div id="modal" class="modal">
+  <!-- TOAST -->
+  <div class="kiosk-toast" id="toast"></div>
 
-  <div class="modal-content">
-
-    <h2>Order Successful!</h2>
-
-    <p>Your order number:</p>
-
-    <h1 id="modal-num">00</h1>
-    <div id="modal-ref" class="order-ref-id"></div>
-
-    <div id="points-earned">
-
-      <p id="pts-earned-text"></p>
-
-      <p>
-        Total Points:
-        <span id="pts-total-text">0</span>
-      </p>
-
-    </div>
-
-    <div class="modal-info">
-      Your order is being prepared.
-      Please wait near the <strong>counter</strong>.
-      <br><br>
-      Estimated time:
-      <strong>5–8 minutes</strong>
-    </div>
-
-    <button class="modal-close" onclick="closeModal()">
-      Start New Order
-    </button>
-
-  </div>
-</div>
-
-<!-- RESERVATION MODAL -->
-<div id="reservation-modal" class="res-modal-overlay">
-  <div class="res-modal">
-
-    <div class="res-modal-header">
-      <div class="res-header-left">
-        <div class="brand-logo" style="width:36px;height:36px;font-size:1.2rem;">QB</div>
-        <div>
-          <div class="res-modal-title">Table Reservation</div>
-          <div class="res-modal-sub">Reserve your spot — skip the wait</div>
-        </div>
-      </div>
-      <button class="res-close-btn" onclick="closeReservationModal()">✕</button>
-    </div>
-
-    <!-- FORM VIEW -->
-    <div id="res-form-view">
-      <div class="res-modal-body">
-
-        <div class="res-section-title">Guest Details</div>
-        <div class="res-grid">
-          <div class="res-field">
-            <label class="res-label">Full Name</label>
-            <input class="res-input" id="res-name" type="text" placeholder="Juan Dela Cruz" />
-          </div>
-          <div class="res-field">
-            <label class="res-label">Contact No.</label>
-            <input class="res-input" id="res-phone" type="tel" placeholder="09XX XXX XXXX" />
-          </div>
-        </div>
-
-        <div class="res-divider"></div>
-        <div class="res-section-title">Reservation Details</div>
-
-        <div class="res-grid">
-          <div class="res-field">
-            <label class="res-label">Date</label>
-            <input class="res-input" id="res-date" type="date" />
-          </div>
-          <div class="res-field">
-            <label class="res-label">Time</label>
-            <select class="res-input" id="res-time">
-              <option value="">Select time</option>
-              <option>10:00 AM</option><option>10:30 AM</option>
-              <option>11:00 AM</option><option>11:30 AM</option>
-              <option>12:00 PM</option><option>12:30 PM</option>
-              <option>1:00 PM</option><option>1:30 PM</option>
-              <option>2:00 PM</option><option>2:30 PM</option>
-              <option>6:00 PM</option><option>6:30 PM</option>
-              <option>7:00 PM</option><option>7:30 PM</option>
-              <option>8:00 PM</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="res-field">
-          <label class="res-label">Number of Guests</label>
-          <div class="res-guests">
-            <button class="res-guest-btn" onclick="setResGuests(this,'1')">1</button>
-            <button class="res-guest-btn" onclick="setResGuests(this,'2')">2</button>
-            <button class="res-guest-btn" onclick="setResGuests(this,'3')">3</button>
-            <button class="res-guest-btn" onclick="setResGuests(this,'4')">4</button>
-            <button class="res-guest-btn" onclick="setResGuests(this,'5')">5</button>
-            <button class="res-guest-btn" onclick="setResGuests(this,'6+')">6+</button>
-          </div>
-        </div>
-
-        <div class="res-field" style="margin-top:14px;">
-          <label class="res-label">Occasion (optional)</label>
-          <div class="res-tags">
-            <button class="res-tag" onclick="toggleResTag(this)">🎂 Birthday</button>
-            <button class="res-tag" onclick="toggleResTag(this)">💍 Anniversary</button>
-            <button class="res-tag" onclick="toggleResTag(this)">👔 Business</button>
-            <button class="res-tag" onclick="toggleResTag(this)">👨‍👩‍👧 Family</button>
-            <button class="res-tag" onclick="toggleResTag(this)">🎉 Celebration</button>
-          </div>
-        </div>
-
-        <div class="res-field" style="margin-top:14px;">
-          <label class="res-label">Special Requests</label>
-          <textarea class="res-input res-textarea" id="res-notes" rows="2" placeholder="Dietary restrictions, seating preferences, high chair needed, etc."></textarea>
-        </div>
-
-      </div>
-
-      <div class="res-modal-footer">
-        <button class="res-btn-cancel" onclick="closeReservationModal()">Cancel</button>
-        <button class="res-btn-confirm" onclick="submitReservation()">CONFIRM RESERVATION</button>
-      </div>
-    </div>
-
-    <!-- SUCCESS VIEW -->
-    <div id="res-success-view" style="display:none;">
-      <div class="res-success">
-        <div class="res-success-icon">✅</div>
-        <div class="res-success-title">Reservation Confirmed!</div>
-        <div class="res-success-num" id="res-confirm-num">—</div>
-        <div class="res-success-detail" id="res-confirm-detail"></div>
-        <div class="res-success-msg">Your table is reserved. Please arrive <strong>5 minutes early</strong> and show your reservation number at the counter.</div>
-        <div class="res-pts-badge">+5 pts earned!</div>
-        <button class="res-btn-confirm" style="width:100%;margin-top:20px;" onclick="closeReservationModal()">DONE</button>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- TOAST -->
-<div class="kiosk-toast" id="toast"></div>
-
-<!-- SCRIPT -->
-<script src="script.js?v=2" defer></script>
+  <!-- SCRIPT -->
+  <script src="script.js" defer></script>
 
 </body>
+
 </html>

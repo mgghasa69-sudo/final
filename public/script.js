@@ -1,40 +1,40 @@
 // ── MENU DATA ─────────────────────────────────────────────
 const MENU = {
   Burgers: [
-    { emoji: '🍔', name: 'Classic Smash Burger', desc: 'Double smashed patty, American cheese, pickles & special sauce', price: 189, kcal: 680 },
-    { emoji: '🍔', name: 'Bacon BBQ Stack', desc: 'Triple beef, crispy bacon, cheddar, onion rings, BBQ sauce', price: 229, kcal: 820 },
-    { emoji: '🍔', name: 'Spicy Crispy Chicken', desc: 'Buttermilk chicken fillet, jalapeños, chipotle mayo, lettuce', price: 199, kcal: 590 },
-    { emoji: '🥬', name: 'Mushroom Swiss Burger', desc: 'Beef patty, sautéed mushrooms, Swiss cheese, garlic aioli', price: 209, kcal: 570 },
-    { emoji: '🍔', name: 'Signature QB Burger', desc: 'Our iconic burger with QB sauce, double patty, fresh tomato', price: 249, kcal: 750 },
-    { emoji: '🍔', name: 'Cheeseburger', desc: 'Simple, classic, always great. Single patty, cheese & ketchup', price: 99, kcal: 390 },
+    { emoji: '🍔', name: 'Classic Smash Burger', desc: 'Double smashed patty, American cheese, pickles & special sauce', price: 189, kcal: 680, img: 'images/smash_burger.png' },
+    { emoji: '🍔', name: 'Bacon BBQ Stack', desc: 'Triple beef, crispy bacon, cheddar, onion rings, BBQ sauce', price: 229, kcal: 820, img: 'images/smash_burger.png' },
+    { emoji: '🍔', name: 'Spicy Crispy Chicken', desc: 'Buttermilk chicken fillet, jalapeños, chipotle mayo, lettuce', price: 199, kcal: 590, img: 'images/smash_burger.png' },
+    { emoji: '🥬', name: 'Mushroom Swiss Burger', desc: 'Beef patty, sautéed mushrooms, Swiss cheese, garlic aioli', price: 209, kcal: 570, img: 'images/smash_burger.png' },
+    { emoji: '🍔', name: 'Signature QB Burger', desc: 'Our iconic burger with QB sauce, double patty, fresh tomato', price: 249, kcal: 750, img: 'images/smash_burger.png' },
+    { emoji: '🍔', name: 'Cheeseburger', desc: 'Simple, classic, always great. Single patty, cheese & ketchup', price: 99, kcal: 390, img: 'images/smash_burger.png' },
   ],
   Chicken: [
-    { emoji: '🍗', name: 'Crispy Fried Chicken', desc: '3-piece golden-fried chicken, seasoned with secret spices', price: 179, kcal: 720 },
-    { emoji: '🥩', name: 'Grilled Chicken Platter', desc: 'Herb-marinated grilled breast, steamed veggies & gravy', price: 195, kcal: 480 },
-    { emoji: '🍗', name: 'Chicken Strips x5', desc: 'Tender chicken strips with your choice of dipping sauce', price: 149, kcal: 420 },
-    { emoji: '🌮', name: 'Chicken Wrap', desc: 'Crispy chicken, lettuce, tomato, ranch in a warm tortilla', price: 165, kcal: 510 },
-    { emoji: '🍗', name: 'Spicy Buffalo Wings', desc: '8-piece wings tossed in fiery buffalo sauce', price: 219, kcal: 640 },
-    { emoji: '🍗', name: 'Chickenjoy Family Bucket', desc: '8-piece mixed chicken, perfect for sharing', price: 459, kcal: 0 },
+    { emoji: '🍗', name: 'Crispy Fried Chicken', desc: '3-piece golden-fried chicken, seasoned with secret spices', price: 179, kcal: 720, img: 'images/fried_chicken.png' },
+    { emoji: '🥩', name: 'Grilled Chicken Platter', desc: 'Herb-marinated grilled breast, steamed veggies & gravy', price: 195, kcal: 480, img: 'images/fried_chicken.png' },
+    { emoji: '🍗', name: 'Chicken Strips x5', desc: 'Tender chicken strips with your choice of dipping sauce', price: 149, kcal: 420, img: 'images/fried_chicken.png' },
+    { emoji: '🌮', name: 'Chicken Wrap', desc: 'Crispy chicken, lettuce, tomato, ranch in a warm tortilla', price: 165, kcal: 510, img: 'images/fried_chicken.png' },
+    { emoji: '🍗', name: 'Spicy Buffalo Wings', desc: '8-piece wings tossed in fiery buffalo sauce', price: 219, kcal: 640, img: 'images/fried_chicken.png' },
+    { emoji: '🍗', name: 'Chickenjoy Family Bucket', desc: '8-piece mixed chicken, perfect for sharing', price: 459, kcal: 0, img: 'images/fried_chicken.png' },
   ],
   'Fries & Sides': [
-    { emoji: '🍟', name: 'Large Fries', desc: 'Golden crispy fries, lightly salted', price: 79, kcal: 490 },
-    { emoji: '🍟', name: 'Medium Fries', desc: 'Classic medium serving of fries', price: 59, kcal: 340 },
-    { emoji: '🧀', name: 'Cheese Fries', desc: 'Loaded with creamy nacho cheese sauce', price: 99, kcal: 580 },
+    { emoji: '🍟', name: 'Large Fries', desc: 'Golden crispy fries, lightly salted', price: 79, kcal: 490, img: 'images/fries.png' },
+    { emoji: '🍟', name: 'Medium Fries', desc: 'Classic medium serving of fries', price: 59, kcal: 340, img: 'images/fries.png' },
+    { emoji: '🧀', name: 'Cheese Fries', desc: 'Loaded with creamy nacho cheese sauce', price: 99, kcal: 580, img: 'images/fries.png' },
     { emoji: '🌭', name: 'Loaded Hotdog', desc: 'Jumbo hotdog, mustard, relish, onions', price: 89, kcal: 420 },
     { emoji: '🥗', name: 'Side Salad', desc: 'Fresh greens, cucumber, tomato & dressing', price: 69, kcal: 120 },
     { emoji: '🧅', name: 'Onion Rings', desc: 'Crispy battered rings, served with ranch', price: 85, kcal: 380 },
   ],
   'Rice Meals': [
-    { emoji: '🍚', name: 'Burger Steak + Rice', desc: 'Juicy beef patties with mushroom gravy over steamed rice', price: 155, kcal: 680 },
-    { emoji: '🍚', name: 'Chicken + Rice', desc: '1-pc crispy chicken with steamed rice & gravy', price: 139, kcal: 590 },
-    { emoji: '🍛', name: 'Beef Tapa + Rice', desc: 'Sweet cured beef tapa with garlic rice & sunny side egg', price: 169, kcal: 720 },
-    { emoji: '🍚', name: 'Pork BBQ + Rice', desc: 'Grilled pork skewer, steamed rice & atchara', price: 149, kcal: 650 },
-    { emoji: '🍳', name: 'Silog Meal', desc: 'Your choice of protein, garlic rice & egg', price: 129, kcal: 610 },
+    { emoji: '🍚', name: 'Burger Steak + Rice', desc: 'Juicy beef patties with mushroom gravy over steamed rice', price: 155, kcal: 680, img: 'images/rice_meal.png' },
+    { emoji: '🍚', name: 'Chicken + Rice', desc: '1-pc crispy chicken with steamed rice & gravy', price: 139, kcal: 590, img: 'images/rice_meal.png' },
+    { emoji: '🍛', name: 'Beef Tapa + Rice', desc: 'Sweet cured beef tapa with garlic rice & sunny side egg', price: 169, kcal: 720, img: 'images/rice_meal.png' },
+    { emoji: '🍚', name: 'Pork BBQ + Rice', desc: 'Grilled pork skewer, steamed rice & atchara', price: 149, kcal: 650, img: 'images/rice_meal.png' },
+    { emoji: '🍳', name: 'Silog Meal', desc: 'Your choice of protein, garlic rice & egg', price: 129, kcal: 610, img: 'images/rice_meal.png' },
   ],
   Beverages: [
     { emoji: '🥤', name: 'Large Cola', desc: 'Chilled Coca-Cola, large cup with ice', price: 69, kcal: 200 },
     { emoji: '🥤', name: 'Medium Cola', desc: 'Refreshing medium-sized Coke', price: 55, kcal: 150 },
-    { emoji: '🥛', name: 'Chocolate Shake', desc: 'Thick, creamy chocolate milkshake', price: 95, kcal: 420 },
+    { emoji: '🥛', name: 'Chocolate Shake', desc: 'Thick, creamy chocolate milkshake', price: 95, kcal: 420, img: 'images/chocolate_shake.png' },
     { emoji: '🍋', name: 'Lemonade Slush', desc: 'Tangy frozen lemonade, sweet & icy', price: 79, kcal: 180 },
     { emoji: '☕', name: 'Hot Coffee', desc: 'Freshly brewed arabica coffee', price: 65, kcal: 5 },
     { emoji: '🧃', name: 'Orange Juice', desc: 'Fresh-squeezed orange juice, 350ml', price: 75, kcal: 140 },
@@ -43,21 +43,21 @@ const MENU = {
     { emoji: '🍦', name: 'Soft Serve Cone', desc: 'Classic creamy vanilla soft serve', price: 39, kcal: 200 },
     { emoji: '🍫', name: 'Hot Fudge Sundae', desc: 'Vanilla ice cream, rich hot fudge sauce', price: 75, kcal: 390 },
     { emoji: '🥧', name: 'Buko Pie Slice', desc: 'Flaky crust, tender young coconut filling', price: 65, kcal: 310 },
-    { emoji: '🍩', name: 'Glazed Donut x2', desc: 'Fluffy yeast donuts with sweet glaze', price: 55, kcal: 480 },
+    { emoji: '🍩', name: 'Glazed Donut x2', desc: 'Fluffy yeast donuts with sweet glaze', price: 55, kcal: 480, img: 'images/glazed_donut.png' },
     { emoji: '🎂', name: 'Birthday Cake Slice', desc: 'Vanilla sponge with sprinkles & cream', price: 89, kcal: 440 },
   ],
   'Value Meals': [
     { emoji: '🎁', name: 'QB Value Meal 1', desc: 'Cheeseburger + Small Fries + Medium Cola', price: 149, kcal: 820 },
     { emoji: '🎁', name: 'QB Value Meal 2', desc: 'Chicken Strips + Large Fries + Large Cola', price: 219, kcal: 1050 },
     { emoji: '🎁', name: 'Family Feast', desc: '2 Burgers + 8-pc Chicken + 2 Large Fries + 4 Drinks', price: 799, kcal: 0 },
-    { emoji: '🎁', name: 'Solo Meal Deal', desc: 'Smash Burger + Medium Fries + Medium Cola', price: 249, kcal: 960 },
+    { emoji: '🎁', name: 'Solo Meal Deal', desc: 'Smash Burger + Medium Fries + Medium Cola', price: 249, kcal: 960, img: 'images/smash_burger.png' },
   ],
   Breakfast: [
-    { emoji: '🥞', name: 'Pancake Platter', desc: '3 fluffy pancakes, butter & maple syrup', price: 109, kcal: 520 },
+    { emoji: '🥞', name: 'Pancake Platter', desc: '3 fluffy pancakes, butter & maple syrup', price: 109, kcal: 520, img: 'images/pancakes.png' },
     { emoji: '🥚', name: 'Egg McMuffin', desc: 'Egg, Canadian bacon & cheese on toasted muffin', price: 99, kcal: 300 },
     { emoji: '🌯', name: 'Breakfast Burrito', desc: 'Scrambled eggs, sausage, cheese in tortilla', price: 119, kcal: 450 },
     { emoji: '🥣', name: 'Oatmeal Bowl', desc: 'Creamy oats with brown sugar & almonds', price: 79, kcal: 290 },
-    { emoji: '☕', name: 'Breakfast Combo', desc: 'Pancakes + Egg + Coffee — start your day right', price: 169, kcal: 700 },
+    { emoji: '☕', name: 'Breakfast Combo', desc: 'Pancakes + Egg + Coffee — start your day right', price: 169, kcal: 700, img: 'images/pancakes.png' },
   ],
 };
 
@@ -510,10 +510,13 @@ function renderMenu() {
   grid.innerHTML = '';
   const items = MENU[currentCategory] || [];
   items.forEach(item => {
+    const mediaContent = item.img 
+      ? `<img src="${item.img}" alt="${item.name}" style="width: 100%; height: 100%; object-fit: cover;" />` 
+      : item.emoji;
     grid.innerHTML += `
         <div class="item-card" onclick="addToCart('${item.name}', ${item.price})">
           <div class="item-img">
-            ${item.emoji}
+            ${mediaContent}
           </div>
           <div class="item-info">
             <div class="item-name">${item.name}</div>
