@@ -1413,6 +1413,24 @@ body::after {
   filter: drop-shadow(0 15px 30px rgba(255, 71, 71, 0.3));
 }
 
+.ss-logo i {
+  background: var(--secondary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+/* Custom icon alignment & coloring */
+.cat-icon-wrap i {
+  transition: var(--transition);
+}
+.cat-item.active .cat-icon-wrap i {
+  color: #fff;
+}
+.cat-reserve .cat-icon-wrap i {
+  color: var(--green);
+}
+
 @keyframes float-screensaver {
   0%, 100% { transform: translateY(0) rotate(0deg); }
   50% { transform: translateY(-25px) rotate(5deg); }

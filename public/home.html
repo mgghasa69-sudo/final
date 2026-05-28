@@ -4,7 +4,9 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>QuickBite — Premium Fast Dining</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 font-family=%22Outfit, sans-serif%22 font-weight=%22900%22 fill=%22%23ffb703%22>Q</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 <style>
 *, *::before, *::after {
   box-sizing: border-box;
@@ -866,7 +868,7 @@ footer {
 <!-- HERO -->
 <section class="hero">
   <div class="hero-content">
-    <div class="hero-badge">🔥 Now Open — Dine In & Take Out</div>
+    <div class="hero-badge"><i class="fa-solid fa-fire" style="margin-right: 6px;"></i> Now Open — Dine In & Take Out</div>
     <h1>Taste The<br><span>Bold</span><br>Side of Fast</h1>
     <p class="hero-sub">Smash burgers, crispy chicken, rice meals & more — served fast, made fresh. Order from our menu or reserve your table today.</p>
     <div class="hero-actions">
@@ -884,22 +886,22 @@ footer {
   <div class="section-title">Fast. <span>Fresh.</span> Flavourful.</div>
   <div class="features-grid">
     <div class="feature-card">
-      <div class="feature-icon">⚡</div>
+      <div class="feature-icon"><i class="fa-solid fa-bolt" style="color: var(--secondary);"></i></div>
       <div class="feature-title">Lightning Fast</div>
       <div class="feature-desc">Your order is ready in 5–8 minutes. No waiting, no fuss — just great food served fast.</div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">🥩</div>
+      <div class="feature-icon"><i class="fa-solid fa-leaf" style="color: var(--green);"></i></div>
       <div class="feature-title">Fresh Ingredients</div>
       <div class="feature-desc">Every patty smashed to order. Every ingredient sourced fresh daily. No frozen shortcuts.</div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">📱</div>
+      <div class="feature-icon"><i class="fa-solid fa-mobile-screen-button" style="color: var(--primary-hover);"></i></div>
       <div class="feature-title">Easy Ordering</div>
       <div class="feature-desc">Browse our interactive self-service menu and tap your way to a perfect meal in seconds.</div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">💰</div>
+      <div class="feature-icon"><i class="fa-solid fa-money-bill-wave" style="color: var(--secondary);"></i></div>
       <div class="feature-title">Value Meals</div>
       <div class="feature-desc">Burger + Fries + Drink starting at ₱149. Great food shouldn't break the bank.</div>
     </div>
@@ -913,7 +915,7 @@ footer {
     <div class="section-title">Fan <span>Favourites</span></div>
     <div class="menu-cards">
       <div class="menu-card" onclick="window.location.href='index.html'">
-        <div class="menu-card-img">🍔</div>
+        <div class="menu-card-img"><i class="fa-solid fa-burger"></i></div>
         <div class="menu-card-body">
           <div class="menu-card-name">Classic Smash Burger</div>
           <div class="menu-card-price">₱189</div>
@@ -921,7 +923,7 @@ footer {
         </div>
       </div>
       <div class="menu-card" onclick="window.location.href='index.html'">
-        <div class="menu-card-img">🍗</div>
+        <div class="menu-card-img"><i class="fa-solid fa-drumstick-bite"></i></div>
         <div class="menu-card-body">
           <div class="menu-card-name">Crispy Fried Chicken</div>
           <div class="menu-card-price">₱179</div>
@@ -929,7 +931,7 @@ footer {
         </div>
       </div>
       <div class="menu-card" onclick="window.location.href='index.html'">
-        <div class="menu-card-img">🍟</div>
+        <div class="menu-card-img"><i class="fa-solid fa-hotdog"></i></div>
         <div class="menu-card-body">
           <div class="menu-card-name">Cheese Fries</div>
           <div class="menu-card-price">₱99</div>
@@ -951,11 +953,11 @@ footer {
     <div class="reservation-info">
       <h3>What to Expect</h3>
       <ul>
-        <li><span>📍</span><span>Located in the city center. Easy parking and direct street access.</span></li>
-        <li><span>🕐</span><span>Open daily from 7:00 AM to 10:00 PM. Breakfast, lunch, dinner options available.</span></li>
-        <li><span>👥</span><span>Capacity for 1 to 10+ guests. Ideal for family celebrations, dates, or business.</span></li>
-        <li><span>⭐</span><span>Earn loyalty points (+5 pts) immediately with every table booked.</span></li>
-        <li><span>📞</span><span>Instant confirmation code will show right here on verification.</span></li>
+        <li><span><i class="fa-solid fa-location-dot"></i></span><span>Located in the city center. Easy parking and direct street access.</span></li>
+        <li><span><i class="fa-solid fa-clock"></i></span><span>Open daily from 7:00 AM to 10:00 PM. Breakfast, lunch, dinner options available.</span></li>
+        <li><span><i class="fa-solid fa-users"></i></span><span>Capacity for 1 to 10+ guests. Ideal for family celebrations, dates, or business.</span></li>
+        <li><span><i class="fa-solid fa-star"></i></span><span>Earn loyalty points (+5 pts) immediately with every table booked.</span></li>
+        <li><span><i class="fa-solid fa-phone"></i></span><span>Instant confirmation code will show right here on verification.</span></li>
       </ul>
     </div>
     
@@ -1011,10 +1013,10 @@ footer {
           <div class="field">
             <label>Occasion (optional)</label>
             <div class="res-tags">
-              <button type="button" class="tag-btn" onclick="toggleTag(this)">🎂 Birthday</button>
-              <button type="button" class="tag-btn" onclick="toggleTag(this)">💍 Anniversary</button>
-              <button type="button" class="tag-btn" onclick="toggleTag(this)">👔 Business</button>
-              <button type="button" class="tag-btn" onclick="toggleTag(this)">👨‍👩‍👧 Family</button>
+              <button type="button" class="tag-btn" onclick="toggleTag(this)"><i class="fa-solid fa-cake-candles" style="margin-right: 4px;"></i> Birthday</button>
+              <button type="button" class="tag-btn" onclick="toggleTag(this)"><i class="fa-solid fa-ring" style="margin-right: 4px;"></i> Anniversary</button>
+              <button type="button" class="tag-btn" onclick="toggleTag(this)"><i class="fa-solid fa-user-tie" style="margin-right: 4px;"></i> Business</button>
+              <button type="button" class="tag-btn" onclick="toggleTag(this)"><i class="fa-solid fa-users" style="margin-right: 4px;"></i> Family</button>
             </div>
           </div>
           
@@ -1030,7 +1032,7 @@ footer {
       
       <!-- SUCCESS VIEW -->
       <div id="res-success-view" class="res-success-view" style="display: none;">
-        <div class="res-success-icon">✅</div>
+        <div class="res-success-icon"><i class="fa-solid fa-circle-check"></i></div>
         <div class="res-success-title">Booking Confirmed!</div>
         <p>Show your reservation code at the counter</p>
         <div class="res-success-num" id="res-confirm-num">—</div>
@@ -1075,7 +1077,13 @@ async function checkSession() {
       currentUser = user;
       localStorage.setItem('user', JSON.stringify(user));
       
+      const showAdmin = (localStorage.getItem("role") === "admin" || localStorage.getItem("isAdmin") === "true");
+      const adminBtn = showAdmin 
+        ? `<button class="btn-nav btn-admin-panel" style="background:var(--primary-gradient);color:#fff;box-shadow:0 4px 15px var(--primary-glow);border:none;margin-right:10px;" onclick="window.location.href='admin.html'">Admin</button>`
+        : '';
+      
       navUser.innerHTML = `
+        ${adminBtn}
         <span class="nav-username" onclick="showProfileModal()" style="cursor:pointer" title="Click to view profile card">${user.username}</span>
         <button class="btn-nav btn-kiosk" onclick="window.location.href='index.html'">Menu</button>
         <button class="btn-nav btn-logout" onclick="logout()">Logout</button>
@@ -1099,7 +1107,13 @@ async function checkSession() {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
       currentUser = user;
+      const showAdmin = (localStorage.getItem("role") === "admin" || localStorage.getItem("isAdmin") === "true");
+      const adminBtn = showAdmin 
+        ? `<button class="btn-nav btn-admin-panel" style="background:var(--primary-gradient);color:#fff;box-shadow:0 4px 15px var(--primary-glow);border:none;margin-right:10px;" onclick="window.location.href='admin.html'">Admin</button>`
+        : '';
+        
       navUser.innerHTML = `
+        ${adminBtn}
         <span class="nav-username" onclick="showProfileModal()" style="cursor:pointer" title="Click to view profile card">${user.username}</span>
         <button class="btn-nav btn-kiosk" onclick="window.location.href='index.html'">Menu</button>
         <button class="btn-nav btn-logout" onclick="logout()">Logout</button>
@@ -1226,26 +1240,26 @@ function showProfileModal() {
   const currentPoints = currentUser.points || 0;
 
   // Calculate Loyalty Tiers and Progress Bar calculations
-  let tier = 'Bronze Member 🥉';
+  let tier = 'Bronze Member <i class="fa-solid fa-medal" style="color:#cd7f32; margin-left:4px;"></i>';
   let tierColor = '#cd7f32';
   let nextTier = 'Silver Tier';
   let pointsNeeded = 100 - currentPoints;
   let progressPct = (currentPoints / 100) * 100;
 
   if (currentPoints >= 600) {
-    tier = 'Platinum VIP 👑';
+    tier = 'Platinum VIP <i class="fa-solid fa-crown" style="color:#e5e4e2; margin-left:4px;"></i>';
     tierColor = '#e5e4e2';
     nextTier = 'Ultimate Legend';
     pointsNeeded = 0;
     progressPct = 100;
   } else if (currentPoints >= 300) {
-    tier = 'Gold Tier 🥇';
+    tier = 'Gold Tier <i class="fa-solid fa-medal" style="color:#ffd700; margin-left:4px;"></i>';
     tierColor = '#ffd700';
     nextTier = 'Platinum VIP';
     pointsNeeded = 600 - currentPoints;
     progressPct = ((currentPoints - 300) / 300) * 100;
   } else if (currentPoints >= 100) {
-    tier = 'Silver Tier 🥈';
+    tier = 'Silver Tier <i class="fa-solid fa-medal" style="color:#c0c0c0; margin-left:4px;"></i>';
     tierColor = '#c0c0c0';
     nextTier = 'Gold Tier';
     pointsNeeded = 300 - currentPoints;
@@ -1325,8 +1339,8 @@ function showProfileModal() {
           <span style="color: ${tierColor}; font-weight: 800; font-size: 0.95rem; text-shadow: 0 0 10px rgba(255,255,255,0.1);">${tier}</span>
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-          <span style="color: #94a3b8; font-weight: 700; font-size: 0.85rem; text-transform: uppercase;">Points Balance</span>
-          <span style="color: #ffb703; font-weight: 800; font-size: 1.2rem;">⭐ ${currentPoints} pts</span>
+          <span style="color: #94a3b8; font-size: 0.85rem; font-weight: 700; text-transform: uppercase;">Points Balance</span>
+          <span style="color: #ffb703; font-weight: 800; font-size: 1.2rem;"><i class="fa-solid fa-star" style="margin-right: 4px;"></i> ${currentPoints} pts</span>
         </div>
 
         ${pointsNeeded > 0 ? `
@@ -1341,7 +1355,7 @@ function showProfileModal() {
           </div>
         ` : `
           <div style="margin-top: 16px; font-size: 0.85rem; color: #06d6a0; font-weight: 700; text-align: center;">
-            👑 You have reached maximum Loyalty Status!
+            <i class="fa-solid fa-crown" style="color: #ffd700; margin-right: 6px;"></i> You have reached maximum Loyalty Status!
           </div>
         `}
       </div>

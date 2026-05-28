@@ -31,11 +31,11 @@ function getPool() {
         if (p) {
             await p.query('SELECT 1');
             dbAvailable = true;
-            console.log('✅ Database connected successfully.');
+            console.log('[SUCCESS] Database connected successfully.');
         }
     } catch (e) {
         dbAvailable = false;
-        console.warn('⚠️ Database unavailable — running Express in offline/resilient mode:', e.message);
+        console.warn('[WARNING] Database unavailable — running Express in offline/resilient mode:', e.message);
     }
 })();
 
@@ -108,7 +108,7 @@ app.use((err, req, res, next) => {
 // ─── SERVER STARTUP (Local development only) ───────────────────────────────────
 if (!process.env.VERCEL) {
     const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => console.log(`🚀 QuickBite Server running on port ${PORT}`));
+    app.listen(PORT, () => console.log(`[INFO] QuickBite Server running on port ${PORT}`));
 }
 
 module.exports = app;

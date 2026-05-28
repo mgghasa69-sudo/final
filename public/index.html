@@ -5,18 +5,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>QuickBite Menu</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22 font-family=%22Outfit, sans-serif%22 font-weight=%22900%22 fill=%22%23ffb703%22>Q</text></svg>">
 
   <meta http-equiv="Content-Security-Policy" content="default-src 'self';
 connect-src 'self' http://localhost:5000 http://127.0.0.1:5500 http://127.0.0.1:5000 http://localhost:3000 https://*.vercel.app ws://127.0.0.1:5500 ws://localhost:5500;
 script-src 'self' 'unsafe-inline';
-style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-font-src 'self' https://fonts.gstatic.com;">
+style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com;
+font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com;">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
     rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -24,9 +26,9 @@ font-src 'self' https://fonts.gstatic.com;">
 
   <!-- SCREENSAVER -->
   <div class="screensaver" id="screensaver" onclick="startSession()">
-    <div class="ss-logo">🍔</div>
+    <div class="ss-logo"><i class="fa-solid fa-burger"></i></div>
     <div class="ss-title">Quick<span>Bite</span></div>
-    <div class="ss-tap">👆 Tap anywhere to start your order</div>
+    <div class="ss-tap"><i class="fa-solid fa-hand-pointer"></i> Tap anywhere to start your order</div>
     <div class="ss-strips"></div>
   </div>
 
@@ -69,47 +71,47 @@ font-src 'self' https://fonts.gstatic.com;">
     <div class="sidebar">
 
       <div class="cat-item active" onclick="setCategory(this,'Burgers')">
-        <div class="cat-icon-wrap">🍔</div>
+        <div class="cat-icon-wrap"><i class="fa-solid fa-burger"></i></div>
         <div class="cat-label">Burgers</div>
       </div>
 
       <div class="cat-item" onclick="setCategory(this,'Chicken')">
-        <div class="cat-icon-wrap">🍗</div>
+        <div class="cat-icon-wrap"><i class="fa-solid fa-drumstick-bite"></i></div>
         <div class="cat-label">Chicken</div>
       </div>
 
       <div class="cat-item" onclick="setCategory(this,'Fries & Sides')">
-        <div class="cat-icon-wrap">🍟</div>
+        <div class="cat-icon-wrap"><i class="fa-solid fa-hotdog"></i></div>
         <div class="cat-label">Fries & Sides</div>
       </div>
 
       <div class="cat-item" onclick="setCategory(this,'Rice Meals')">
-        <div class="cat-icon-wrap">🍚</div>
+        <div class="cat-icon-wrap"><i class="fa-solid fa-bowl-rice"></i></div>
         <div class="cat-label">Rice Meals</div>
       </div>
 
       <div class="cat-item" onclick="setCategory(this,'Beverages')">
-        <div class="cat-icon-wrap">🥤</div>
+        <div class="cat-icon-wrap"><i class="fa-solid fa-cup-straw"></i></div>
         <div class="cat-label">Beverages</div>
       </div>
 
       <div class="cat-item" onclick="setCategory(this,'Desserts')">
-        <div class="cat-icon-wrap">🍦</div>
+        <div class="cat-icon-wrap"><i class="fa-solid fa-ice-cream"></i></div>
         <div class="cat-label">Desserts</div>
       </div>
 
       <div class="cat-item" onclick="setCategory(this,'Value Meals')">
-        <div class="cat-icon-wrap">🎁</div>
+        <div class="cat-icon-wrap"><i class="fa-solid fa-gift"></i></div>
         <div class="cat-label">Value Meals</div>
       </div>
 
       <div class="cat-item" onclick="setCategory(this,'Breakfast')">
-        <div class="cat-icon-wrap">🥞</div>
+        <div class="cat-icon-wrap"><i class="fa-solid fa-egg"></i></div>
         <div class="cat-label">Breakfast</div>
       </div>
 
       <div class="cat-item cat-reserve" onclick="openReservationModal()">
-        <div class="cat-icon-wrap">📅</div>
+        <div class="cat-icon-wrap"><i class="fa-solid fa-calendar-days"></i></div>
         <div class="cat-label">Reserve</div>
       </div>
 
@@ -120,7 +122,7 @@ font-src 'self' https://fonts.gstatic.com;">
 
       <div class="menu-header">
         <h2 id="menu-title">Burgers</h2>
-        <div class="promo-pill">🔥 Today's Deals</div>
+        <div class="promo-pill"><i class="fa-solid fa-fire"></i> Today's Deals</div>
       </div>
 
       <div class="menu-grid" id="menu-grid"></div>
@@ -138,7 +140,7 @@ font-src 'self' https://fonts.gstatic.com;">
       <div class="order-items" id="order-items">
 
         <div class="empty-order" id="empty-order">
-          <div class="empty-icon">🛒</div>
+          <div class="empty-icon"><i class="fa-solid fa-cart-shopping"></i></div>
           <p>
             No items yet.<br>
             Tap a menu item to add it.
@@ -161,7 +163,7 @@ font-src 'self' https://fonts.gstatic.com;">
 
         <!-- POINTS DISCOUNT ROW (hidden by default) -->
         <div class="summary-row points-discount-row" id="points-discount-row" style="display:none;">
-          <span>⭐ Points Discount</span>
+          <span><i class="fa-solid fa-star" style="color:var(--secondary); margin-right:4px"></i> Points Discount</span>
           <span id="points-discount-amt" style="color:var(--green); font-weight:700;">-₱0.00</span>
         </div>
 
@@ -173,7 +175,7 @@ font-src 'self' https://fonts.gstatic.com;">
         <!-- REDEEM POINTS BUTTON -->
         <div id="redeem-wrap" style="display:none;">
           <button class="btn-redeem" id="redeem-btn" onclick="toggleRedeem()">
-            ⭐ Redeem Points (<span id="redeem-pts-available">0</span> pts)
+            <i class="fa-solid fa-star" style="margin-right:4px"></i> Redeem Points (<span id="redeem-pts-available">0</span> pts)
           </button>
           <p class="redeem-hint" id="redeem-hint">50 pts = ₱50 off your order</p>
         </div>
@@ -306,11 +308,11 @@ font-src 'self' https://fonts.gstatic.com;">
           <div class="res-field" style="margin-top:14px;">
             <label class="res-label">Occasion (optional)</label>
             <div class="res-tags">
-              <button class="res-tag" onclick="toggleResTag(this)">🎂 Birthday</button>
-              <button class="res-tag" onclick="toggleResTag(this)">💍 Anniversary</button>
-              <button class="res-tag" onclick="toggleResTag(this)">👔 Business</button>
-              <button class="res-tag" onclick="toggleResTag(this)">👨‍👩‍👧 Family</button>
-              <button class="res-tag" onclick="toggleResTag(this)">🎉 Celebration</button>
+              <button class="res-tag" onclick="toggleResTag(this)"><i class="fa-solid fa-cake-candles" style="margin-right: 4px;"></i> Birthday</button>
+              <button class="res-tag" onclick="toggleResTag(this)"><i class="fa-solid fa-ring" style="margin-right: 4px;"></i> Anniversary</button>
+              <button class="res-tag" onclick="toggleResTag(this)"><i class="fa-solid fa-user-tie" style="margin-right: 4px;"></i> Business</button>
+              <button class="res-tag" onclick="toggleResTag(this)"><i class="fa-solid fa-users" style="margin-right: 4px;"></i> Family</button>
+              <button class="res-tag" onclick="toggleResTag(this)"><i class="fa-solid fa-champagne-glasses" style="margin-right: 4px;"></i> Celebration</button>
             </div>
           </div>
 
@@ -331,7 +333,7 @@ font-src 'self' https://fonts.gstatic.com;">
       <!-- SUCCESS VIEW -->
       <div id="res-success-view" style="display:none;">
         <div class="res-success">
-          <div class="res-success-icon">✅</div>
+          <div class="res-success-icon"><i class="fa-solid fa-circle-check"></i></div>
           <div class="res-success-title">Reservation Confirmed!</div>
           <div class="res-success-num" id="res-confirm-num">—</div>
           <div class="res-success-detail" id="res-confirm-detail"></div>

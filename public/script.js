@@ -1,63 +1,63 @@
 // ── MENU DATA ─────────────────────────────────────────────
 const MENU = {
   Burgers: [
-    { emoji: '🍔', name: 'Classic Smash Burger', desc: 'Double smashed patty, American cheese, pickles & special sauce', price: 189, kcal: 680, img: 'images/smash_burger.png' },
-    { emoji: '🍔', name: 'Bacon BBQ Stack', desc: 'Triple beef, crispy bacon, cheddar, onion rings, BBQ sauce', price: 229, kcal: 820, img: 'images/bbq_burger.png' },
-    { emoji: '🍔', name: 'Spicy Crispy Chicken', desc: 'Buttermilk chicken fillet, jalapeños, chipotle mayo, lettuce', price: 199, kcal: 590, img: 'images/chicken_burger.png' },
-    { emoji: '🥬', name: 'Mushroom Swiss Burger', desc: 'Beef patty, sautéed mushrooms, Swiss cheese, garlic aioli', price: 209, kcal: 570, img: 'images/mushroom_burger.png' },
-    { emoji: '🍔', name: 'Signature QB Burger', desc: 'Our iconic burger with QB sauce, double patty, fresh tomato', price: 249, kcal: 750, img: 'images/qb_burger.png' },
-    { emoji: '🍔', name: 'Cheeseburger', desc: 'Simple, classic, always great. Single patty, cheese & ketchup', price: 99, kcal: 390, img: 'images/smash_burger.png' },
+    { emoji: '<i class="fa-solid fa-burger"></i>', name: 'Classic Smash Burger', desc: 'Double smashed patty, American cheese, pickles & special sauce', price: 189, kcal: 680, img: 'images/smash_burger.png' },
+    { emoji: '<i class="fa-solid fa-burger"></i>', name: 'Bacon BBQ Stack', desc: 'Triple beef, crispy bacon, cheddar, onion rings, BBQ sauce', price: 229, kcal: 820, img: 'images/bbq_burger.png' },
+    { emoji: '<i class="fa-solid fa-burger"></i>', name: 'Spicy Crispy Chicken', desc: 'Buttermilk chicken fillet, jalapeños, chipotle mayo, lettuce', price: 199, kcal: 590, img: 'images/chicken_burger.png' },
+    { emoji: '<i class="fa-solid fa-burger"></i>', name: 'Mushroom Swiss Burger', desc: 'Beef patty, sautéed mushrooms, Swiss cheese, garlic aioli', price: 209, kcal: 570, img: 'images/mushroom_burger.png' },
+    { emoji: '<i class="fa-solid fa-burger"></i>', name: 'Signature QB Burger', desc: 'Our iconic burger with QB sauce, double patty, fresh tomato', price: 249, kcal: 750, img: 'images/qb_burger.png' },
+    { emoji: '<i class="fa-solid fa-burger"></i>', name: 'Cheeseburger', desc: 'Simple, classic, always great. Single patty, cheese & ketchup', price: 99, kcal: 390, img: 'images/smash_burger.png' },
   ],
   Chicken: [
-    { emoji: '🍗', name: 'Crispy Fried Chicken', desc: '3-piece golden-fried chicken, seasoned with secret spices', price: 179, kcal: 720, img: 'images/fried_chicken.png' },
-    { emoji: '🥩', name: 'Grilled Chicken Platter', desc: 'Herb-marinated grilled breast, steamed veggies & gravy', price: 195, kcal: 480, img: 'images/rice_meal.png' },
-    { emoji: '🍗', name: 'Chicken Strips x5', desc: 'Tender chicken strips with your choice of dipping sauce', price: 149, kcal: 420, img: 'images/fried_chicken.png' },
-    { emoji: '🌮', name: 'Chicken Wrap', desc: 'Crispy chicken, lettuce, tomato, ranch in a warm tortilla', price: 165, kcal: 510, img: 'images/fried_chicken.png' },
-    { emoji: '🍗', name: 'Spicy Buffalo Wings', desc: '8-piece wings tossed in fiery buffalo sauce', price: 219, kcal: 640, img: 'images/fried_chicken.png' },
-    { emoji: '🍗', name: 'Chickenjoy Family Bucket', desc: '8-piece mixed chicken, perfect for sharing', price: 459, kcal: 0, img: 'images/fried_chicken.png' },
+    { emoji: '<i class="fa-solid fa-drumstick-bite"></i>', name: 'Crispy Fried Chicken', desc: '3-piece golden-fried chicken, seasoned with secret spices', price: 179, kcal: 720, img: 'images/fried_chicken.png' },
+    { emoji: '<i class="fa-solid fa-leaf"></i>', name: 'Grilled Chicken Platter', desc: 'Herb-marinated grilled breast, steamed veggies & gravy', price: 195, kcal: 480, img: 'images/rice_meal.png' },
+    { emoji: '<i class="fa-solid fa-drumstick-bite"></i>', name: 'Chicken Strips x5', desc: 'Tender chicken strips with your choice of dipping sauce', price: 149, kcal: 420, img: 'images/fried_chicken.png' },
+    { emoji: '<i class="fa-solid fa-drumstick-bite"></i>', name: 'Chicken Wrap', desc: 'Crispy chicken, lettuce, tomato, ranch in a warm tortilla', price: 165, kcal: 510, img: 'images/fried_chicken.png' },
+    { emoji: '<i class="fa-solid fa-drumstick-bite"></i>', name: 'Spicy Buffalo Wings', desc: '8-piece wings tossed in fiery buffalo sauce', price: 219, kcal: 640, img: 'images/fried_chicken.png' },
+    { emoji: '<i class="fa-solid fa-drumstick-bite"></i>', name: 'Chickenjoy Family Bucket', desc: '8-piece mixed chicken, perfect for sharing', price: 459, kcal: 0, img: 'images/fried_chicken.png' },
   ],
   'Fries & Sides': [
-    { emoji: '🍟', name: 'Large Fries', desc: 'Golden crispy fries, lightly salted', price: 79, kcal: 490, img: 'images/fries.png' },
-    { emoji: '🍟', name: 'Medium Fries', desc: 'Classic medium serving of fries', price: 59, kcal: 340, img: 'images/fries.png' },
-    { emoji: '🧀', name: 'Cheese Fries', desc: 'Loaded with creamy nacho cheese sauce', price: 99, kcal: 580, img: 'images/fries.png' },
-    { emoji: '🌭', name: 'Loaded Hotdog', desc: 'Jumbo hotdog, mustard, relish, onions', price: 89, kcal: 420, img: 'images/hotdog.png' },
-    { emoji: '🥗', name: 'Side Salad', desc: 'Fresh greens, cucumber, tomato & dressing', price: 69, kcal: 120, img: 'images/salad.png' },
-    { emoji: '🧅', name: 'Onion Rings', desc: 'Crispy battered rings, served with ranch', price: 85, kcal: 380, img: 'images/onion_rings.png' },
+    { emoji: '<i class="fa-solid fa-hotdog"></i>', name: 'Large Fries', desc: 'Golden crispy fries, lightly salted', price: 79, kcal: 490, img: 'images/fries.png' },
+    { emoji: '<i class="fa-solid fa-hotdog"></i>', name: 'Medium Fries', desc: 'Classic medium serving of fries', price: 59, kcal: 340, img: 'images/fries.png' },
+    { emoji: '<i class="fa-solid fa-cheese"></i>', name: 'Cheese Fries', desc: 'Loaded with creamy nacho cheese sauce', price: 99, kcal: 580, img: 'images/fries.png' },
+    { emoji: '<i class="fa-solid fa-hotdog"></i>', name: 'Loaded Hotdog', desc: 'Jumbo hotdog, mustard, relish, onions', price: 89, kcal: 420, img: 'images/hotdog.png' },
+    { emoji: '<i class="fa-solid fa-leaf"></i>', name: 'Side Salad', desc: 'Fresh greens, cucumber, tomato & dressing', price: 69, kcal: 120, img: 'images/salad.png' },
+    { emoji: '<i class="fa-solid fa-hotdog"></i>', name: 'Onion Rings', desc: 'Crispy battered rings, served with ranch', price: 85, kcal: 380, img: 'images/onion_rings.png' },
   ],
   'Rice Meals': [
-    { emoji: '🍚', name: 'Burger Steak + Rice', desc: 'Juicy beef patties with mushroom gravy over steamed rice', price: 155, kcal: 680, img: 'images/rice_meal.png' },
-    { emoji: '🍚', name: 'Chicken + Rice', desc: '1-pc crispy chicken with steamed rice & gravy', price: 139, kcal: 590, img: 'images/rice_meal.png' },
-    { emoji: '🍛', name: 'Beef Tapa + Rice', desc: 'Sweet cured beef tapa with garlic rice & sunny side egg', price: 169, kcal: 720, img: 'images/rice_meal.png' },
-    { emoji: '🍚', name: 'Pork BBQ + Rice', desc: 'Grilled pork skewer, steamed rice & atchara', price: 149, kcal: 650, img: 'images/rice_meal.png' },
-    { emoji: '🍳', name: 'Silog Meal', desc: 'Your choice of protein, garlic rice & egg', price: 129, kcal: 610, img: 'images/rice_meal.png' },
+    { emoji: '<i class="fa-solid fa-bowl-rice"></i>', name: 'Burger Steak + Rice', desc: 'Juicy beef patties with mushroom gravy over steamed rice', price: 155, kcal: 680, img: 'images/rice_meal.png' },
+    { emoji: '<i class="fa-solid fa-bowl-rice"></i>', name: 'Chicken + Rice', desc: '1-pc crispy chicken with steamed rice & gravy', price: 139, kcal: 590, img: 'images/rice_meal.png' },
+    { emoji: '<i class="fa-solid fa-bowl-rice"></i>', name: 'Beef Tapa + Rice', desc: 'Sweet cured beef tapa with garlic rice & sunny side egg', price: 169, kcal: 720, img: 'images/rice_meal.png' },
+    { emoji: '<i class="fa-solid fa-bowl-rice"></i>', name: 'Pork BBQ + Rice', desc: 'Grilled pork skewer, steamed rice & atchara', price: 149, kcal: 650, img: 'images/rice_meal.png' },
+    { emoji: '<i class="fa-solid fa-egg"></i>', name: 'Silog Meal', desc: 'Your choice of protein, garlic rice & egg', price: 129, kcal: 610, img: 'images/rice_meal.png' },
   ],
   Beverages: [
-    { emoji: '🥤', name: 'Large Cola', desc: 'Chilled Coca-Cola, large cup with ice', price: 69, kcal: 200, img: 'images/cola.png' },
-    { emoji: '🥤', name: 'Medium Cola', desc: 'Refreshing medium-sized Coke', price: 55, kcal: 150, img: 'images/cola.png' },
-    { emoji: '🥛', name: 'Chocolate Shake', desc: 'Thick, creamy chocolate milkshake', price: 95, kcal: 420, img: 'images/chocolate_shake.png' },
-    { emoji: '🍋', name: 'Lemonade Slush', desc: 'Tangy frozen lemonade, sweet & icy', price: 79, kcal: 180, img: 'images/lemonade.png' },
-    { emoji: '☕', name: 'Hot Coffee', desc: 'Freshly brewed arabica coffee', price: 65, kcal: 5, img: 'images/coffee.png' },
-    { emoji: '🧃', name: 'Orange Juice', desc: 'Fresh-squeezed orange juice, 350ml', price: 75, kcal: 140, img: 'images/lemonade.png' },
+    { emoji: '<i class="fa-solid fa-cup-straw"></i>', name: 'Large Cola', desc: 'Chilled Coca-Cola, large cup with ice', price: 69, kcal: 200, img: 'images/cola.png' },
+    { emoji: '<i class="fa-solid fa-cup-straw"></i>', name: 'Medium Cola', desc: 'Refreshing medium-sized Coke', price: 55, kcal: 150, img: 'images/cola.png' },
+    { emoji: '<i class="fa-solid fa-cup-straw"></i>', name: 'Chocolate Shake', desc: 'Thick, creamy chocolate milkshake', price: 95, kcal: 420, img: 'images/chocolate_shake.png' },
+    { emoji: '<i class="fa-solid fa-cup-straw"></i>', name: 'Lemonade Slush', desc: 'Tangy frozen lemonade, sweet & icy', price: 79, kcal: 180, img: 'images/lemonade.png' },
+    { emoji: '<i class="fa-solid fa-mug-hot"></i>', name: 'Hot Coffee', desc: 'Freshly brewed arabica coffee', price: 65, kcal: 5, img: 'images/coffee.png' },
+    { emoji: '<i class="fa-solid fa-cup-straw"></i>', name: 'Orange Juice', desc: 'Fresh-squeezed orange juice, 350ml', price: 75, kcal: 140, img: 'images/lemonade.png' },
   ],
   Desserts: [
-    { emoji: '🍦', name: 'Soft Serve Cone', desc: 'Classic creamy vanilla soft serve', price: 39, kcal: 200, img: 'images/chocolate_shake.png' },
-    { emoji: '🍫', name: 'Hot Fudge Sundae', desc: 'Vanilla ice cream, rich hot fudge sauce', price: 75, kcal: 390, img: 'images/chocolate_shake.png' },
-    { emoji: '🥧', name: 'Buko Pie Slice', desc: 'Flaky crust, tender young coconut filling', price: 65, kcal: 310, img: 'images/glazed_donut.png' },
-    { emoji: '🍩', name: 'Glazed Donut x2', desc: 'Fluffy yeast donuts with sweet glaze', price: 55, kcal: 480, img: 'images/glazed_donut.png' },
-    { emoji: '🎂', name: 'Birthday Cake Slice', desc: 'Vanilla sponge with sprinkles & cream', price: 89, kcal: 440, img: 'images/pancakes.png' },
+    { emoji: '<i class="fa-solid fa-ice-cream"></i>', name: 'Soft Serve Cone', desc: 'Classic creamy vanilla soft serve', price: 39, kcal: 200, img: 'images/chocolate_shake.png' },
+    { emoji: '<i class="fa-solid fa-ice-cream"></i>', name: 'Hot Fudge Sundae', desc: 'Vanilla ice cream, rich hot fudge sauce', price: 75, kcal: 390, img: 'images/chocolate_shake.png' },
+    { emoji: '<i class="fa-solid fa-cookie"></i>', name: 'Buko Pie Slice', desc: 'Flaky crust, tender young coconut filling', price: 65, kcal: 310, img: 'images/glazed_donut.png' },
+    { emoji: '<i class="fa-solid fa-cookie"></i>', name: 'Glazed Donut x2', desc: 'Fluffy yeast donuts with sweet glaze', price: 55, kcal: 480, img: 'images/glazed_donut.png' },
+    { emoji: '<i class="fa-solid fa-cake-candles"></i>', name: 'Birthday Cake Slice', desc: 'Vanilla sponge with sprinkles & cream', price: 89, kcal: 440, img: 'images/pancakes.png' },
   ],
   'Value Meals': [
-    { emoji: '🎁', name: 'QB Value Meal 1', desc: 'Cheeseburger + Small Fries + Medium Cola', price: 149, kcal: 820, img: 'images/qb_burger.png' },
-    { emoji: '🎁', name: 'QB Value Meal 2', desc: 'Chicken Strips + Large Fries + Large Cola', price: 219, kcal: 1050, img: 'images/fried_chicken.png' },
-    { emoji: '🎁', name: 'Family Feast', desc: '2 Burgers + 8-pc Chicken + 2 Large Fries + 4 Drinks', price: 799, kcal: 0, img: 'images/bbq_burger.png' },
-    { emoji: '🎁', name: 'Solo Meal Deal', desc: 'Smash Burger + Medium Fries + Medium Cola', price: 249, kcal: 960, img: 'images/smash_burger.png' },
+    { emoji: '<i class="fa-solid fa-gift"></i>', name: 'QB Value Meal 1', desc: 'Cheeseburger + Small Fries + Medium Cola', price: 149, kcal: 820, img: 'images/qb_burger.png' },
+    { emoji: '<i class="fa-solid fa-gift"></i>', name: 'QB Value Meal 2', desc: 'Chicken Strips + Large Fries + Large Cola', price: 219, kcal: 1050, img: 'images/fried_chicken.png' },
+    { emoji: '<i class="fa-solid fa-gift"></i>', name: 'Family Feast', desc: '2 Burgers + 8-pc Chicken + 2 Large Fries + 4 Drinks', price: 799, kcal: 0, img: 'images/bbq_burger.png' },
+    { emoji: '<i class="fa-solid fa-gift"></i>', name: 'Solo Meal Deal', desc: 'Smash Burger + Medium Fries + Medium Cola', price: 249, kcal: 960, img: 'images/smash_burger.png' },
   ],
   Breakfast: [
-    { emoji: '🥞', name: 'Pancake Platter', desc: '3 fluffy pancakes, butter & maple syrup', price: 109, kcal: 520, img: 'images/pancakes.png' },
-    { emoji: '🥚', name: 'Egg McMuffin', desc: 'Egg, Canadian bacon & cheese on toasted muffin', price: 99, kcal: 300, img: 'images/pancakes.png' },
-    { emoji: '🌯', name: 'Breakfast Burrito', desc: 'Scrambled eggs, sausage, cheese in tortilla', price: 119, kcal: 450, img: 'images/pancakes.png' },
-    { emoji: '🥣', name: 'Oatmeal Bowl', desc: 'Creamy oats with brown sugar & almonds', price: 79, kcal: 290, img: 'images/pancakes.png' },
-    { emoji: '☕', name: 'Breakfast Combo', desc: 'Pancakes + Egg + Coffee — start your day right', price: 169, kcal: 700, img: 'images/pancakes.png' },
+    { emoji: '<i class="fa-solid fa-egg"></i>', name: 'Pancake Platter', desc: '3 fluffy pancakes, butter & maple syrup', price: 109, kcal: 520, img: 'images/pancakes.png' },
+    { emoji: '<i class="fa-solid fa-egg"></i>', name: 'Egg McMuffin', desc: 'Egg, Canadian bacon & cheese on toasted muffin', price: 99, kcal: 300, img: 'images/pancakes.png' },
+    { emoji: '<i class="fa-solid fa-egg"></i>', name: 'Breakfast Burrito', desc: 'Scrambled eggs, sausage, cheese in tortilla', price: 119, kcal: 450, img: 'images/pancakes.png' },
+    { emoji: '<i class="fa-solid fa-egg"></i>', name: 'Oatmeal Bowl', desc: 'Creamy oats with brown sugar & almonds', price: 79, kcal: 290, img: 'images/pancakes.png' },
+    { emoji: '<i class="fa-solid fa-mug-hot"></i>', name: 'Breakfast Combo', desc: 'Pancakes + Egg + Coffee — start your day right', price: 169, kcal: 700, img: 'images/pancakes.png' },
   ],
 };
 
@@ -140,12 +140,18 @@ function renderUserArea() {
     ? currentUser.username.slice(0, 2).toUpperCase()
     : 'QB';
 
+  const showAdmin = (localStorage.getItem("role") === "admin" || localStorage.getItem("isAdmin") === "true");
+  const adminBtn = showAdmin 
+    ? `<button class="btn-admin-redirect" style="margin-right: 12px; background: var(--primary-gradient); color:#fff; font-family:'Outfit', sans-serif; font-size:0.9rem; font-weight:800; border:none; padding:10px 20px; border-radius:var(--radius-sm); cursor:pointer; box-shadow:0 4px 15px var(--primary-glow); text-transform:uppercase; transition:var(--transition);" onclick="window.location.href='admin.html'">Admin Panel</button>`
+    : '';
+
   area.innerHTML = `
+      ${adminBtn}
       <div class="user-chip" onclick="showProfileModal()" style="cursor:pointer" title="Click to view profile card">
         <div class="user-avatar">${initials}</div>
         <div class="user-info">
           <div class="user-name">${currentUser.username}</div>
-          <div class="user-pts" id="user-pts-display">⭐ ${currentPoints} pts</div>
+          <div class="user-pts" id="user-pts-display"><i class="fa-solid fa-star" style="margin-right: 4px;"></i> ${currentPoints} pts</div>
         </div>
         <button class="topbar-logout-btn" onclick="event.stopPropagation(); logout()">Sign Out</button>
       </div>
@@ -157,26 +163,26 @@ function showProfileModal() {
   if (!currentUser) return;
 
   // Calculate Loyalty Tiers and Progress Bar calculations
-  let tier = 'Bronze Member 🥉';
+  let tier = 'Bronze Member <i class="fa-solid fa-medal" style="color:#cd7f32; margin-left:4px;"></i>';
   let tierColor = '#cd7f32';
   let nextTier = 'Silver Tier';
   let pointsNeeded = 100 - currentPoints;
   let progressPct = (currentPoints / 100) * 100;
 
   if (currentPoints >= 600) {
-    tier = 'Platinum VIP 👑';
+    tier = 'Platinum VIP <i class="fa-solid fa-crown" style="color:#e5e4e2; margin-left:4px;"></i>';
     tierColor = '#e5e4e2';
     nextTier = 'Ultimate Legend';
     pointsNeeded = 0;
     progressPct = 100;
   } else if (currentPoints >= 300) {
-    tier = 'Gold Tier 🥇';
+    tier = 'Gold Tier <i class="fa-solid fa-medal" style="color:#ffd700; margin-left:4px;"></i>';
     tierColor = '#ffd700';
     nextTier = 'Platinum VIP';
     pointsNeeded = 600 - currentPoints;
     progressPct = ((currentPoints - 300) / 300) * 100;
   } else if (currentPoints >= 100) {
-    tier = 'Silver Tier 🥈';
+    tier = 'Silver Tier <i class="fa-solid fa-medal" style="color:#c0c0c0; margin-left:4px;"></i>';
     tierColor = '#c0c0c0';
     nextTier = 'Gold Tier';
     pointsNeeded = 300 - currentPoints;
@@ -257,7 +263,7 @@ function showProfileModal() {
         </div>
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
           <span style="color: #94a3b8; font-size: 0.85rem; font-weight: 700; text-transform: uppercase;">Points Balance</span>
-          <span style="color: #ffb703; font-weight: 800; font-size: 1.2rem;">⭐ ${currentPoints} pts</span>
+          <span style="color: #ffb703; font-weight: 800; font-size: 1.2rem;"><i class="fa-solid fa-star" style="margin-right: 4px;"></i> ${currentPoints} pts</span>
         </div>
 
         ${pointsNeeded > 0 ? `
@@ -272,7 +278,7 @@ function showProfileModal() {
           </div>
         ` : `
           <div style="margin-top: 16px; font-size: 0.85rem; color: #06d6a0; font-weight: 700; text-align: center;">
-            👑 You have reached maximum Loyalty Status!
+            <i class="fa-solid fa-crown" style="color: #ffd700; margin-right: 6px;"></i> You have reached maximum Loyalty Status!
           </div>
         `}
       </div>
@@ -336,7 +342,7 @@ async function fetchPoints() {
 
 function updatePointsDisplay(pts) {
   const el = document.getElementById('user-pts-display');
-  if (el) el.textContent = `⭐ ${pts ?? currentPoints} pts`;
+  if (el) el.innerHTML = `<i class="fa-solid fa-star" style="margin-right: 4px;"></i> ${pts ?? currentPoints} pts`;
 }
 
 function logout() {
@@ -444,7 +450,7 @@ function toggleRedeem() {
     }
 
     pointsDiscount = ptsToUse;
-    showToast(`⭐ ${ptsToUse} pts redeemed! -₱${ptsToUse} off`);
+    showToast(`<i class="fa-solid fa-star" style="color:var(--secondary); margin-right:6px"></i> ${ptsToUse} pts redeemed! -₱${ptsToUse} off`);
   } else {
     pointsDiscount = 0;
     showToast('Points redemption removed');
@@ -479,7 +485,7 @@ function updateRedeemButton() {
     } else {
       btn.style.background = '';
       btn.style.color = '';
-      btn.innerHTML = `⭐ Redeem Points (<span id="redeem-pts-available">${currentPoints}</span> pts)`;
+      btn.innerHTML = `<i class="fa-solid fa-star" style="margin-right: 4px;"></i> Redeem Points (<span id="redeem-pts-available">${currentPoints}</span> pts)`;
     }
   }
 }
@@ -723,7 +729,7 @@ function updateClock() {
 function showToast(msg) {
   const toast = document.getElementById('toast');
   if (!toast) return;
-  toast.innerText = msg;
+  toast.innerHTML = msg;
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 2000);
 }
@@ -825,7 +831,7 @@ async function submitReservation() {
     document.getElementById('res-form-view').style.display = 'none';
     document.getElementById('res-success-view').style.display = 'block';
 
-    showToast('Reservation confirmed! 🎉');
+    showToast('Reservation confirmed! <i class="fa-solid fa-circle-check" style="color:var(--green); margin-left:6px"></i>');
 
     // Reset button for next time
     confirmBtn.textContent = 'CONFIRM RESERVATION';
