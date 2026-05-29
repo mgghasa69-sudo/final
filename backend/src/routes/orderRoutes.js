@@ -1,13 +1,15 @@
 const express = require('express');
 const { pool } = require('../database/db');
-const { verifyToken, requireAdmin } = require('../middleware/auth');
+const { verifyToken, requireAdmin, protect } = require('../middleware/auth');
 
 const router = express.Router();
 
 // PLACE A NEW ORDER
-// Open to all customers/kiosks, handles database insert, and falls back gracefully to a random order ID if offline.
-router.post('/', async (req, res) => {
-    const { customer_name, customer_email, items, total, notes, order_type } = req.body;
+// Authenticated users only, handles database insert, and falls back gracefully to a random order ID if offline.
+router.post('/', protect, async (req, res) => {
+    const { items, total, notes, order_type } = req.body;
+    const customer_name = req.user.username;
+    const customer_email = req.user.email || '';
 
     try {
         const result = await pool.query(

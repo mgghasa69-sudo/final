@@ -102,9 +102,26 @@ function lsClearUser() {
   localStorage.removeItem('role');
 }
 
+function saveCart() {
+  localStorage.setItem('qb_cart', JSON.stringify(cart));
+}
+
+function loadCart() {
+  try {
+    const saved = localStorage.getItem('qb_cart');
+    if (saved) {
+      cart = JSON.parse(saved);
+      updateCartUI();
+    }
+  } catch (e) {
+    console.warn("Failed to load saved cart:", e);
+  }
+}
+
 // ── BOOT ──────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
   initUser();
+  loadCart();
   updateClock();
   setInterval(updateClock, 1000);
   renderMenu();
@@ -545,6 +562,7 @@ function addToCart(name, price) {
     redeemActive = false;
     pointsDiscount = 0;
   }
+  saveCart();
   updateCartUI();
   showToast(`${name} added!`);
 }
@@ -608,6 +626,14 @@ function updatePrices(subtotal) {
 
 // ── CHECKOUT (Supabase-integrated with offline fallback) ──
 async function checkout() {
+  if (!currentUser) {
+    showToast('Please sign in first to place your order! Redirecting...');
+    setTimeout(() => {
+      window.location.href = 'login.html';
+    }, 1500);
+    return;
+  }
+
   const subtotal = cart.reduce((s, i) => s + i.price * i.quantity, 0);
   const vat = subtotal * 0.12;
   const beforeDiscount = parseFloat((subtotal + vat).toFixed(2));
@@ -716,6 +742,7 @@ function clearOrder() {
   cart = [];
   redeemActive = false;
   pointsDiscount = 0;
+  saveCart();
   updateCartUI();
 }
 

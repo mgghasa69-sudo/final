@@ -23,6 +23,8 @@
     { "source": "/orders/:path*", "destination": "/api" },
     { "source": "/orders", "destination": "/api" },
     { "source": "/points/:path*", "destination": "/api" },
+    { "source": "/menu/:path*", "destination": "/api" },
+    { "source": "/menu", "destination": "/api" },
     { "source": "/", "destination": "/home.html" }
   ]
 }
