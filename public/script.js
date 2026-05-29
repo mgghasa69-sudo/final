@@ -32,12 +32,12 @@ const MENU = {
     { emoji: '<i class="fa-solid fa-egg"></i>', name: 'Silog Meal', desc: 'Your choice of protein, garlic rice & egg', price: 129, kcal: 610, img: 'images/rice_meal.png' },
   ],
   Beverages: [
-    { emoji: '<i class="fa-solid fa-cup-straw"></i>', name: 'Large Cola', desc: 'Chilled Coca-Cola, large cup with ice', price: 69, kcal: 200, img: 'images/cola.png' },
-    { emoji: '<i class="fa-solid fa-cup-straw"></i>', name: 'Medium Cola', desc: 'Refreshing medium-sized Coke', price: 55, kcal: 150, img: 'images/cola.png' },
-    { emoji: '<i class="fa-solid fa-cup-straw"></i>', name: 'Chocolate Shake', desc: 'Thick, creamy chocolate milkshake', price: 95, kcal: 420, img: 'images/chocolate_shake.png' },
-    { emoji: '<i class="fa-solid fa-cup-straw"></i>', name: 'Lemonade Slush', desc: 'Tangy frozen lemonade, sweet & icy', price: 79, kcal: 180, img: 'images/lemonade.png' },
+    { emoji: '<i class="fa-solid fa-glass-water"></i>', name: 'Large Cola', desc: 'Chilled Coca-Cola, large cup with ice', price: 69, kcal: 200, img: 'images/cola.png' },
+    { emoji: '<i class="fa-solid fa-glass-water"></i>', name: 'Medium Cola', desc: 'Refreshing medium-sized Coke', price: 55, kcal: 150, img: 'images/cola.png' },
+    { emoji: '<i class="fa-solid fa-glass-water"></i>', name: 'Chocolate Shake', desc: 'Thick, creamy chocolate milkshake', price: 95, kcal: 420, img: 'images/chocolate_shake.png' },
+    { emoji: '<i class="fa-solid fa-glass-water"></i>', name: 'Lemonade Slush', desc: 'Tangy frozen lemonade, sweet & icy', price: 79, kcal: 180, img: 'images/lemonade.png' },
     { emoji: '<i class="fa-solid fa-mug-hot"></i>', name: 'Hot Coffee', desc: 'Freshly brewed arabica coffee', price: 65, kcal: 5, img: 'images/coffee.png' },
-    { emoji: '<i class="fa-solid fa-cup-straw"></i>', name: 'Orange Juice', desc: 'Fresh-squeezed orange juice, 350ml', price: 75, kcal: 140, img: 'images/lemonade.png' },
+    { emoji: '<i class="fa-solid fa-glass-water"></i>', name: 'Orange Juice', desc: 'Fresh-squeezed orange juice, 350ml', price: 75, kcal: 140, img: 'images/lemonade.png' },
   ],
   Desserts: [
     { emoji: '<i class="fa-solid fa-ice-cream"></i>', name: 'Soft Serve Cone', desc: 'Classic creamy vanilla soft serve', price: 39, kcal: 200, img: 'images/chocolate_shake.png' },
