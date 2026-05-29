@@ -31,7 +31,7 @@ const MENU = {
     { emoji: '<i class="fa-solid fa-bowl-rice"></i>', name: 'Pork BBQ + Rice', desc: 'Grilled pork skewer, steamed rice & atchara', price: 149, kcal: 650, img: 'images/rice_meal.png' },
     { emoji: '<i class="fa-solid fa-egg"></i>', name: 'Silog Meal', desc: 'Your choice of protein, garlic rice & egg', price: 129, kcal: 610, img: 'images/rice_meal.png' },
   ],
-  Beverages: [
+  Drinks: [
     { emoji: '<i class="fa-solid fa-glass-water"></i>', name: 'Large Cola', desc: 'Chilled Coca-Cola, large cup with ice', price: 69, kcal: 200, img: 'images/cola.png' },
     { emoji: '<i class="fa-solid fa-glass-water"></i>', name: 'Medium Cola', desc: 'Refreshing medium-sized Coke', price: 55, kcal: 150, img: 'images/cola.png' },
     { emoji: '<i class="fa-solid fa-glass-water"></i>', name: 'Chocolate Shake', desc: 'Thick, creamy chocolate milkshake', price: 95, kcal: 420, img: 'images/chocolate_shake.png' },
