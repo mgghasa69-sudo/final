@@ -184,6 +184,37 @@ body::after {
   border: 1px solid var(--border);
 }
 
+.btn-maximize {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1.5px solid var(--border);
+  color: var(--text-muted);
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  font-size: 1.3rem;
+  margin-left: 6px;
+  user-select: none;
+  outline: none;
+}
+
+.btn-maximize:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.05);
+}
+
+.btn-maximize:active {
+  transform: translateY(1px);
+}
+
+
 .dine-toggle {
   display: flex;
   background: rgba(255, 255, 255, 0.03);
@@ -1512,4 +1543,41 @@ body::after {
 .kiosk-toast.show {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
+}
+
+/* ── SOLD OUT ITEM CARD STYLING ── */
+.item-card.sold-out {
+  pointer-events: none; /* Disable adding to cart */
+  opacity: 0.55;
+  filter: grayscale(0.65);
+  border-color: rgba(255, 71, 71, 0.25) !important;
+}
+
+.item-card.sold-out::before {
+  background: linear-gradient(135deg, rgba(255, 71, 71, 0.2) 0%, rgba(255, 255, 255, 0.02) 100%) !important;
+}
+
+.item-card.sold-out .add-btn {
+  background: var(--border) !important;
+  color: var(--text-dim) !important;
+  box-shadow: none !important;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.item-card.sold-out .item-bottom::after {
+  content: 'SOLD OUT';
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: var(--primary-gradient);
+  color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 50px;
+  box-shadow: 0 4px 10px var(--primary-glow);
+  letter-spacing: 0.05em;
+  pointer-events: auto;
 }

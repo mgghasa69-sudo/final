@@ -532,12 +532,15 @@ function renderMenu() {
   if (!grid) return;
   grid.innerHTML = '';
   const items = MENU[currentCategory] || [];
+  const soldOutItems = JSON.parse(localStorage.getItem('qb_sold_out_items') || '[]');
+
   items.forEach(item => {
+    const isSoldOut = soldOutItems.includes(item.name);
     const mediaContent = item.img 
       ? `<img src="${item.img}" alt="${item.name}" style="width: 100%; height: 100%; object-fit: cover;" />` 
       : item.emoji;
     grid.innerHTML += `
-        <div class="item-card" onclick="addToCart('${item.name}', ${item.price})">
+        <div class="item-card ${isSoldOut ? 'sold-out' : ''}" onclick="${isSoldOut ? '' : `addToCart('${item.name}', ${item.price})`}">
           <div class="item-img">
             ${mediaContent}
           </div>
@@ -546,7 +549,7 @@ function renderMenu() {
             <div class="item-desc">${item.desc}</div>
             <div class="item-bottom">
               <div class="item-price">₱${item.price.toFixed(2)}</div>
-              <button class="add-btn">+</button>
+              <button class="add-btn" ${isSoldOut ? 'disabled' : ''}>${isSoldOut ? '✕' : '+'}</button>
             </div>
           </div>
         </div>
